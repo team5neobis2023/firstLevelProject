@@ -15,7 +15,7 @@ CREATE TABLE g4g_db.user(
     phone_number varchar,
     group_id int not null,
     file_id int,
-    CONSTRAINT fk_group FOREIGN KEY(group_id) REFERENCES group(id),
+    CONSTRAINT fk_group FOREIGN KEY(group_id) REFERENCES user_group(id),
     CONSTRAINT fk_file FOREIGN KEY(file_id) REFERENCES file(id)
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE g4g_db.article (
     title varchar,
     description text,
     views_count int,
-    like_count int,
+    like_id int,
     user_id int not null,
     file_id int,
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES user(id),
