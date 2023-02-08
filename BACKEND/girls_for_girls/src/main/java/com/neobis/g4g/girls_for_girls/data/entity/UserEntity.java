@@ -1,4 +1,4 @@
-package com.neobis.g4g.girls_for_girls.entities;
+package com.neobis.g4g.girls_for_girls.data.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
