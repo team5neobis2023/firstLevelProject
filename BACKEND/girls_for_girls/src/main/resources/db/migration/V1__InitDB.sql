@@ -73,3 +73,11 @@ CREATE TABLE refresh_tokens (
     token text not null,
     user_id int not null
 );
+
+INSERT INTO user_group(id, name)
+VALUES (1, 'ADMIN'),
+       (2, 'MENTOR'),
+       (3, 'USER');
+
+INSERT INTO users(id, first_name, last_name, email, password, date_of_birth, phone_number, group_id, file_id)
+VALUES (1, 'undefined', 'undefined', 'g4g@mail.ru', '$2a$10$SyIi.z/OMzZh2pNDGXAgyuaKuZ0r.8svAURkRyi30ZsJmOSroy6my', '1998-05-05 15:56:46.196000', '0703361322', '1', null);
