@@ -7,6 +7,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.RefreshTokenEntity;
 import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
 import com.neobis.g4g.girls_for_girls.repository.RefreshTokenRepository;
+import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import com.neobis.g4g.girls_for_girls.security.TokenGenerator;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,6 +42,7 @@ public class JwtAuthenticationController {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserGroupRepository userGroupRepository;
 
     @Autowired
     public JwtAuthenticationController(
@@ -49,7 +51,7 @@ public class JwtAuthenticationController {
             DaoAuthenticationProvider daoAuthenticationProvider,
             @Qualifier("jwtRefreshTokenAuthProvider") JwtAuthenticationProvider jwtRefreshTokenAuthProvider,
             RefreshTokenRepository refreshTokenRepository,
-            UserRepository userRepository, PasswordEncoder passwordEncoder) {
+            UserRepository userRepository, PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository) {
         this.tokenGenerator = tokenGenerator;
         this.userDetailsManager = userDetailsManager;
         this.daoAuthenticationProvider = daoAuthenticationProvider;
@@ -57,6 +59,7 @@ public class JwtAuthenticationController {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userGroupRepository = userGroupRepository;
     }
 
     @PostMapping("/register")
@@ -64,11 +67,11 @@ public class JwtAuthenticationController {
         UserEntity user = new UserEntity();
 
         user.setEmail(userDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(user.getRole());
-        user.setPhoneNumber(user.getPhoneNumber());
-        user.setDateOfBirth(user.getDateOfBirth());
-        user.setFile(user.getFile());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setRole(userGroupRepository.findById(2));
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setDateOfBirth(userDTO.getDateOfBirth());
+        user.setFile(userDTO.getFile());
 
 
         try {

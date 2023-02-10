@@ -4,7 +4,6 @@ import com.neobis.g4g.girls_for_girls.data.entity.UserGroupEntity;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,21 +33,21 @@ public class UserGroupController {
 
     @Operation(summary = "Добавить новую роль", tags = "Роли")
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public UserGroupEntity addNewGroup(@RequestBody UserGroupEntity userGroupEntity){
         return userGroupRepository.save(userGroupEntity);
     }
 
     @Operation(summary = "Изменить роль", tags = "Роли")
     @PutMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public UserGroupEntity saveGroup(@RequestBody UserGroupEntity userGroupEntity){
         return userGroupRepository.save(userGroupEntity);
     }
 
     @Operation(summary = "Удалить роль по его ID", tags = "Роли")
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteUserGroup(@PathVariable int id){
         userGroupRepository.deleteById(id);
     }

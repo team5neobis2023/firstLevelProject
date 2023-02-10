@@ -38,7 +38,7 @@ public class UserEntity implements UserDetails {
     @JoinColumn(name = "group_id")
     private UserGroupEntity role;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "file_id")
     private FileEntity file;
 
