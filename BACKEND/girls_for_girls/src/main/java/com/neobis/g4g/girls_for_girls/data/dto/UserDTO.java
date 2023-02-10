@@ -12,6 +12,8 @@ import java.sql.Timestamp;
 public class UserDTO {
     private int id;
     private String email;
+    private String firstName;
+    private String lastName;
     private String password;
     private UserGroupEntity role;
     private Timestamp dateOfBirth;

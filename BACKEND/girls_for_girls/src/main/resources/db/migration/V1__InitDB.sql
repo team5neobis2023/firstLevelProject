@@ -20,6 +20,8 @@ CREATE TABLE product_group(
 CREATE TABLE users(
     id serial primary key,
     rec_time timestamp default now(),
+    first_name varchar,
+    last_name varchar,
     email varchar,
     password varchar,
     date_of_birth timestamp,

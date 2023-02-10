@@ -68,7 +68,9 @@ public class JwtAuthenticationController {
 
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setRole(userGroupRepository.findById(2));
+        user.setRole(userGroupRepository.findById(3));
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setDateOfBirth(userDTO.getDateOfBirth());
         user.setFile(userDTO.getFile());
