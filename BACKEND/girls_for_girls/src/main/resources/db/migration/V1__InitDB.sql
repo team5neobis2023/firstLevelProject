@@ -64,3 +64,10 @@ CREATE TABLE orders(
     order_date timestamp default now(),
     PRIMARY KEY (user_id, product_id)
 );
+
+CREATE TABLE refresh_tokens (
+    id serial not null,
+    rec_time timestamp default now (),
+    token text not null,
+    user_id int not null
+);
