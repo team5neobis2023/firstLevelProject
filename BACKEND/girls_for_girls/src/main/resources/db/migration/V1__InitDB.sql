@@ -60,11 +60,11 @@ CREATE TABLE product(
 );
 
 CREATE TABLE orders(
+    id serial primary key,
     user_id int REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
     product_id int REFERENCES product(id) ON UPDATE CASCADE,
     amount int NOT NULL,
-    order_date timestamp default now(),
-    PRIMARY KEY (user_id, product_id)
+    order_date timestamp default now()
 );
 
 CREATE TABLE refresh_tokens (

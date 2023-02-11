@@ -32,4 +32,12 @@ public class FileEntity {
 
     @OneToMany(mappedBy = "file")
     private Set<UserEntity> users;
+
+    @OneToMany(mappedBy = "productGroupId")
+    private Set<ProductEntity> products;
+
+    @ManyToOne
+    @JoinColumn(name = "article")
+    private ArticleEntity article;
 }
+
