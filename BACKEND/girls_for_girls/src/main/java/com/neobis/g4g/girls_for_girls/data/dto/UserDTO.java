@@ -4,19 +4,20 @@ import com.neobis.g4g.girls_for_girls.data.entity.FileEntity;
 import com.neobis.g4g.girls_for_girls.data.entity.UserGroupEntity;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.sql.Timestamp;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class UserDTO {
     private int id;
     private String email;
     private String firstName;
     private String lastName;
     private String password;
+    private String confirmPass;
     private UserGroupEntity role;
-    private Timestamp dateOfBirth;
+    private String placeOfBirth;
     private FileEntity file;
     private String phoneNumber;
 }

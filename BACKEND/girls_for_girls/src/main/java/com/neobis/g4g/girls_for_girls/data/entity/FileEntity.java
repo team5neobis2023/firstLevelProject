@@ -1,5 +1,6 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,14 +31,12 @@ public class FileEntity {
     @Column(name = "rec_time")
     private Timestamp recTime;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "file")
     private Set<UserEntity> users;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "productGroupId")
     private Set<ProductEntity> products;
-
-    @ManyToOne
-    @JoinColumn(name = "article")
-    private ArticleEntity article;
 }
 

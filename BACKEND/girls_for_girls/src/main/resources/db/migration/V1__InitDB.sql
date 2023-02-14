@@ -24,10 +24,11 @@ CREATE TABLE users(
     last_name varchar,
     email varchar,
     password varchar,
-    date_of_birth timestamp,
+    place_of_birth varchar,
     phone_number varchar,
     group_id int not null,
     file_id int,
+    reset_token varchar,
     FOREIGN KEY(group_id) REFERENCES user_group(id),
     FOREIGN KEY(file_id) REFERENCES file(id)
 );
@@ -67,7 +68,7 @@ CREATE TABLE orders(
     order_date timestamp default now()
 );
 
-CREATE TABLE refresh_tokens (
+CREATE TABLE refresh_token (
     id serial not null,
     rec_time timestamp default now (),
     token text not null,
@@ -79,5 +80,5 @@ VALUES (1, 'ADMIN'),
        (2, 'MENTOR'),
        (3, 'USER');
 
-INSERT INTO users(id, first_name, last_name, email, password, date_of_birth, phone_number, group_id, file_id)
-VALUES (1, 'undefined', 'undefined', 'g4g@mail.ru', '$2a$10$SyIi.z/OMzZh2pNDGXAgyuaKuZ0r.8svAURkRyi30ZsJmOSroy6my', '1998-05-05 15:56:46.196000', '0703361322', '1', null);
+INSERT INTO users(id, first_name, last_name, email, password, place_of_birth, phone_number, group_id, file_id, reset_token)
+VALUES (1, 'undefined', 'undefined', 'g4g@mail.ru', '$2a$10$SyIi.z/OMzZh2pNDGXAgyuaKuZ0r.8svAURkRyi30ZsJmOSroy6my', 'Bishkek', '0703361322', '1', null, null);

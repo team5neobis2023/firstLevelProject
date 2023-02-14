@@ -5,9 +5,9 @@ import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
 import com.neobis.g4g.girls_for_girls.data.entity.UserGroupEntity;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
+import com.neobis.g4g.girls_for_girls.service.UserManager;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,12 +22,14 @@ public class UserController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserGroupRepository userGroupRepository;
+    private final UserManager userManager;
 
     @Autowired
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository) {
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository, UserManager userManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userGroupRepository = userGroupRepository;
+        this.userManager = userManager;
     }
 
     @Operation(summary = "Получить аккаунт по его ID", tags = "Аккаунт")
@@ -58,7 +60,7 @@ public class UserController {
             newUser.setLastName(userDTO.getLastName());
             newUser.setPhoneNumber(userDTO.getPhoneNumber());
             newUser.setFile(userDTO.getFile());
-            newUser.setDateOfBirth(userDTO.getDateOfBirth());
+            newUser.setPlaceOfBirth(userDTO.getPlaceOfBirth());
             userRepository.save(newUser);
 
             return ResponseEntity.ok().body(newUser.getId());
@@ -85,7 +87,7 @@ public class UserController {
                 user.setPhoneNumber(userDTO.getPhoneNumber());
                 user.setFile(userDTO.getFile());
                 user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-                user.setDateOfBirth(userDTO.getDateOfBirth());
+                user.setPlaceOfBirth(userDTO.getPlaceOfBirth());
                 userRepository.save(user);
 
                 return ResponseEntity.ok().body(user.getId());
@@ -96,4 +98,6 @@ public class UserController {
             return ResponseEntity.internalServerError().body("Internal server error");
         }
     }
+
+
 }

@@ -1,6 +1,9 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,7 +13,6 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,11 +40,12 @@ public class UserEntity implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
-    @Column(name = "date_of_birth")
-    private Timestamp dateOfBirth;
+    @Column(name = "place_of_birth")
+    private String placeOfBirth;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -55,11 +58,16 @@ public class UserEntity implements UserDetails {
     @JoinColumn(name = "file_id")
     private FileEntity file;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Set<OrderEntity> orderEntities;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<ArticleEntity> articleEntities;
+
+    @Column(name = "reset_token")
+    private String resetToken;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

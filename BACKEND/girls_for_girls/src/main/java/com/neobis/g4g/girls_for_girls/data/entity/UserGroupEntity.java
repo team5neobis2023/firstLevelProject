@@ -1,5 +1,6 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class UserGroupEntity {
     @Column(name = "name")
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "role")
     private Set<UserEntity> users;
 }

@@ -31,13 +31,15 @@ public class ArticleEntity {
     @Column(name = "views_count")
     private Long viewsCount;
 
-    @Column(name = "like_count")
-    private Long likeCount;
+    @ManyToOne
+    @JoinColumn(name = "like_id")
+    private UserEntity likeCount;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userId;
 
-    @OneToMany(mappedBy = "article")
-    private Set<FileEntity> fileEntities;
+    @ManyToOne
+    @JoinColumn(name = "file_id")
+    private FileEntity fileEntities;
 }

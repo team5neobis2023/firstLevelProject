@@ -3,10 +3,8 @@ package com.neobis.g4g.girls_for_girls.controller;
 import com.neobis.g4g.girls_for_girls.data.dto.LoginDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.TokenDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.RefreshTokenEntity;
 import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
-import com.neobis.g4g.girls_for_girls.repository.RefreshTokenRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import com.neobis.g4g.girls_for_girls.security.TokenGenerator;
@@ -72,7 +70,7 @@ public class JwtAuthenticationController {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setDateOfBirth(userDTO.getDateOfBirth());
+        user.setPlaceOfBirth(userDTO.getPlaceOfBirth());
         user.setFile(userDTO.getFile());
 
 
