@@ -38,8 +38,4 @@ public class ArticleEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userId;
-
-    @ManyToOne
-    @JoinColumn(name = "file_id")
-    private FileEntity fileEntities;
 }

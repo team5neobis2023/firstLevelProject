@@ -9,7 +9,10 @@ CREATE TABLE file(
     rec_time timestamp default now(),
     name varchar,
     file_code varchar,
-    is_deleted boolean default false
+    is_deleted boolean default false,
+    incident_id int,
+    product_id int,
+    user_id int not null
 );
 
 CREATE TABLE product_group(
@@ -43,10 +46,8 @@ CREATE TABLE article (
     views_count int,
     like_id int,
     user_id int not null,
-    file_id int,
     FOREIGN KEY(user_id) REFERENCES users(id),
-    FOREIGN KEY(like_id) REFERENCES users(id),
-    FOREIGN KEY(file_id) REFERENCES file(id)
+    FOREIGN KEY(like_id) REFERENCES users(id)
 );
 
 CREATE TABLE product(
@@ -56,9 +57,7 @@ CREATE TABLE product(
     price int,
     size varchar,
     product_group_id int,
-    file_id int,
-    FOREIGN KEY(product_group_id) REFERENCES product_group(id),
-    FOREIGN KEY(file_id) REFERENCES file(id)
+    FOREIGN KEY(product_group_id) REFERENCES product_group(id)
 );
 
 CREATE TABLE orders(

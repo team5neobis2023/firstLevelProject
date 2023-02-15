@@ -31,12 +31,17 @@ public class FileEntity {
     @Column(name = "rec_time")
     private Timestamp recTime;
 
+    @Column(name = "product_id")
+    private int productId;
+
+    @Column(name = "article_id")
+    private int articleId;
+
+    @Column(name = "user_id")
+    private int userId;
+
     @JsonIgnore
     @OneToMany(mappedBy = "file")
     private Set<UserEntity> users;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "productGroupId")
-    private Set<ProductEntity> products;
 }
 
