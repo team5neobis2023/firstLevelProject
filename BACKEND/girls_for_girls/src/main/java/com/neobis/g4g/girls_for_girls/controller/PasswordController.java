@@ -5,6 +5,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
 import com.neobis.g4g.girls_for_girls.exception.UserNotFoundException;
 import com.neobis.g4g.girls_for_girls.repository.EmailService;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/password")
 public class PasswordController {
@@ -52,7 +54,8 @@ public class PasswordController {
             // Save token to database
             userRepository.save(user);
 
-            String appUrl = request.getScheme() + "://" + request.getServerName() +":" + request.getLocalPort() + "/api/v1/password";
+            String appUrl = request.getScheme() + "://" + request.getServerName() +":" +
+                    request.getLocalPort() + "/api/v1/password";
 
             // Email message
             SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
@@ -63,6 +66,7 @@ public class PasswordController {
                     + "/reset?token=" + user.getResetToken());
 
             emailService.sendEmail(passwordResetEmail);
+            log.info("Success send email to " + userEmail);
 
         }
 

@@ -20,15 +20,11 @@ import java.util.List;
 @RequestMapping("/api/v1/user")
 public class UserController {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserGroupRepository userGroupRepository;
     private final UserManager userManager;
 
     @Autowired
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository, UserManager userManager) {
+    public UserController(UserRepository userRepository, UserManager userManager) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userGroupRepository = userGroupRepository;
         this.userManager = userManager;
     }
 
@@ -48,56 +44,13 @@ public class UserController {
     @PostMapping()
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO, @AuthenticationPrincipal UserEntity authUser) {
-        try {
-
-            UserGroupEntity userGroupEntity = userGroupRepository.findById(userDTO.getRole().getId());
-            UserEntity newUser = new UserEntity();
-
-            newUser.setEmail(userDTO.getEmail());
-            newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            newUser.setRole(userGroupEntity);
-            newUser.setFirstName(userDTO.getFirstName());
-            newUser.setLastName(userDTO.getLastName());
-            newUser.setPhoneNumber(userDTO.getPhoneNumber());
-            newUser.setFile(userDTO.getFile());
-            newUser.setPlaceOfBirth(userDTO.getPlaceOfBirth());
-            userRepository.save(newUser);
-
-            return ResponseEntity.ok().body(newUser.getId());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return ResponseEntity.internalServerError().body("Internal server error");
-        }
+        return saveUser(userDTO, authUser);
     }
 
     @Operation(summary = "Изменить аккаунт", tags = "Аккаунт")
     @PutMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO){
-        try {
-            boolean exist = userRepository.existsById(userDTO.getId());
-
-            if(exist) {
-                UserEntity user = userRepository.findById(userDTO.getId());
-
-                user.setEmail(userDTO.getEmail());
-                user.setFirstName(userDTO.getFirstName());
-                user.setRole(userDTO.getRole());
-                user.setLastName(userDTO.getLastName());
-                user.setPhoneNumber(userDTO.getPhoneNumber());
-                user.setFile(userDTO.getFile());
-                user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-                user.setPlaceOfBirth(userDTO.getPlaceOfBirth());
-                userRepository.save(user);
-
-                return ResponseEntity.ok().body(user.getId());
-            }
-            throw new IllegalStateException("User with id " + userDTO.getId() + " does not exist");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return ResponseEntity.internalServerError().body("Internal server error");
-        }
+        return userManager.updateUser(userDTO);
     }
-
-
 }

@@ -29,6 +29,7 @@ CREATE TABLE users(
     group_id int not null,
     file_id int,
     reset_token varchar,
+    enabled bool default false,
     FOREIGN KEY(group_id) REFERENCES user_group(id),
     FOREIGN KEY(file_id) REFERENCES file(id)
 );
@@ -80,5 +81,5 @@ VALUES (1, 'ADMIN'),
        (2, 'MENTOR'),
        (3, 'USER');
 
-INSERT INTO users(id, first_name, last_name, email, password, place_of_birth, phone_number, group_id, file_id, reset_token)
-VALUES (1, 'undefined', 'undefined', 'g4g@mail.ru', '$2a$10$SyIi.z/OMzZh2pNDGXAgyuaKuZ0r.8svAURkRyi30ZsJmOSroy6my', 'Bishkek', '0703361322', '1', null, null);
+INSERT INTO users(first_name, last_name, email, password, place_of_birth, phone_number, group_id, file_id, reset_token, enabled)
+VALUES ('undefined', 'undefined', 'g4g@mail.ru', '$2a$10$SyIi.z/OMzZh2pNDGXAgyuaKuZ0r.8svAURkRyi30ZsJmOSroy6my', 'Bishkek', '0703361322', '1', null, null, true);

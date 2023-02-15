@@ -69,6 +69,9 @@ public class UserEntity implements UserDetails {
     @Column(name = "reset_token")
     private String resetToken;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(role.getName()));
@@ -92,5 +95,5 @@ public class UserEntity implements UserDetails {
     public boolean isCredentialsNonExpired() {return true;}
 
     @Override
-    public boolean isEnabled() {return true;}
+    public boolean isEnabled() {return enabled;}
 }
