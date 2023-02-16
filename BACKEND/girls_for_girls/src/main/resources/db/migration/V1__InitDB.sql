@@ -75,6 +75,70 @@ CREATE TABLE refresh_token (
     user_id int not null
 );
 
+CREATE TABLE training (
+    id serial not null,
+    rec_time timestamp default now (),
+    description text not null,
+    user_id int
+);
+
+CREATE TABLE conferences (
+    id serial not null,
+    rec_time timestamp default now (),
+    conference_date timestamp,
+    description varchar,
+    user_id int
+);
+
+CREATE TABLE mentor_program (
+    id serial not null,
+    rec_time timestamp default now (),
+    description text not null,
+    user_id int
+);
+
+CREATE TABLE application (
+    id serial not null,
+    rec_time timestamp default now (),
+    date_of_birth timestamp,
+    email varchar,
+    address varchar,
+    work_format varchar,
+    motivation varchar(1000),
+    about_me varchar(1000),
+    achievements varchar(1000),
+    my_fails varchar(1000),
+    my_skills varchar(1000),
+    training_id int,
+    mentor_program_id int,
+    conferences_id int
+);
+
+CREATE TABLE notification (
+    id serial not null,
+    rec_time timestamp default now (),
+    message varchar,
+    user_id int
+);
+
+CREATE TABLE video_course (
+    id serial not null,
+    rec_time timestamp default now (),
+    description varchar,
+    rating int,
+    user_id int
+);
+
+CREATE TABLE feedback (
+    id serial not null,
+    rec_time timestamp default now (),
+    full_name varchar,
+    email varchar,
+    phone_number varchar,
+    message varchar(1000),
+    video_course_id int
+);
+
 INSERT INTO user_group(id, name)
 VALUES (1, 'ADMIN'),
        (2, 'MENTOR'),
