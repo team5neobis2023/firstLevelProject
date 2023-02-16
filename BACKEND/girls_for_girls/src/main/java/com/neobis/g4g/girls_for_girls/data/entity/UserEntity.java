@@ -66,6 +66,21 @@ public class UserEntity implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<ArticleEntity> articleEntities;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<TrainingEntity> trainingEntities;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<ConferencesEntity> conferencesEntities;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<MentorProgramEntity> mentorProgramEntities;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<NotificationEntity> notificationEntities;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Set<VideoCourseEntity> videoCourseEntities;
+
     @Column(name = "reset_token")
     private String resetToken;
 
