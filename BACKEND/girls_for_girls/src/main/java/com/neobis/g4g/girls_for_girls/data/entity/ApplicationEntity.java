@@ -53,7 +53,7 @@ public class ApplicationEntity {
     private trainingId;
 
     @Column(name = "")
-    private mentorProgramId;
+    private mentorProgramId
 
     @Column(name = "")
     private conferencesId;
