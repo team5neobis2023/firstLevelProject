@@ -1,15 +1,26 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "article")
 public class ArticleEntity {
+
+    public ArticleEntity(Timestamp recTime, Timestamp updateTime, String title, String description, Long viewsCount, UserEntity likeCount, UserEntity userId) {
+        this.recTime = recTime;
+        this.updateTime = updateTime;
+        this.title = title;
+        this.description = description;
+        this.viewsCount = viewsCount;
+        this.likeCount = likeCount;
+        this.userId = userId;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

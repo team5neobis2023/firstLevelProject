@@ -1,14 +1,25 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "feedback")
 public class FeedbackEntity {
+
+    public FeedbackEntity(Timestamp recTime, String fullName, String email, String phoneNumber, String message, VideoCourseEntity videoCourse) {
+        this.recTime = recTime;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.message = message;
+        this.videoCourse = videoCourse;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

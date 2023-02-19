@@ -1,14 +1,20 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "products")
 public class ProductGroupEntity {
+
+    public ProductGroupEntity(String title) {
+        this.title = title;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,5 +25,5 @@ public class ProductGroupEntity {
     private String title;
 
     @OneToMany(mappedBy = "productGroupId")
-    private Set<ProductEntity> users;
+    private Set<ProductEntity> productEntities;
 }

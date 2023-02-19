@@ -2,14 +2,30 @@ package com.neobis.g4g.girls_for_girls.data.entity;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
 @Entity
+@NoArgsConstructor
 @Table(name = "application")
 public class ApplicationEntity {
+
+    public ApplicationEntity(Timestamp recTime, String fullName, Timestamp dateOfBirth, String email, String address, String workFormat, String motivation, String aboutMe, String achievements, String myFails, String mySkills) {
+        this.recTime = recTime;
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.address = address;
+        this.workFormat = workFormat;
+        this.motivation = motivation;
+        this.aboutMe = aboutMe;
+        this.achievements = achievements;
+        this.myFails = myFails;
+        this.mySkills = mySkills;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,13 +65,13 @@ public class ApplicationEntity {
     @Column(name = "my_skills")
     private String mySkills;
 
-    @Column(name = "")
-    private trainingId;
-
-    @Column(name = "")
-    private mentorProgramId
-
-    @Column(name = "")
-    private conferencesId;
+//    @Column(name = "")
+//    private trainingId;
+//    TODO Will do connecting other entities
+//    @Column(name = "")
+//    private mentorProgramId
+//
+//    @Column(name = "")
+//    private conferencesId;
 
 }
