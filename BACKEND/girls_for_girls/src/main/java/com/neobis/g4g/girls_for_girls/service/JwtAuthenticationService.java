@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
@@ -59,7 +60,8 @@ public class JwtAuthenticationService {
 
     public ResponseEntity<?> register(UserDTO userDTO, HttpServletRequest request) {
         UserEntity user = new UserEntity();
-
+        Random random = new Random();
+        int token = random.nextInt(9999);
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
         user.setRole(userGroupRepository.findById(3));
@@ -68,7 +70,7 @@ public class JwtAuthenticationService {
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setPlaceOfBirth(userDTO.getPlaceOfBirth());
         user.setFile(userDTO.getFile());
-        user.setResetToken(UUID.randomUUID().toString());
+        user.setResetToken(String.valueOf(token));
 
 
         try {
@@ -77,16 +79,13 @@ public class JwtAuthenticationService {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-        String appUrl = request.getScheme() + "://" + request.getServerName() +":" +
-                request.getLocalPort() + "/api/v1/auth";
 
         // Email message
         SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
         passwordResetEmail.setFrom("g4g@gmail.com");
         passwordResetEmail.setTo(user.getEmail());
         passwordResetEmail.setSubject("Account activation");
-        passwordResetEmail.setText("To activate your account follow the link:\n" + appUrl
-                + "/active?token=" + user.getResetToken());
+        passwordResetEmail.setText("Your activation code: " + user.getResetToken());
 
         emailService.sendEmail(passwordResetEmail);
         log.info("Success send email to " + userDTO.getEmail());

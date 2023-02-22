@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
@@ -36,6 +37,8 @@ public class PasswordService {
 
         // Lookup user in database by e-mail
         Optional<UserEntity> optional = userRepository.findByEmail(userEmail);
+        Random random = new Random();
+        int token = random.nextInt(9999);
 
         if (!optional.isPresent()) {
             throw new UserNotFoundException(
@@ -44,21 +47,17 @@ public class PasswordService {
 
             // Generate random 36-character string token for reset password
             UserEntity user = optional.get();
-            user.setResetToken(UUID.randomUUID().toString());
+            user.setResetToken(String.valueOf(token));
 
             // Save token to database
             userRepository.save(user);
-
-            String appUrl = request.getScheme() + "://" + request.getServerName() +":" +
-                    request.getLocalPort() + "/api/v1/password";
 
             // Email message
             SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
             passwordResetEmail.setFrom("g4g@gmail.com");
             passwordResetEmail.setTo(user.getEmail());
             passwordResetEmail.setSubject("Password Reset Request");
-            passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
-                    + "/reset?token=" + user.getResetToken());
+            passwordResetEmail.setText("To reset your password, enter this code: " + user.getResetToken());
 
             emailService.sendEmail(passwordResetEmail);
             log.info("Success send email to " + userEmail);
