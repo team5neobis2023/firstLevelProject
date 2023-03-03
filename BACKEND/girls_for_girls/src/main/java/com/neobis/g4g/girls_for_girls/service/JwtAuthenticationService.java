@@ -122,12 +122,23 @@ public class JwtAuthenticationService {
             return ResponseEntity.badRequest().body("This refresh was invalidated");
         }
 
+
         refreshTokenRepository.delete(refreshTokenEntity);
 
         Authentication authentication = jwtAuthenticationProvider
                 .authenticate(new BearerTokenAuthenticationToken(tokenDTO.getRefreshToken()));
 
-        return ResponseEntity.ok(tokenGenerator.createToken(authentication));
+        UserEntity user = userRepository.findById(refreshTokenEntity.getUserId());
+
+        TokenDTO newTokenDTO = tokenGenerator.createToken(authentication);
+
+        RefreshTokenEntity newRefreshTokenEntity = new RefreshTokenEntity();
+
+        newRefreshTokenEntity.setUserId(user.getId());
+        newRefreshTokenEntity.setToken(newTokenDTO.getRefreshToken());
+        refreshTokenRepository.save(newRefreshTokenEntity);
+
+        return ResponseEntity.ok(newTokenDTO);
     }
 
     public ResponseEntity<String> activateAccount(String token) {

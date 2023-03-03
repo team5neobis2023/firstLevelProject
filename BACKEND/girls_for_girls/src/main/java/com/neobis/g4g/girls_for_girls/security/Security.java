@@ -68,8 +68,8 @@ public class Security implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/*", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/v1/auth/*", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/api/v1/password/*").permitAll()
+                .anyRequest().permitAll()
                 .and()
                 .cors().and()
                 .httpBasic().disable()
