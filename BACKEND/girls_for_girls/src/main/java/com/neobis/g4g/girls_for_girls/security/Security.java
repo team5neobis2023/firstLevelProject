@@ -69,7 +69,7 @@ public class Security implements WebMvcConfigurer {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/*", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/api/v1/password/*").permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .cors().and()
                 .httpBasic().disable()
