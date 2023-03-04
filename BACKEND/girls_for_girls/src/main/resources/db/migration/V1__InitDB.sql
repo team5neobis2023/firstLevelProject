@@ -99,6 +99,7 @@ CREATE TABLE mentor_program (
 
 CREATE TABLE application (
     id serial not null,
+    full_name varchar,
     rec_time timestamp default now (),
     date_of_birth timestamp,
     email varchar,
