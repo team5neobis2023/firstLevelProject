@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Data
 @Entity
@@ -37,5 +38,7 @@ public class ConferencesEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userId;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conferencesId")
+    private Set<ApplicationEntity> applicationEntities;
 
 }

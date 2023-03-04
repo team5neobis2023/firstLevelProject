@@ -65,13 +65,16 @@ public class ApplicationEntity {
     @Column(name = "my_skills")
     private String mySkills;
 
-//    @Column(name = "")
-//    private trainingId;
-//    TODO Will do connecting other entities
-//    @Column(name = "")
-//    private mentorProgramId
-//
-//    @Column(name = "")
-//    private conferencesId;
+    @ManyToOne
+    @JoinColumn(name = "training_id")
+    private TrainingEntity trainingId;
+
+    @ManyToOne
+    @JoinColumn(name = "mentor_program_id")
+    private MentorProgramEntity mentorProgramId;
+
+    @ManyToOne
+    @JoinColumn(name = "conferences_id")
+    private ConferencesEntity conferencesId;
 
 }
