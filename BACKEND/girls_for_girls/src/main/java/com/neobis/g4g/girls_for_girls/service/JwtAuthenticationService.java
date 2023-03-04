@@ -3,8 +3,8 @@ package com.neobis.g4g.girls_for_girls.service;
 import com.neobis.g4g.girls_for_girls.data.dto.LoginDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.TokenDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.RefreshToken;
-import com.neobis.g4g.girls_for_girls.data.entity.User;
+import com.neobis.g4g.girls_for_girls.data.entity.RefreshTokenEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
 import com.neobis.g4g.girls_for_girls.repository.EmailService;
 import com.neobis.g4g.girls_for_girls.repository.RefreshTokenRepository;
@@ -58,7 +58,7 @@ public class JwtAuthenticationService {
     }
 
     public ResponseEntity<?> register(UserDTO userDTO, HttpServletRequest request) {
-        User user = new User();
+        UserEntity user = new UserEntity();
 
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
@@ -103,12 +103,12 @@ public class JwtAuthenticationService {
 
             TokenDTO tokenDTO = tokenGenerator.createToken(authentication);
 
-            RefreshToken refreshToken = new RefreshToken();
-            Optional<User> user = userRepository.findByEmail(loginDTO.getEmail());
+            RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity();
+            Optional<UserEntity> user = userRepository.findByEmail(loginDTO.getEmail());
 
-            refreshToken.setUserId(user.get().getId());
-            refreshToken.setToken(tokenDTO.getRefreshToken());
-            refreshTokenRepository.save(refreshToken);
+            refreshTokenEntity.setUserId(user.get().getId());
+            refreshTokenEntity.setToken(tokenDTO.getRefreshToken());
+            refreshTokenRepository.save(refreshTokenEntity);
 
             return ResponseEntity.ok(tokenDTO);
         } catch (BadCredentialsException e) {
@@ -117,13 +117,13 @@ public class JwtAuthenticationService {
     }
 
     public ResponseEntity<?> refreshToken(TokenDTO tokenDTO) {
-        RefreshToken refreshToken = refreshTokenRepository.findByToken(tokenDTO.getRefreshToken());
+        RefreshTokenEntity refreshTokenEntity = refreshTokenRepository.findByToken(tokenDTO.getRefreshToken());
 
-        if (refreshToken == null) {
+        if (refreshTokenEntity == null) {
             return ResponseEntity.badRequest().body("This refresh was invalidated");
         }
 
-        refreshTokenRepository.delete(refreshToken);
+        refreshTokenRepository.delete(refreshTokenEntity);
 
         Authentication authentication = jwtAuthenticationProvider
                 .authenticate(new BearerTokenAuthenticationToken(tokenDTO.getRefreshToken()));
@@ -134,12 +134,12 @@ public class JwtAuthenticationService {
     public ResponseEntity<String> activateAccount(String token) {
 
         // Find the user associated with the reset token
-        Optional<User> user = userRepository.findByResetToken(token);
+        Optional<UserEntity> user = userRepository.findByResetToken(token);
 
         // This should always be non-null but we check just in case
         if (user.isPresent()) {
 
-            User resetUser = user.get();
+            UserEntity resetUser = user.get();
 
             // Set account enabled
             resetUser.setEnabled(true);
