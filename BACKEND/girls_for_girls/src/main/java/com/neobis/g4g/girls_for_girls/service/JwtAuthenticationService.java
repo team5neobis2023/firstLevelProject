@@ -6,7 +6,6 @@ import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.RefreshToken;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
-import com.neobis.g4g.girls_for_girls.repository.EmailService;
 import com.neobis.g4g.girls_for_girls.repository.RefreshTokenRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;

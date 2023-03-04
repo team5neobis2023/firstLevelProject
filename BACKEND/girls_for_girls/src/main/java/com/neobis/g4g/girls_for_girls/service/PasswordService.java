@@ -3,7 +3,6 @@ package com.neobis.g4g.girls_for_girls.service;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.UserNotFoundException;
-import com.neobis.g4g.girls_for_girls.repository.EmailService;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
