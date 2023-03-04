@@ -1,7 +1,7 @@
 package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.UserNotFoundException;
 import com.neobis.g4g.girls_for_girls.repository.EmailService;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
@@ -35,7 +35,7 @@ public class PasswordService {
     public ResponseEntity<String> processForgotPasswordForm(String userEmail, HttpServletRequest request) {
 
         // Lookup user in database by e-mail
-        Optional<UserEntity> optional = userRepository.findByEmail(userEmail);
+        Optional<User> optional = userRepository.findByEmail(userEmail);
 
         if (!optional.isPresent()) {
             throw new UserNotFoundException(
@@ -43,7 +43,7 @@ public class PasswordService {
         } else {
 
             // Generate random 36-character string token for reset password
-            UserEntity user = optional.get();
+            User user = optional.get();
             user.setResetToken(UUID.randomUUID().toString());
 
             // Save token to database
@@ -71,7 +71,7 @@ public class PasswordService {
 
     public ResponseEntity<String> displayResetPasswordPage(String token) {
 
-        Optional<UserEntity> user = userRepository.findByResetToken(token);
+        Optional<User> user = userRepository.findByResetToken(token);
 
         if (user.isPresent()) { // Token found in DB
             return ResponseEntity.ok().body("Token is valid!");
@@ -82,12 +82,12 @@ public class PasswordService {
     public ResponseEntity<String> setNewPassword(String token, UserDTO password) {
 
         // Find the user associated with the reset token
-        Optional<UserEntity> user = userRepository.findByResetToken(token);
+        Optional<User> user = userRepository.findByResetToken(token);
 
         // This should always be non-null but we check just in case
         if (user.isPresent()) {
 
-            UserEntity resetUser = user.get();
+            User resetUser = user.get();
 
             // Set new password
             resetUser.setPassword(passwordEncoder.encode(password.getPassword()));
