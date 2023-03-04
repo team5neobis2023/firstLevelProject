@@ -20,7 +20,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Table(name = "users")
-public class UserEntity implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,34 +52,34 @@ public class UserEntity implements UserDetails {
 
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private UserGroupEntity role;
+    private UserGroup role;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "file_id")
-    private FileEntity file;
+    private File file;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<OrderEntity> orderEntities;
+    private Set<Order> orderEntities;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<ArticleEntity> articleEntities;
+    private Set<Article> articleEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<TrainingEntity> trainingEntities;
+    private Set<Training> trainingEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<ConferencesEntity> conferencesEntities;
+    private Set<Conferences> conferencesEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<MentorProgramEntity> mentorProgramEntities;
+    private Set<MentorProgram> mentorProgramEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<NotificationEntity> notificationEntities;
+    private Set<Notification> notificationEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<VideoCourseEntity> videoCourseEntities;
+    private Set<VideoCourse> videoCourseEntities;
 
     @Column(name = "reset_token")
     private String resetToken;

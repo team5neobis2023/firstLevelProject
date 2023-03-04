@@ -11,9 +11,9 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Table(name = "training")
-public class TrainingEntity {
+public class Training {
 
-    public TrainingEntity(Timestamp recTime, Timestamp conferenceDate, String description, UserEntity userId) {
+    public Training(Timestamp recTime, Timestamp conferenceDate, String description, User userId) {
         this.recTime = recTime;
         this.conferenceDate = conferenceDate;
         this.description = description;
@@ -36,8 +36,8 @@ public class TrainingEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userId;
+    private User userId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainingId")
-    private Set<ApplicationEntity> applicationEntities;
+    private Set<Application> applicationEntities;
 }

@@ -1,14 +1,14 @@
 package com.neobis.g4g.girls_for_girls.repository;
 
-import com.neobis.g4g.girls_for_girls.data.entity.ProductGroupEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.ProductGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface ProductGroupRepo extends JpaRepository<ProductGroupEntity, Long> {
+public interface ProductGroupRepo extends JpaRepository<ProductGroup, Long> {
 
-    Optional<ProductGroupEntity> findByTitle(String title);
+    Optional<ProductGroup> findByTitle(String title);
 
 }

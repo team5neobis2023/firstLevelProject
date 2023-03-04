@@ -5,17 +5,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
 
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "mentor_program")
-public class MentorProgramEntity {
+@Table(name = "notification")
+public class Notification {
 
-    public MentorProgramEntity(String description, Timestamp recTime, UserEntity userId) {
-        this.description = description;
+    public Notification(Timestamp recTime, String message, User userId) {
         this.recTime = recTime;
+        this.message = message;
         this.userId = userId;
     }
 
@@ -24,16 +23,14 @@ public class MentorProgramEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "description")
-    private String description;
-
     @Column(name = "rec_time")
     private Timestamp recTime;
 
+    @Column(name = "message")
+    private String message;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userId;
+    private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mentorProgramId")
-    private Set<ApplicationEntity> applicationEntities;
 }

@@ -10,9 +10,9 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor
 @Table(name = "order")
-public class OrderEntity {
+public class Order {
 
-    public OrderEntity(UserEntity user, ProductEntity product, int amount, Timestamp orderDate) {
+    public Order(User user, Product product, int amount, Timestamp orderDate) {
         this.user = user;
         this.product = product;
         this.amount = amount;
@@ -26,11 +26,11 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductEntity product;
+    private Product product;
 
     @Column(name = "amount")
     private int amount;

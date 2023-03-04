@@ -1,19 +1,19 @@
 package com.neobis.g4g.girls_for_girls.repository;
 
-import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
     boolean existsByEmail(String EMAIL);
 
-    UserEntity findById(int id);
+    User findById(int id);
 
-    Optional<UserEntity> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    Optional<UserEntity> findByResetToken(String resetToken);
+    Optional<User> findByResetToken(String resetToken);
 }

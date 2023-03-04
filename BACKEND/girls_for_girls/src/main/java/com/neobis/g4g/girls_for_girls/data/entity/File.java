@@ -15,7 +15,7 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "file")
-public class FileEntity {
+public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +42,6 @@ public class FileEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "file")
-    private Set<UserEntity> users;
+    private Set<User> users;
 }
 

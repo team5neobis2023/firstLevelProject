@@ -1,6 +1,6 @@
 package com.neobis.g4g.girls_for_girls.security;
 
-import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -19,7 +19,7 @@ public class JwtToUserConverter implements Converter<Jwt, UsernamePasswordAuthen
 
     @Override
     public UsernamePasswordAuthenticationToken convert(Jwt jwt) {
-        UserEntity user = (UserEntity) userManager.loadUserByUsername(jwt.getClaimAsString("username"));
+        User user = (User) userManager.loadUserByUsername(jwt.getClaimAsString("username"));
 
         return new UsernamePasswordAuthenticationToken(user, jwt, user.getAuthorities());
     }

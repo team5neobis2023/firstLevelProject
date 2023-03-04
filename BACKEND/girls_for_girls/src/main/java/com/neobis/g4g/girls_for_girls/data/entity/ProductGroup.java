@@ -9,12 +9,8 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "products")
-public class ProductGroupEntity {
-
-    public ProductGroupEntity(String title) {
-        this.title = title;
-    }
+@Table(name = "product_group")
+public class ProductGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,5 +21,5 @@ public class ProductGroupEntity {
     private String title;
 
     @OneToMany(mappedBy = "productGroupId")
-    private Set<ProductEntity> productEntities;
+    private Set<Product> productEntities;
 }

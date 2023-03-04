@@ -1,7 +1,7 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
-import com.neobis.g4g.girls_for_girls.data.entity.FileEntity;
-import com.neobis.g4g.girls_for_girls.data.entity.UserGroupEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.File;
+import com.neobis.g4g.girls_for_girls.data.entity.UserGroup;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,8 +16,8 @@ public class UserDTO {
     private String lastName;
     private String password;
     private String confirmPass;
-    private UserGroupEntity role;
+    private UserGroup role;
     private String placeOfBirth;
-    private FileEntity file;
+    private File file;
     private String phoneNumber;
 }

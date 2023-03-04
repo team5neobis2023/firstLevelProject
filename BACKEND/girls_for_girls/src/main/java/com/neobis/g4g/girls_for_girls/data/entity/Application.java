@@ -11,9 +11,9 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor
 @Table(name = "application")
-public class ApplicationEntity {
+public class Application {
 
-    public ApplicationEntity(Timestamp recTime, String fullName, Timestamp dateOfBirth, String email, String address, String workFormat, String motivation, String aboutMe, String achievements, String myFails, String mySkills) {
+    public Application(Timestamp recTime, String fullName, Timestamp dateOfBirth, String email, String address, String workFormat, String motivation, String aboutMe, String achievements, String myFails, String mySkills) {
         this.recTime = recTime;
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
@@ -67,14 +67,14 @@ public class ApplicationEntity {
 
     @ManyToOne
     @JoinColumn(name = "training_id")
-    private TrainingEntity trainingId;
+    private Training trainingId;
 
     @ManyToOne
     @JoinColumn(name = "mentor_program_id")
-    private MentorProgramEntity mentorProgramId;
+    private MentorProgram mentorProgramId;
 
     @ManyToOne
     @JoinColumn(name = "conferences_id")
-    private ConferencesEntity conferencesId;
+    private Conferences conferencesId;
 
 }

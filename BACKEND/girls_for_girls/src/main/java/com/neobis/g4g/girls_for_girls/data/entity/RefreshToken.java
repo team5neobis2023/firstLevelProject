@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Setter
 @Entity
 @Table(name = "refresh_token")
-public class RefreshTokenEntity {
+public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

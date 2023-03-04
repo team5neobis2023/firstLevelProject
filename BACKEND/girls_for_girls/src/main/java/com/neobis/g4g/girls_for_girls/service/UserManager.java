@@ -1,8 +1,8 @@
 package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
-import com.neobis.g4g.girls_for_girls.data.entity.UserGroupEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
+import com.neobis.g4g.girls_for_girls.data.entity.UserGroup;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
@@ -39,8 +39,8 @@ public class UserManager implements UserDetailsManager {
                     MessageFormat.format("Email {0} already exist", user.getUsername()));
         }
 
-        ((UserEntity) user).setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save((UserEntity) user);
+        ((User) user).setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save((User) user);
     }
 
     @Override
@@ -70,15 +70,15 @@ public class UserManager implements UserDetailsManager {
                         () -> new UsernameNotFoundException(MessageFormat.format("Email {0} not found", username)));
     }
 
-    public ResponseEntity<?> saveUser(UserDTO userDTO, UserEntity userEntity){
+    public ResponseEntity<?> saveUser(UserDTO userDTO, User user){
         try {
 
-            UserGroupEntity userGroupEntity = userGroupRepository.findById(userDTO.getRole().getId());
-            UserEntity newUser = new UserEntity();
+            UserGroup userGroup = userGroupRepository.findById(userDTO.getRole().getId());
+            User newUser = new User();
 
             newUser.setEmail(userDTO.getEmail());
             newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            newUser.setRole(userGroupEntity);
+            newUser.setRole(userGroup);
             newUser.setFirstName(userDTO.getFirstName());
             newUser.setLastName(userDTO.getLastName());
             newUser.setPhoneNumber(userDTO.getPhoneNumber());
@@ -98,7 +98,7 @@ public class UserManager implements UserDetailsManager {
             boolean exist = userRepository.existsById(userDTO.getId());
 
             if(exist) {
-                UserEntity user = userRepository.findById(userDTO.getId());
+                User user = userRepository.findById(userDTO.getId());
 
                 user.setEmail(userDTO.getEmail());
                 user.setFirstName(userDTO.getFirstName());

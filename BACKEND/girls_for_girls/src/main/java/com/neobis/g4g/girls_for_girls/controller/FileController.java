@@ -1,8 +1,8 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.FileDownloadDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.FileEntity;
-import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.File;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,12 +33,12 @@ public class FileController {
     @Operation(summary = "Загрузка файла", tags = "Файлы")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(required = true, content =
     @Content(mediaType = "multipart/from-data", schema =
-    @Schema(implementation = FileEntity.class)), description = "Тело запроса должно содержать объект JSON, представляющий создание файла.")
+    @Schema(implementation = File.class)), description = "Тело запроса должно содержать объект JSON, представляющий создание файла.")
     public ResponseEntity<?> upload(
             @RequestParam("files") MultipartFile[] files,
             @RequestParam(value = "productId", required = false) Integer productId,
             @RequestParam(value = "articleId", required = false) Integer articleId,
-            @AuthenticationPrincipal UserEntity authUser) {
+            @AuthenticationPrincipal User authUser) {
         return fileService.upload(files, productId, articleId, authUser);
     }
 

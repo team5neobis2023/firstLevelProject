@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "user_group")
-public class UserGroupEntity {
+public class UserGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +23,5 @@ public class UserGroupEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "role")
-    private Set<UserEntity> users;
+    private Set<User> users;
 }

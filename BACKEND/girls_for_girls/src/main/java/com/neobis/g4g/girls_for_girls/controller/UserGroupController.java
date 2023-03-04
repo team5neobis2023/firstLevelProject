@@ -1,6 +1,6 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
-import com.neobis.g4g.girls_for_girls.data.entity.UserGroupEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.UserGroup;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,28 +21,28 @@ public class UserGroupController {
 
     @Operation(summary = "Получить роль по его ID", tags = "Роли")
     @GetMapping("/{id}")
-    public UserGroupEntity getUserGroup(@PathVariable int id){
+    public UserGroup getUserGroup(@PathVariable int id){
         return userGroupRepository.findById(id);
     }
 
     @Operation(summary = "Получить все роли", tags = "Роли")
     @GetMapping
-    public List<UserGroupEntity> getUserGroups(){
+    public List<UserGroup> getUserGroups(){
         return userGroupRepository.findAll();
     }
 
     @Operation(summary = "Добавить новую роль", tags = "Роли")
     @PostMapping
 //    @PreAuthorize("hasAuthority('ADMIN')")
-    public UserGroupEntity addNewGroup(@RequestBody UserGroupEntity userGroupEntity){
-        return userGroupRepository.save(userGroupEntity);
+    public UserGroup addNewGroup(@RequestBody UserGroup userGroup){
+        return userGroupRepository.save(userGroup);
     }
 
     @Operation(summary = "Изменить роль", tags = "Роли")
     @PutMapping
 //    @PreAuthorize("hasAuthority('ADMIN')")
-    public UserGroupEntity saveGroup(@RequestBody UserGroupEntity userGroupEntity){
-        return userGroupRepository.save(userGroupEntity);
+    public UserGroup saveGroup(@RequestBody UserGroup userGroup){
+        return userGroupRepository.save(userGroup);
     }
 
     @Operation(summary = "Удалить роль по его ID", tags = "Роли")

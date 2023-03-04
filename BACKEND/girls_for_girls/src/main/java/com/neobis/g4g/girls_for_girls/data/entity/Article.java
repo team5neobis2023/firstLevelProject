@@ -10,9 +10,9 @@ import java.sql.Timestamp;
 @Entity
 @NoArgsConstructor
 @Table(name = "article")
-public class ArticleEntity {
+public class Article {
 
-    public ArticleEntity(Timestamp recTime, Timestamp updateTime, String title, String description, Long viewsCount, UserEntity likeCount, UserEntity userId) {
+    public Article(Timestamp recTime, Timestamp updateTime, String title, String description, Long viewsCount, User likeCount, User userId) {
         this.recTime = recTime;
         this.updateTime = updateTime;
         this.title = title;
@@ -44,9 +44,9 @@ public class ArticleEntity {
 
     @ManyToOne
     @JoinColumn(name = "like_id")
-    private UserEntity likeCount;
+    private User likeCount;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userId;
+    private User userId;
 }

@@ -1,7 +1,7 @@
 package com.neobis.g4g.girls_for_girls.security;
 
 import com.neobis.g4g.girls_for_girls.data.dto.TokenDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,7 +29,7 @@ public class TokenGenerator {
     }
 
     private String createAccessToken(Authentication authentication) {
-        UserEntity user = (UserEntity) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         Instant now = Instant.now();
 
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
@@ -44,7 +44,7 @@ public class TokenGenerator {
     }
 
     private String createRefreshToken(Authentication authentication) {
-        UserEntity user = (UserEntity) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
         Instant now = Instant.now();
 
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
@@ -59,7 +59,7 @@ public class TokenGenerator {
     }
 
     public TokenDTO createToken(Authentication authentication) {
-        if (!(authentication.getPrincipal() instanceof UserEntity user)) {
+        if (!(authentication.getPrincipal() instanceof User user)) {
             throw new BadCredentialsException(MessageFormat.format("principal {0} is not of User type",
                     authentication.getPrincipal().getClass()));
         }

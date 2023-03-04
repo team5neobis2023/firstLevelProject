@@ -17,7 +17,7 @@ CREATE TABLE file(
 
 CREATE TABLE product_group(
     id serial primary key,
-    name varchar
+    title varchar unique
 );
 
 CREATE TABLE users(
@@ -52,7 +52,7 @@ CREATE TABLE article (
 
 CREATE TABLE product(
     id serial primary key,
-    name varchar,
+    title varchar,
     description varchar,
     price int,
     size varchar,

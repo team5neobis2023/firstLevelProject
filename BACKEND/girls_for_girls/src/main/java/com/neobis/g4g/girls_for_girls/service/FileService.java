@@ -1,8 +1,8 @@
 package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.FileDownloadDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.FileEntity;
-import com.neobis.g4g.girls_for_girls.data.entity.UserEntity;
+import com.neobis.g4g.girls_for_girls.data.entity.File;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.repository.FileRepository;
 import com.neobis.g4g.girls_for_girls.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +35,8 @@ public class FileService {
             MultipartFile[] files,
             Integer productId,
             Integer articelId,
-            UserEntity authUser) {
-        List<FileEntity> fileEntities = new ArrayList<>();
+            User authUser) {
+        List<File> fileEntities = new ArrayList<>();
 
         Arrays.stream(files)
                 .takeWhile(n -> !isErrorOccurred)
@@ -51,7 +51,7 @@ public class FileService {
                         return;
                     }
 
-                    FileEntity fileEntity = new FileEntity();
+                    File fileEntity = new File();
 
                     fileEntity.setName(name);
                     if(productId != null) {
@@ -71,7 +71,7 @@ public class FileService {
             return new ResponseEntity<>("Files uploading error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        List<FileEntity> savedFiles = fileRepository.saveAll(fileEntities);
+        List<File> savedFiles = fileRepository.saveAll(fileEntities);
         isErrorOccurred = false;
 
         return new ResponseEntity<>(savedFiles, HttpStatus.OK);
@@ -101,7 +101,7 @@ public class FileService {
     }
 
     public ResponseEntity<?> downloadByProductId(Integer productId) throws IOException {
-        List<FileEntity> fileEntities = fileRepository.findByProductIdAndIsDeletedFalse(productId);
+        List<File> fileEntities = fileRepository.findByProductIdAndIsDeletedFalse(productId);
         List<Resource> resources = new ArrayList<>();
 
         fileEntities.forEach((fileEntity) -> {
@@ -129,7 +129,7 @@ public class FileService {
     }
 
     public ResponseEntity<?> downloadByArticleId(Integer articleId) throws IOException {
-        List<FileEntity> fileEntities = fileRepository.findByArticleIdAndIsDeletedFalse(articleId);
+        List<File> fileEntities = fileRepository.findByArticleIdAndIsDeletedFalse(articleId);
         List<Resource> resources = new ArrayList<>();
 
         fileEntities.forEach((fileEntity) -> {
@@ -157,11 +157,11 @@ public class FileService {
     }
 
     public ResponseEntity<?> delete(FileDownloadDTO body) {
-        FileEntity fileEntity = fileRepository.findByFileCode(body.fileCode);
+        File file = fileRepository.findByFileCode(body.fileCode);
 
-        fileEntity.setIsDeleted(true);
+        file.setIsDeleted(true);
 
-        fileRepository.save(fileEntity);
+        fileRepository.save(file);
 
         return ResponseEntity.status(HttpStatus.OK).body("Deleted!");
     }
