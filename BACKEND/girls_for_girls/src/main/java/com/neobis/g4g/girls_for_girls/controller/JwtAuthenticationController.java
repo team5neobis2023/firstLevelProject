@@ -38,8 +38,8 @@ public class JwtAuthenticationController {
         return jwtAuthenticationService.refreshToken(tokenDTO);
     }
 
-    @GetMapping("/active")
-    public ResponseEntity<String> activateAccount(@RequestParam("token") String token) {
+    @GetMapping("/active/{token}")
+    public ResponseEntity<String> activateAccount(@PathVariable("token") String token) {
         return jwtAuthenticationService.activateAccount(token);
     }
 }

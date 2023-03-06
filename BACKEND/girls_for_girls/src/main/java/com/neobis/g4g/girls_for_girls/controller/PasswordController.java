@@ -20,19 +20,19 @@ public class PasswordController {
     }
 
     // Process form submission from forgotPassword page
-    @PostMapping("/forgot")
-    public ResponseEntity<String> processForgotPasswordForm(@RequestParam("email") String userEmail, HttpServletRequest request) {
+    @PostMapping("/forgot/{email}")
+    public ResponseEntity<String> processForgotPasswordForm(@PathVariable("email") String userEmail, HttpServletRequest request) {
         return passwordService.processForgotPasswordForm(userEmail, request);
     }
 
     // Display form to reset password
-    @GetMapping("/reset")
-    public ResponseEntity<String> displayResetPasswordPage(@RequestParam("token") String token) {
+    @GetMapping("/reset/{token}")
+    public ResponseEntity<String> displayResetPasswordPage(@PathVariable("token") String token) {
         return passwordService.displayResetPasswordPage(token);
     }
 
-    @PostMapping("/reset")
-    public ResponseEntity<String> setNewPassword(@RequestParam("token") String token, @RequestBody UserDTO password) {
+    @PostMapping("/reset/{token}")
+    public ResponseEntity<String> setNewPassword(@PathVariable("token") String token, @RequestBody UserDTO password) {
         return passwordService.setNewPassword(token, password);
     }
 }
