@@ -19,19 +19,12 @@ public class ProductGroupService {
     private final ProductGroupRepo productGroupRepo;
 
     public List<ProductGroupDTO> getAllProductGroups() {
-        List<ProductGroup> productGroups = productGroupRepo.findAll();
-        List<ProductGroupDTO> productGroupDTOList = new ArrayList<>();
-        for (ProductGroup productGroup : productGroups) {
-            ProductGroupDTO productGroupDTO = new ProductGroupDTO();
-            productGroupDTO.setTitle(productGroup.getTitle());
-            productGroupDTOList.add(productGroupDTO);
-        }
-        return productGroupDTOList;
+        return ProductGroupDTO.productGroupToProductGroupDtoList(productGroupRepo.findAll());
     }
 
     public ResponseEntity<?> getProductGroupId(Long id) {
         if (productGroupRepo.findById(id).isPresent()) {
-            return ResponseEntity.ok(ProductGroupDTO.toProductGroup(productGroupRepo.findById(id).get()));
+            return ResponseEntity.ok(ProductGroupDTO.ProductGroupToProductGroupDto(productGroupRepo.findById(id).get()));
         }
         return new ResponseEntity<String>("Product group with this id: " + id + " not found", HttpStatus.NOT_FOUND);
     }
