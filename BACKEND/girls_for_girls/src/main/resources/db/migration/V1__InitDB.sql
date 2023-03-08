@@ -10,7 +10,7 @@ CREATE TABLE file(
     name varchar,
     file_code varchar,
     is_deleted boolean default false,
-    incident_id int,
+    article_id int,
     product_id int,
     user_id int not null
 );

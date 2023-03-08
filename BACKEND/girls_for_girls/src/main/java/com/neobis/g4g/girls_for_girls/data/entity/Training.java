@@ -13,9 +13,8 @@ import java.util.Set;
 @Table(name = "training")
 public class Training {
 
-    public Training(Timestamp recTime, Timestamp conferenceDate, String description, User userId) {
+    public Training(Timestamp recTime, String description, User userId) {
         this.recTime = recTime;
-        this.conferenceDate = conferenceDate;
         this.description = description;
         this.userId = userId;
     }
@@ -27,9 +26,6 @@ public class Training {
 
     @Column(name = "rec_time")
     private Timestamp recTime;
-
-    @Column(name = "conference_date")
-    private Timestamp conferenceDate;
 
     @Column(name = "description")
     private String description;

@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO.toApplicationDTO;
 
@@ -32,8 +31,8 @@ public class ApplicationService {
 
 
     public ResponseEntity<?> getApplicationById(long id) {
-        if(applicationRepository.existsById(id)){
-            return ResponseEntity.ok(applicationRepository.findById(id));
+        if(applicationRepository.findById(id).isPresent()){
+            return ResponseEntity.ok(toApplicationDTO(applicationRepository.findById(id).get()));
         }
         return new ResponseEntity<>("Application with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
     }
@@ -42,20 +41,14 @@ public class ApplicationService {
         if(applicationRepository.existsByEmail(applicationDTO.getEmail())){
             return ResponseEntity.badRequest().body("Application with this email already exists");
         }
-        try {
-            Application application = convertToApplication(applicationDTO);
-            applicationRepository.save(application);
-            return new ResponseEntity<>("Application was created", HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>("Application wasn't created", HttpStatus.BAD_REQUEST);
-        }
-
+        applicationRepository.save(toApplication(applicationDTO));
+        return new ResponseEntity<>("Application was created", HttpStatus.CREATED);
     }
 
     public ResponseEntity<?> updateApplication(Long id, ApplicationDTO applicationDTO){
-        if(applicationRepository.existsById(id)){
-            Application application = convertToApplication(applicationDTO);
-            application.setId(applicationRepository.findById(id).get().getId());
+        if(applicationRepository.findById(id).isPresent()){
+            Application application = toApplication(applicationDTO);
+            application.setId(id);
             applicationRepository.save(application);
             return ResponseEntity.ok("Application was updated");
         }else {
@@ -72,7 +65,22 @@ public class ApplicationService {
         }
     }
 
-    private Application convertToApplication(ApplicationDTO applicationDTO) {
-        return modelMapper.map(applicationDTO, Application.class);
+    private Application toApplication(ApplicationDTO applicationDTO) {
+        return Application.builder()
+                .fullName(applicationDTO.getFullName())
+                .email(applicationDTO.getEmail())
+                .achievements(applicationDTO.getAchievements())
+                .address(applicationDTO.getAddress())
+                .aboutMe(applicationDTO.getAboutMe())
+                .conferencesId(applicationDTO.getConferencesId())
+                .dateOfBirth(applicationDTO.getDateOfBirth())
+                .myFails(applicationDTO.getMyFails())
+                .motivation(applicationDTO.getMotivation())
+                .recTime(applicationDTO.getRecTime())
+                .workFormat(applicationDTO.getWorkFormat())
+                .mentorProgramId(applicationDTO.getMentorProgramId())
+                .trainingId(applicationDTO.getTrainingId())
+                .mySkills(applicationDTO.getMySkills())
+                .build();
     }
 }
