@@ -3,7 +3,6 @@ package com.neobis.g4g.girls_for_girls.service;
 import com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Application;
 import com.neobis.g4g.girls_for_girls.repository.ApplicationRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,10 @@ import static com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO.toApplicati
 @Service
 public class ApplicationService {
     private final ApplicationRepository applicationRepository;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public ApplicationService(ApplicationRepository applicationRepository, ModelMapper modelMapper) {
+    public ApplicationService(ApplicationRepository applicationRepository) {
         this.applicationRepository = applicationRepository;
-        this.modelMapper = modelMapper;
     }
 
 
@@ -72,7 +69,7 @@ public class ApplicationService {
                 .achievements(applicationDTO.getAchievements())
                 .address(applicationDTO.getAddress())
                 .aboutMe(applicationDTO.getAboutMe())
-                .conferencesId(applicationDTO.getConferencesId())
+                .conferenceId(applicationDTO.getConferenceId())
                 .dateOfBirth(applicationDTO.getDateOfBirth())
                 .myFails(applicationDTO.getMyFails())
                 .motivation(applicationDTO.getMotivation())

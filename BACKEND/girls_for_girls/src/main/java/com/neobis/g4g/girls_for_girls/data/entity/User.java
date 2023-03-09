@@ -70,7 +70,7 @@ public class User implements UserDetails {
     private Set<Training> trainingEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<Conferences> conferencesEntities;
+    private Set<Conference> conferenceEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<MentorProgram> mentorProgramEntities;

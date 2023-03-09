@@ -82,7 +82,7 @@ CREATE TABLE training (
     user_id int
 );
 
-CREATE TABLE conferences (
+CREATE TABLE conference (
     id serial not null,
     rec_time timestamp default now (),
     conference_date timestamp,

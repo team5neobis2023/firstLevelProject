@@ -1,16 +1,14 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
 import com.neobis.g4g.girls_for_girls.data.entity.Application;
-import com.neobis.g4g.girls_for_girls.data.entity.Conferences;
+import com.neobis.g4g.girls_for_girls.data.entity.Conference;
 import com.neobis.g4g.girls_for_girls.data.entity.MentorProgram;
 import com.neobis.g4g.girls_for_girls.data.entity.Training;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.parameters.P;
 
-import javax.persistence.Column;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +44,7 @@ public class ApplicationDTO {
 
     private MentorProgram mentorProgramId;
 
-    private Conferences conferencesId;
+    private Conference conferenceId;
 
     public static ApplicationDTO toApplicationDTO(Application application){
         return ApplicationDTO.builder()

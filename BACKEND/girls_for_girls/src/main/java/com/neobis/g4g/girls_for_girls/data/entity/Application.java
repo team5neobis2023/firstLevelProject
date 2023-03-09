@@ -79,6 +79,6 @@ public class Application {
 
     @ManyToOne
     @JoinColumn(name = "conferences_id")
-    private Conferences conferencesId;
+    private Conference conferenceId;
 
 }

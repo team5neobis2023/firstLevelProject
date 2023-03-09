@@ -1,5 +1,7 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,10 +12,12 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "conferences")
-public class Conferences {
+public class Conference {
 
-    public Conferences(Timestamp recTime, Timestamp conferenceDate, String description, User userId) {
+    public Conference(Timestamp recTime, Timestamp conferenceDate, String description, User userId) {
         this.recTime = recTime;
         this.conferenceDate = conferenceDate;
         this.description = description;
