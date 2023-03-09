@@ -23,23 +23,12 @@ public class ProductService {
     private final ProductGroupRepo productGroupRepo;
 
     public List<ProductDTO> getAllProducts() {
-        List<Product> products = productRepo.findAll();
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        for (Product product : products) {
-            ProductDTO productDTO = new ProductDTO();
-            productDTO.setTitle(product.getTitle());
-            productDTO.setDescription(product.getDescription());
-            productDTO.setSize(product.getSize());
-            productDTO.setPrice(product.getPrice());
-            productDTO.setTitleGroup(product.getProductGroupId().getTitle());
-            productDTOList.add(productDTO);
-        }
-        return productDTOList;
+        return ProductDTO.productToProductDtoList(productRepo.findAll());
     }
 
     public ResponseEntity<?> getProductId(Long id) {
         if (productRepo.findById(id).isPresent()) {
-            return ResponseEntity.ok(ProductDTO.toProduct(productRepo.findById(id).get()));
+            return ResponseEntity.ok(ProductDTO.productToProductDto(productRepo.findById(id).get()));
         }
         return new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND);
     }

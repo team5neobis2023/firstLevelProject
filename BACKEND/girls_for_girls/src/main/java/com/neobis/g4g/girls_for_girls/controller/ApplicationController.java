@@ -46,13 +46,33 @@ public class ApplicationController {
         return applicationService.getApplicationById(id);
     }
 
-    //TODO
-//    @PostMapping()
-//    @Operation(
-//            summary = "Добавление заявки",
-//            tags = "Заявка"
-//    )
-//    public ResponseEntity<?> addApplication(@RequestBody ApplicationDTO applicationDTO){
-//        return applicationService.addApplication(applicationDTO);
-//    }
+    @PostMapping()
+    @Operation(
+            summary = "Добавление заявки",
+            tags = "Заявка"
+    )
+    public ResponseEntity<?> addApplication(@RequestBody ApplicationDTO applicationDTO){
+        return applicationService.addApplication(applicationDTO);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Обновление данных заявки",
+            tags = "Заявка"
+    )
+    public ResponseEntity<?> updateApplication(@PathVariable("id")
+                                                   @Parameter(description = "Идентификатор заявки") long id,
+                                               @RequestBody ApplicationDTO applicationDTO){
+        return applicationService.updateApplication(id, applicationDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Удаление заявки",
+            tags = "Заявка"
+    )
+    public ResponseEntity<?> deleteApplication(@PathVariable("id")
+                                                   @Parameter(description = "Идентификатор заявки") long id){
+        return applicationService.deleteApplication(id);
+    }
 }

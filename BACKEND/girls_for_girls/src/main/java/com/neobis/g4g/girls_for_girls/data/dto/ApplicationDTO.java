@@ -1,6 +1,9 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
 import com.neobis.g4g.girls_for_girls.data.entity.Application;
+import com.neobis.g4g.girls_for_girls.data.entity.Conferences;
+import com.neobis.g4g.girls_for_girls.data.entity.MentorProgram;
+import com.neobis.g4g.girls_for_girls.data.entity.Training;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +41,12 @@ public class ApplicationDTO {
     private String myFails;
 
     private String mySkills;
+
+    private Training trainingId;
+
+    private MentorProgram mentorProgramId;
+
+    private Conferences conferencesId;
 
     public static ApplicationDTO toApplicationDTO(Application application){
         return ApplicationDTO.builder()
