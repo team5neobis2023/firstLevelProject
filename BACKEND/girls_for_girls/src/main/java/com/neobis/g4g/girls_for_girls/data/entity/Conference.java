@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "conferences")
+@Table(name = "conference")
 public class Conference {
 
     public Conference(Timestamp recTime, Timestamp conferenceDate, String description, User userId) {
@@ -42,7 +42,7 @@ public class Conference {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conferencesId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conferenceId")
     private Set<Application> applicationEntities;
 
 }
