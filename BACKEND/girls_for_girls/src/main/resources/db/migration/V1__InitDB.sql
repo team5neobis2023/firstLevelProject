@@ -57,7 +57,9 @@ CREATE TABLE product(
     price int,
     size varchar,
     product_group_id int,
-    FOREIGN KEY(product_group_id) REFERENCES product_group(id)
+    file_id int,
+    FOREIGN KEY(product_group_id) REFERENCES product_group(id),
+    FOREIGN KEY(file_id) REFERENCES file(id)
 );
 
 CREATE TABLE orders(
