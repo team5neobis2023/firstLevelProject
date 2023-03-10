@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class ConferencesDTO {
-    private Timestamp recTime;
 
     private Timestamp conferenceDate;
 
@@ -30,7 +29,6 @@ public class ConferencesDTO {
 
     public static ConferencesDTO toConferencesDTO(Conference conference){
         return ConferencesDTO.builder()
-                .recTime(conference.getRecTime())
                 .conferenceDate(conference.getConferenceDate())
                 .description(conference.getDescription())
                 .userId(conference.getUserId())

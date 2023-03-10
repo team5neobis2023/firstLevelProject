@@ -73,7 +73,6 @@ public class ApplicationService {
                 .dateOfBirth(applicationDTO.getDateOfBirth())
                 .myFails(applicationDTO.getMyFails())
                 .motivation(applicationDTO.getMotivation())
-                .recTime(applicationDTO.getRecTime())
                 .workFormat(applicationDTO.getWorkFormat())
                 .mentorProgramId(applicationDTO.getMentorProgramId())
                 .trainingId(applicationDTO.getTrainingId())

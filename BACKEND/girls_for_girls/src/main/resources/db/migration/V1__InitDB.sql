@@ -112,7 +112,7 @@ CREATE TABLE application (
     my_skills varchar(1000),
     training_id int,
     mentor_program_id int,
-    conferences_id int
+    conference_id int
 );
 
 CREATE TABLE notification (

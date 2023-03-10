@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class ApplicationDTO {
-    private Timestamp recTime;
-
     private String fullName;
 
     private Timestamp dateOfBirth;
@@ -49,7 +47,6 @@ public class ApplicationDTO {
     public static ApplicationDTO toApplicationDTO(Application application){
         return ApplicationDTO.builder()
                 .fullName(application.getFullName())
-                .recTime(application.getRecTime())
                 .dateOfBirth(application.getDateOfBirth())
                 .email(application.getEmail())
                 .address(application.getAddress())

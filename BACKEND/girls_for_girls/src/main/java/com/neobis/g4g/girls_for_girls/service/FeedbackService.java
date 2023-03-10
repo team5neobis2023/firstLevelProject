@@ -59,9 +59,8 @@ public class FeedbackService {
         }
     }
 
-    private Feedback toFeedback(FeedbackDTO feedbackDTO) {
+    public static Feedback toFeedback(FeedbackDTO feedbackDTO) {
         return Feedback.builder()
-                .recTime(feedbackDTO.getRecTime())
                 .email(feedbackDTO.getEmail())
                 .fullName(feedbackDTO.getFullName())
                 .phoneNumber(feedbackDTO.getPhoneNumber())

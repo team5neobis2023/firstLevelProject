@@ -1,5 +1,6 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity

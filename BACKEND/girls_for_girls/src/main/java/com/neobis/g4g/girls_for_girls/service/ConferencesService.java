@@ -64,7 +64,6 @@ public class ConferencesService {
 
     private Conference toConference(ConferencesDTO conferencesDTO){
         return Conference.builder()
-                .recTime(conferencesDTO.getRecTime())
                 .conferenceDate(conferencesDTO.getConferenceDate())
                 .description(conferencesDTO.getDescription())
                 .userId(conferencesDTO.getUserId())

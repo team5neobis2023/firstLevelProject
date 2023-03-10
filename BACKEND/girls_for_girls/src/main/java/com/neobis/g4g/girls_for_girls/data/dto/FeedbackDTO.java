@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,8 +15,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class FeedbackDTO {
-    private Timestamp recTime;
-
     private String fullName;
 
     private String email;
@@ -30,7 +27,6 @@ public class FeedbackDTO {
 
     public static FeedbackDTO toFeedbackDTO(Feedback feedback){
         return FeedbackDTO.builder()
-                .recTime(feedback.getRecTime())
                 .fullName(feedback.getFullName())
                 .email(feedback.getEmail())
                 .message(feedback.getMessage())
