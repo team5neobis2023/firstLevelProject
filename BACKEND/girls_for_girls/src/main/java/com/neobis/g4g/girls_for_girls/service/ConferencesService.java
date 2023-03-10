@@ -1,8 +1,10 @@
 package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ConferencesDTO;
+import com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Conference;
 import com.neobis.g4g.girls_for_girls.repository.ConferencesRepository;
+import com.neobis.g4g.girls_for_girls.repository.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +13,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.neobis.g4g.girls_for_girls.data.dto.ConferencesDTO.toConferencesDTO;
+import static com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO.toFeedbackDTO;
 
 @Service
 public class ConferencesService {
     private final ConferencesRepository conferencesRepository;
+    private final FeedbackRepository feedbackRepository;
 
     @Autowired
-    public ConferencesService(ConferencesRepository conferencesRepository) {
+    public ConferencesService(ConferencesRepository conferencesRepository, FeedbackRepository feedbackRepository) {
         this.conferencesRepository = conferencesRepository;
+        this.feedbackRepository = feedbackRepository;
     }
 
     public List<ConferencesDTO> getAllConferences(){
@@ -48,7 +53,7 @@ public class ConferencesService {
         }
     }
 
-    public ResponseEntity<?> deleteApplication(Long id){
+    public ResponseEntity<?> deleteConference(Long id){
         if(conferencesRepository.existsById(id)){
             conferencesRepository.deleteById(id);
             return ResponseEntity.ok("Conference was deleted");

@@ -1,5 +1,7 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +11,8 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "feedback")
 public class Feedback {
 
