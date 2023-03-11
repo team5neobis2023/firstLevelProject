@@ -1,5 +1,6 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
+import com.neobis.g4g.girls_for_girls.data.entity.File;
 import com.neobis.g4g.girls_for_girls.data.entity.Product;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class ProductDTO {
     private int price;
     private String size;
     private String titleGroup;
+    private File file;
 
     public static ProductDTO productToProductDto(Product product) {
         return ProductDTO.builder()
@@ -24,6 +26,7 @@ public class ProductDTO {
                 .price(product.getPrice())
                 .size(product.getSize())
                 .titleGroup(product.getProductGroupId().getTitle())
+                .file(product.getFileId())
                 .build();
     }
 

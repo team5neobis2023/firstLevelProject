@@ -1,8 +1,6 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ProductGroupDTO;
-import com.neobis.g4g.girls_for_girls.data.dto.ProductGroupRequest;
-import com.neobis.g4g.girls_for_girls.data.entity.ProductGroup;
 import com.neobis.g4g.girls_for_girls.service.ProductGroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,7 +23,7 @@ public class ProductGroupController {
     private final ProductGroupService productGroupService;
 
     @Operation(
-            summary = "Получение типов товара",
+            summary = "Получить типы товара",
             tags = "Типы товара"
     )
     @GetMapping
@@ -34,7 +32,7 @@ public class ProductGroupController {
     }
 
     @Operation(
-            summary = "Получение тип товара",
+            summary = "Получить тип товара",
             description = "Позволяет получить тип товара по его ID",
             tags = "Типы товара"
     )
@@ -50,8 +48,8 @@ public class ProductGroupController {
             tags = "Типы товара"
     )
     @PostMapping()
-    public ResponseEntity<?> addProductGroup(@RequestBody ProductGroupRequest productGroupRequest) {
-        return productGroupService.addProductGroup(productGroupRequest);
+    public ResponseEntity<?> addProductGroup(@RequestBody ProductGroupDTO productGroupDTO) {
+        return productGroupService.addProductGroup(productGroupDTO);
     }
 
     @Operation(

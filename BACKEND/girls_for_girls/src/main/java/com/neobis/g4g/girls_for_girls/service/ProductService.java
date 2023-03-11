@@ -1,7 +1,6 @@
 package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ProductDTO;
-import com.neobis.g4g.girls_for_girls.data.dto.ProductRequest;
 import com.neobis.g4g.girls_for_girls.data.entity.Product;
 import com.neobis.g4g.girls_for_girls.data.entity.ProductGroup;
 import com.neobis.g4g.girls_for_girls.repository.ProductGroupRepo;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,18 +32,18 @@ public class ProductService {
     }
 
 
-    public ResponseEntity<String> addProduct(ProductRequest productRequest) {
+    public ResponseEntity<String> addProduct(ProductDTO productDto) {
         try {
-            if (productRepo.findByTitle(productRequest.getTitle()).isPresent()) {
+            if (productRepo.findByTitle(productDto.getTitle()).isPresent()) {
                 return ResponseEntity.badRequest().body("The product already exists");
             }
             Product product = new Product();
-            Optional<ProductGroup> productGroup = productGroupRepo.findByTitle(productRequest.getProductGroup());
-            product.setTitle(productRequest.getTitle());
-            product.setDescription(productRequest.getDescription());
-            product.setPrice(productRequest.getPrice());
-            product.setSize(productRequest.getSize());
-            product.setFileId(productRequest.getFile());
+            Optional<ProductGroup> productGroup = productGroupRepo.findByTitle(productDto.getTitleGroup());
+            product.setTitle(productDto.getTitle());
+            product.setDescription(productDto.getDescription());
+            product.setPrice(productDto.getPrice());
+            product.setSize(productDto.getSize());
+            product.setFileId(productDto.getFile());
             product.setProductGroupId(productGroup.get());
             productRepo.save(product);
             return new ResponseEntity<String>("Product is created", HttpStatus.CREATED);
@@ -54,15 +52,15 @@ public class ProductService {
         }
     }
 
-    public ResponseEntity<?> updateProduct(Long id, ProductRequest productRequest) {
+    public ResponseEntity<?> updateProduct(Long id, ProductDTO productDTO) {
         return productRepo.findById(id)
                 .map(product -> {
-                    product.setTitle(productRequest.getTitle());
-                    product.setDescription(productRequest.getDescription());
-                    product.setPrice(productRequest.getPrice());
-                    product.setSize(productRequest.getSize());
-                    product.setFileId(productRequest.getFile());
-                    product.setProductGroupId(productGroupRepo.findByTitle(productRequest.getProductGroup()).get());
+                    product.setTitle(productDTO.getTitle());
+                    product.setDescription(productDTO.getDescription());
+                    product.setPrice(productDTO.getPrice());
+                    product.setSize(productDTO.getSize());
+                    product.setFileId(productDTO.getFile());
+                    product.setProductGroupId(productGroupRepo.findByTitle(productDTO.getTitleGroup()).get());
                     productRepo.save(product);
                     return ResponseEntity.ok("Product with this id: " + id + " updated");
                 }).orElse(new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND));

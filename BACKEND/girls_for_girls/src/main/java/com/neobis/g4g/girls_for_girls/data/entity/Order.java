@@ -2,6 +2,7 @@ package com.neobis.g4g.girls_for_girls.data.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -35,6 +36,7 @@ public class Order {
     @Column(name = "amount")
     private int amount;
 
+    @CreationTimestamp
     @Column(name = "order_date")
     private Timestamp orderDate;
 

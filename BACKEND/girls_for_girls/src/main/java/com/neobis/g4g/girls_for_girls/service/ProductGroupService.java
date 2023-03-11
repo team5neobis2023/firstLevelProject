@@ -1,7 +1,6 @@
 package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ProductGroupDTO;
-import com.neobis.g4g.girls_for_girls.data.dto.ProductGroupRequest;
 import com.neobis.g4g.girls_for_girls.data.entity.ProductGroup;
 import com.neobis.g4g.girls_for_girls.repository.ProductGroupRepo;
 import lombok.AllArgsConstructor;
@@ -29,13 +28,13 @@ public class ProductGroupService {
         return new ResponseEntity<String>("Product group with this id: " + id + " not found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<String> addProductGroup(ProductGroupRequest productGroupRequest) {
+    public ResponseEntity<String> addProductGroup(ProductGroupDTO productGroupDto) {
         try {
-            if (productGroupRepo.findByTitle(productGroupRequest.getTitle()).isPresent()) {
+            if (productGroupRepo.findByTitle(productGroupDto.getTitle()).isPresent()) {
                 return ResponseEntity.badRequest().body("The product group already exists");
             }
             ProductGroup productGroup = new ProductGroup();
-            productGroup.setTitle(productGroupRequest.getTitle());
+            productGroup.setTitle(productGroupDto.getTitle());
             productGroupRepo.save(productGroup);
             return new ResponseEntity<String>("Product group is created", HttpStatus.CREATED);
         } catch (Exception e) {
