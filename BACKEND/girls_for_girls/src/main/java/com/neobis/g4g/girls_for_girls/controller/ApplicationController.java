@@ -1,14 +1,20 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO;
+import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
+import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
+import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.service.ApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -51,8 +57,9 @@ public class ApplicationController {
             summary = "Добавление заявки",
             tags = "Заявка"
     )
-    public ResponseEntity<?> addApplication(@RequestBody ApplicationDTO applicationDTO){
-        return applicationService.addApplication(applicationDTO);
+    public ResponseEntity<?> addApplication(@RequestBody @Valid ApplicationDTO applicationDTO,
+                                            BindingResult bindingResult){
+        return applicationService.addApplication(applicationDTO, bindingResult);
     }
 
     @PutMapping("/{id}")
@@ -62,8 +69,9 @@ public class ApplicationController {
     )
     public ResponseEntity<?> updateApplication(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор заявки") long id,
-                                               @RequestBody ApplicationDTO applicationDTO){
-        return applicationService.updateApplication(id, applicationDTO);
+                                               @RequestBody @Valid ApplicationDTO applicationDTO,
+                                               BindingResult bindingResult){
+        return applicationService.updateApplication(id, applicationDTO, bindingResult);
     }
 
     @DeleteMapping("/{id}")
@@ -74,5 +82,17 @@ public class ApplicationController {
     public ResponseEntity<?> deleteApplication(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор заявки") long id){
         return applicationService.deleteApplication(id);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(NotAddedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(NotUpdatedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
