@@ -1,15 +1,19 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "mentor_program")
 public class MentorProgram {
 
@@ -35,5 +39,5 @@ public class MentorProgram {
     private User userId;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mentorProgramId")
-    private Set<Application> applicationEntities;
+    private List<Application> applicationEntities;
 }
