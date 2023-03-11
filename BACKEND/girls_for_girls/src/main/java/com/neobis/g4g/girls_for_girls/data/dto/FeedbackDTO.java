@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,12 +18,18 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class FeedbackDTO {
+    @NotEmpty(message = "ФИО не может быть пустым")
     private String fullName;
 
+    @NotEmpty(message = "Электронная почта не может быть пустой")
+    @Email(message = "Введите почту корректно")
     private String email;
 
+    @NotEmpty(message = "Номер телефона не может быть пустым")
     private String phoneNumber;
 
+    @NotEmpty(message = "Отзыв не может быть пустым")
+    @Size(min = 3, message = "Отзыв должен содержать от 3 символов")
     private String message;
 
     private VideoCourse videoCourse;
