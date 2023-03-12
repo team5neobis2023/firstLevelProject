@@ -61,28 +61,35 @@ public class User implements UserDetails {
     @JoinColumn(name = "file_id")
     private File file;
 
+    @ManyToMany()
+    @JoinTable(
+            name = "article_like",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "article_id"))
+    private List<Article> likedArticles;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Order> orderEntities;
+    private List<Order> orderEntities;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<Article> articleEntities;
+    private List<Article> articleEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<Training> trainingEntities;
+    private List<Training> trainingEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private List<Conference> conferenceEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<MentorProgram> mentorProgramEntities;
+    private List<MentorProgram> mentorProgramEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<Notification> notificationEntities;
+    private List<Notification> notificationEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<VideoCourse> videoCourseEntities;
+    private List<VideoCourse> videoCourseEntities;
 
     @Column(name = "reset_token")
     private String resetToken;

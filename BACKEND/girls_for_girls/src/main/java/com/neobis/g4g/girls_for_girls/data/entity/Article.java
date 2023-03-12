@@ -1,24 +1,29 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "article")
 public class Article {
 
-    public Article(Timestamp recTime, Timestamp updateTime, String title, String description, Long viewsCount, User likeCount, User userId) {
+    public Article(Timestamp recTime, Timestamp updateTime, String title, String description, Long viewsCount, List<User> likes, User userId) {
         this.recTime = recTime;
         this.updateTime = updateTime;
         this.title = title;
         this.description = description;
         this.viewsCount = viewsCount;
-        this.likeCount = likeCount;
+        this.likes = likes;
         this.userId = userId;
     }
 
@@ -42,9 +47,8 @@ public class Article {
     @Column(name = "views_count")
     private Long viewsCount;
 
-    @ManyToOne
-    @JoinColumn(name = "like_id")
-    private User likeCount;
+    @ManyToMany(mappedBy = "likedArticles")
+    private List<User> likes;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
