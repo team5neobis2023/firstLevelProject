@@ -16,8 +16,8 @@ public class ProductDTO {
     private String description;
     private int price;
     private String size;
-    private String titleGroup;
-    private File file;
+    private Long groupId;
+    private Long fileId;
 
     public static ProductDTO productToProductDto(Product product) {
         return ProductDTO.builder()
@@ -25,8 +25,8 @@ public class ProductDTO {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .size(product.getSize())
-                .titleGroup(product.getProductGroupId().getTitle())
-                .file(product.getFileId())
+                .groupId(product.getProductGroupId().getId())
+                .fileId(product.getFileId().getId())
                 .build();
     }
 

@@ -1,7 +1,7 @@
-FROM openjdk:17-alpine
+FROM openjdk:17
 
-COPY target/girls_for_girls-0.0.1-SNAPSHOT.jar /G4G.jar
+ADD /target/girls_for_girls-0.0.1-SNAPSHOT.jar G4G.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "G4G.jar"]
+ENTRYPOINT ["java", "-jar", "G4G.jar"]

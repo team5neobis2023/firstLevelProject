@@ -59,7 +59,7 @@ public class ProductController {
     )
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable
-                                                @Parameter(description = "Идентификатор типа товара")
+                                                @Parameter(description = "Идентификатор товара")
                                                 Long id,
                                                 @RequestBody ProductDTO productDTO) {
         return productService.updateProduct(id, productDTO);

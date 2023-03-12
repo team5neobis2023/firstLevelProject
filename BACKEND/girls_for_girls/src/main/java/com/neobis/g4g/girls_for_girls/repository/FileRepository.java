@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FileRepository extends JpaRepository<File, Integer> {
+public interface FileRepository extends JpaRepository<File, Long> {
     List<File> findByProductIdAndIsDeletedFalse(int id);
 
     List<File> findByArticleIdAndIsDeletedFalse(int id);

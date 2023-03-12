@@ -3,6 +3,7 @@ package com.neobis.g4g.girls_for_girls.service;
 import com.neobis.g4g.girls_for_girls.data.dto.ProductDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Product;
 import com.neobis.g4g.girls_for_girls.data.entity.ProductGroup;
+import com.neobis.g4g.girls_for_girls.repository.FileRepository;
 import com.neobis.g4g.girls_for_girls.repository.ProductGroupRepo;
 import com.neobis.g4g.girls_for_girls.repository.ProductRepo;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class ProductService {
 
     private final ProductRepo productRepo;
     private final ProductGroupRepo productGroupRepo;
+    private final FileRepository fileRepo;
 
     public List<ProductDTO> getAllProducts() {
         return ProductDTO.productToProductDtoList(productRepo.findAll());
@@ -38,13 +40,12 @@ public class ProductService {
                 return ResponseEntity.badRequest().body("The product already exists");
             }
             Product product = new Product();
-            Optional<ProductGroup> productGroup = productGroupRepo.findByTitle(productDto.getTitleGroup());
             product.setTitle(productDto.getTitle());
             product.setDescription(productDto.getDescription());
             product.setPrice(productDto.getPrice());
             product.setSize(productDto.getSize());
-            product.setFileId(productDto.getFile());
-            product.setProductGroupId(productGroup.get());
+            product.setFileId(fileRepo.findById(productDto.getFileId()).get());
+            product.setProductGroupId(productGroupRepo.findById(productDto.getGroupId()).get());
             productRepo.save(product);
             return new ResponseEntity<String>("Product is created", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -59,8 +60,8 @@ public class ProductService {
                     product.setDescription(productDTO.getDescription());
                     product.setPrice(productDTO.getPrice());
                     product.setSize(productDTO.getSize());
-                    product.setFileId(productDTO.getFile());
-                    product.setProductGroupId(productGroupRepo.findByTitle(productDTO.getTitleGroup()).get());
+                    product.setFileId(fileRepo.findById(productDTO.getFileId()).get());
+                    product.setProductGroupId(productGroupRepo.findById(productDTO.getGroupId()).get());
                     productRepo.save(product);
                     return ResponseEntity.ok("Product with this id: " + id + " updated");
                 }).orElse(new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND));
