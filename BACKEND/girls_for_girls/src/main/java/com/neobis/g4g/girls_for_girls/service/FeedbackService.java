@@ -1,19 +1,17 @@
 package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.Conference;
 import com.neobis.g4g.girls_for_girls.data.entity.Feedback;
-import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.repository.FeedbackRepository;
+import com.neobis.g4g.girls_for_girls.repository.VideoCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -25,10 +23,12 @@ import static com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO.toFeedbackDTO;
 @Service
 public class FeedbackService {
     private final FeedbackRepository feedbackRepository;
+    private final VideoCourseRepository videoCourseRepository;
 
     @Autowired
-    public FeedbackService(FeedbackRepository feedbackRepository) {
+    public FeedbackService(FeedbackRepository feedbackRepository, VideoCourseRepository videoCourseRepository) {
         this.feedbackRepository = feedbackRepository;
+        this.videoCourseRepository = videoCourseRepository;
     }
 
     public List<FeedbackDTO> getAllFeedbacks(){
@@ -48,8 +48,14 @@ public class FeedbackService {
             throw new NotAddedException(getErrorMsg(bindingResult).toString());
         }
 
-        feedbackRepository.save(toFeedback(feedbackDTO));
-        return new ResponseEntity<>("Feedback was added", HttpStatus.CREATED);
+        if(videoCourseRepository.existsById(feedbackDTO.getVideoCourseId())){
+            Feedback feedback = toFeedback(feedbackDTO);
+            feedback.setVideoCourse(videoCourseRepository.findById(feedbackDTO.getVideoCourseId()).get());
+            feedbackRepository.save(feedback);
+            return new ResponseEntity<>("Feedback was added", HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>("Write video course id correctly", HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<?> updateFeedback(long id, FeedbackDTO feedbackDTO,
@@ -59,10 +65,15 @@ public class FeedbackService {
         }
 
         if(feedbackRepository.findById(id).isPresent()){
-            Feedback feedback = toFeedback(feedbackDTO);
-            feedback.setId(id);
-            feedbackRepository.save(feedback);
-            return ResponseEntity.ok("Feedback was updated");
+            if(videoCourseRepository.existsById(feedbackDTO.getVideoCourseId())){
+                Feedback feedback = toFeedback(feedbackDTO);
+                feedback.setId(id);
+                feedback.setVideoCourse(videoCourseRepository.findById(feedbackDTO.getVideoCourseId()).get());
+                feedbackRepository.save(feedback);
+                return new ResponseEntity<>("Feedback was updated", HttpStatus.CREATED);
+            }else{
+                return new ResponseEntity<>("Write video course id correctly", HttpStatus.BAD_REQUEST);
+            }
         }else{
             return new ResponseEntity<>("Feedback with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
         }
@@ -94,7 +105,6 @@ public class FeedbackService {
                 .email(feedbackDTO.getEmail())
                 .fullName(feedbackDTO.getFullName())
                 .phoneNumber(feedbackDTO.getPhoneNumber())
-                .videoCourse(feedbackDTO.getVideoCourse())
                 .message(feedbackDTO.getMessage())
                 .recTime(Timestamp.valueOf(LocalDateTime.now()))
                 .build();

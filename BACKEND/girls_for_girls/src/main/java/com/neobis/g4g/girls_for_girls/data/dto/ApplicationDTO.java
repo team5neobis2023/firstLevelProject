@@ -40,6 +40,7 @@ public class ApplicationDTO {
     @NotEmpty(message = "Информация о себе не может быть пустой")
     private String aboutMe;
 
+    @NotEmpty(message = "Достижения не могут быть пустыми")
     private String achievements;
 
     private String myFails;
@@ -47,11 +48,11 @@ public class ApplicationDTO {
     @NotEmpty(message = "Скиллы не могут быть пустыми")
     private String mySkills;
 
-    private Training trainingId;
+    private long trainingId;
 
-    private MentorProgram mentorProgramId;
+    private long mentorProgramId;
 
-    private Conference conferenceId;
+    private long conferenceId;
 
     public static ApplicationDTO toApplicationDTO(Application application){
         return ApplicationDTO.builder()
@@ -65,6 +66,9 @@ public class ApplicationDTO {
                 .achievements(application.getAchievements())
                 .myFails(application.getMyFails())
                 .mySkills(application.getMySkills())
+                .mentorProgramId(application.getMentorProgram().getId())
+                .trainingId(application.getTrainingId().getId())
+                .conferenceId(application.getConferenceId().getId())
                 .build();
     }
 

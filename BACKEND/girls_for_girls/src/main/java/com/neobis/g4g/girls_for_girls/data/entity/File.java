@@ -38,7 +38,7 @@ public class File {
     private int articleId;
 
     @Column(name = "user_id")
-    private int userId;
+    private long userId;
 
     @JsonIgnore
     @OneToMany(mappedBy = "file")

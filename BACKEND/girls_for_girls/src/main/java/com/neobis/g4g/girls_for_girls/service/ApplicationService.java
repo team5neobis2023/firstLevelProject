@@ -5,6 +5,8 @@ import com.neobis.g4g.girls_for_girls.data.entity.Application;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.repository.ApplicationRepository;
+import com.neobis.g4g.girls_for_girls.repository.ConferencesRepository;
+import com.neobis.g4g.girls_for_girls.repository.MentorProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,14 @@ import static com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO.toApplicati
 @Service
 public class ApplicationService {
     private final ApplicationRepository applicationRepository;
+    private final ConferencesRepository conferencesRepository;
+    private final MentorProgramRepository mentorProgramRepository;
 
     @Autowired
-    public ApplicationService(ApplicationRepository applicationRepository) {
+    public ApplicationService(ApplicationRepository applicationRepository, ConferencesRepository conferencesRepository, MentorProgramRepository mentorProgramRepository) {
         this.applicationRepository = applicationRepository;
+        this.conferencesRepository = conferencesRepository;
+        this.mentorProgramRepository = mentorProgramRepository;
     }
 
 
@@ -49,8 +55,17 @@ public class ApplicationService {
         if(applicationRepository.existsByEmail(applicationDTO.getEmail())){
             return ResponseEntity.badRequest().body("Application with this email already exists");
         }
-        applicationRepository.save(toApplication(applicationDTO));
-        return new ResponseEntity<>("Application was created", HttpStatus.CREATED);
+        if(conferenceExistsById(applicationDTO) && mentorProgramExistsById(applicationDTO)){
+
+            Application application = toApplication(applicationDTO);
+            application.setConferenceId(conferencesRepository.findById(applicationDTO.getConferenceId()).get());
+            application.setMentorProgram(mentorProgramRepository.findById(applicationDTO.getMentorProgramId()).get());
+            applicationRepository.save(application);
+            return new ResponseEntity<>("Application was created", HttpStatus.CREATED);
+
+        }else{
+            return new ResponseEntity<>("Please write correctly conference id/mentor program id/training id", HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<?> updateApplication(Long id, ApplicationDTO applicationDTO,
@@ -60,10 +75,19 @@ public class ApplicationService {
         }
 
         if(applicationRepository.findById(id).isPresent()){
-            Application application = toApplication(applicationDTO);
-            application.setId(id);
-            applicationRepository.save(application);
-            return ResponseEntity.ok("Application was updated");
+            if(conferenceExistsById(applicationDTO) && mentorProgramExistsById(applicationDTO)){
+                Application application = toApplication(applicationDTO);
+                application.setId(id);
+                //TODO training id checking
+                application.setConferenceId(conferencesRepository.findById(applicationDTO.getConferenceId()).get());
+                application.setMentorProgram(mentorProgramRepository.findById(applicationDTO.getMentorProgramId()).get());
+                applicationRepository.save(application);
+                return new ResponseEntity<>("Application was updated", HttpStatus.OK);
+
+            }else{
+                return new ResponseEntity<>("Please write correctly conference id/mentor program id/training id", HttpStatus.BAD_REQUEST);
+            }
+
         }else {
             return new ResponseEntity<>("Application with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
         }
@@ -90,6 +114,14 @@ public class ApplicationService {
         return errorMsg;
     }
 
+    private boolean conferenceExistsById(ApplicationDTO applicationDTO){
+        return conferencesRepository.existsById(applicationDTO.getConferenceId());
+    }
+
+    private boolean mentorProgramExistsById(ApplicationDTO applicationDTO){
+        return mentorProgramRepository.existsById(applicationDTO.getMentorProgramId());
+    }
+
     private Application toApplication(ApplicationDTO applicationDTO) {
         return Application.builder()
                 .fullName(applicationDTO.getFullName())
@@ -97,13 +129,10 @@ public class ApplicationService {
                 .achievements(applicationDTO.getAchievements())
                 .address(applicationDTO.getAddress())
                 .aboutMe(applicationDTO.getAboutMe())
-                .conferenceId(applicationDTO.getConferenceId())
                 .dateOfBirth(applicationDTO.getDateOfBirth())
                 .myFails(applicationDTO.getMyFails())
                 .motivation(applicationDTO.getMotivation())
                 .workFormat(applicationDTO.getWorkFormat())
-                .mentorProgramId(applicationDTO.getMentorProgramId())
-                .trainingId(applicationDTO.getTrainingId())
                 .mySkills(applicationDTO.getMySkills())
                 .recTime(Timestamp.valueOf(LocalDateTime.now()))
                 .build();

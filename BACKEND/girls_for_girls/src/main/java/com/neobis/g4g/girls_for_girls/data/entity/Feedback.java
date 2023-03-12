@@ -1,5 +1,6 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

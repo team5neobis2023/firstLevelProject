@@ -75,7 +75,7 @@ public class Application {
 
     @ManyToOne
     @JoinColumn(name = "mentor_program_id")
-    private MentorProgram mentorProgramId;
+    private MentorProgram mentorProgram;
 
     @ManyToOne
     @JoinColumn(name = "conference_id")

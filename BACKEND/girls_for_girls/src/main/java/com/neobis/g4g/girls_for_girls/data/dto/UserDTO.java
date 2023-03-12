@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserDTO {
-    private int id;
+    private long id;
     private String email;
     private String firstName;
     private String lastName;

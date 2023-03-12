@@ -13,6 +13,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -50,10 +51,12 @@ public class User implements UserDetails {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "group_id")
     private UserGroup role;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "file_id")
     private File file;
@@ -70,7 +73,7 @@ public class User implements UserDetails {
     private Set<Training> trainingEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-    private Set<Conference> conferenceEntities;
+    private List<Conference> conferenceEntities;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Set<MentorProgram> mentorProgramEntities;

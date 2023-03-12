@@ -25,5 +25,5 @@ public class RefreshToken {
     private String token;
 
     @Column(name = "user_id")
-    private int userId;
+    private long userId;
 }

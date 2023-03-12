@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +33,8 @@ public class FeedbackDTO {
     @Size(min = 3, message = "Отзыв должен содержать от 3 символов")
     private String message;
 
-    private VideoCourse videoCourse;
+    @NotNull(message = "Идентификатор видеокурса не может быть пустым")
+    private long videoCourseId;
 
     public static FeedbackDTO toFeedbackDTO(Feedback feedback){
         return FeedbackDTO.builder()
@@ -40,7 +42,7 @@ public class FeedbackDTO {
                 .email(feedback.getEmail())
                 .message(feedback.getMessage())
                 .phoneNumber(feedback.getPhoneNumber())
-                .videoCourse(feedback.getVideoCourse())
+                .videoCourseId(feedback.getVideoCourse().getId())
                 .build();
     }
 

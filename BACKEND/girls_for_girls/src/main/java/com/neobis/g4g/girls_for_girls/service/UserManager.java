@@ -98,7 +98,7 @@ public class UserManager implements UserDetailsManager {
             boolean exist = userRepository.existsById(userDTO.getId());
 
             if(exist) {
-                User user = userRepository.findById(userDTO.getId());
+                User user = userRepository.findById(userDTO.getId()).get();
 
                 user.setEmail(userDTO.getEmail());
                 user.setFirstName(userDTO.getFirstName());

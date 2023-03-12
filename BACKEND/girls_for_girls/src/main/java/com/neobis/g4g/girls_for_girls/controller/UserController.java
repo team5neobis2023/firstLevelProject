@@ -28,7 +28,7 @@ public class UserController {
     @Operation(summary = "Получить аккаунт по его ID", tags = "Аккаунт")
     @GetMapping("/{id}")
     public User getUser(@PathVariable int id) {
-        return userRepository.findById(id);
+        return userRepository.findById(id).get();
     }
 
     @Operation(summary = "Получить все аккаунты и поиск по логину", tags = "Аккаунт")

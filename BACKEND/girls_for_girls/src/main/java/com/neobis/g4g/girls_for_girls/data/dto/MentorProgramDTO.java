@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,20 +20,21 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class MentorProgramDTO {
+    @NotEmpty(message = "Описание не может быть пустым")
+    @Size(min = 5, message = "Описание должно содержать минимум 5 символов")
     private String description;
 
-    private User userId;
+    @NotNull(message = "Идентификатор пользователя не может быть пустым")
+    private long userId;
 
     private Timestamp recTime;
 
-    private List<Application> applicationEntities;
 
     public static MentorProgramDTO toMentorProgramDTO(MentorProgram mentorProgram){
         return MentorProgramDTO.builder()
                 .description(mentorProgram.getDescription())
-                .applicationEntities(mentorProgram.getApplicationEntities())
                 .recTime(mentorProgram.getRecTime())
-                .userId(mentorProgram.getUserId())
+                .userId(mentorProgram.getUserId().getId())
                 .build();
     }
 

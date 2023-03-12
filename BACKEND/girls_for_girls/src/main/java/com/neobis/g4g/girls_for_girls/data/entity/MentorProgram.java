@@ -1,5 +1,6 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +39,6 @@ public class MentorProgram {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mentorProgramId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mentorProgram")
     private List<Application> applicationEntities;
 }
