@@ -12,15 +12,15 @@ import java.util.stream.Collectors;
 @Builder
 public class OrderDTO {
 
-    private String userEmail;
-    private String productTitle;
+    private Long userId;
+    private Long productId;
     private int amount;
     private Timestamp orderDate;
 
     public static OrderDTO orderToOrderDto(Order order) {
         return OrderDTO.builder()
-                .userEmail(order.getUser().getEmail())
-                .productTitle(order.getProduct().getTitle())
+                .userId(order.getUser().getId())
+                .productId(order.getProduct().getId())
                 .amount(order.getAmount())
                 .orderDate(order.getOrderDate())
                 .build();

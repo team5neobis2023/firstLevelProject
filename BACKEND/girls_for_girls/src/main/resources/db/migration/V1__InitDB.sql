@@ -51,56 +51,56 @@ CREATE TABLE article (
 );
 
 CREATE TABLE product(
-    id serial primary key,
+    id bigserial primary key,
     title varchar,
     description varchar,
     price int,
     size varchar,
-    product_group_id int,
-    file_id int,
+    product_group_id bigserial,
+    file_id bigserial,
     FOREIGN KEY(product_group_id) REFERENCES product_group(id),
     FOREIGN KEY(file_id) REFERENCES file(id)
 );
 
 CREATE TABLE orders(
-    id serial primary key,
-    user_id int REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
-    product_id int REFERENCES product(id) ON UPDATE CASCADE,
+    id bigserial primary key,
+    user_id bigserial REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    product_id bigserial REFERENCES product(id) ON UPDATE CASCADE,
     amount int NOT NULL,
     order_date timestamp default now()
 );
 
 CREATE TABLE refresh_token (
-    id serial not null,
+    id bigserial not null,
     rec_time timestamp default now (),
     token text not null,
-    user_id int not null
+    user_id bigserial not null
 );
 
 CREATE TABLE training (
-    id serial not null,
+    id bigserial not null,
     rec_time timestamp default now (),
     description text not null,
-    user_id int
+    user_id bigserial
 );
 
 CREATE TABLE conference (
-    id serial not null,
+    id bigserial not null,
     rec_time timestamp default now (),
     conference_date timestamp,
     description varchar,
-    user_id int
+    user_id bigserial
 );
 
 CREATE TABLE mentor_program (
-    id serial not null,
+    id bigserial not null,
     rec_time timestamp default now (),
     description text not null,
-    user_id int
+    user_id bigserial
 );
 
 CREATE TABLE application (
-    id serial not null,
+    id bigserial not null,
     full_name varchar,
     rec_time timestamp default now (),
     date_of_birth timestamp,
@@ -112,34 +112,34 @@ CREATE TABLE application (
     achievements varchar(1000),
     my_fails varchar(1000),
     my_skills varchar(1000),
-    training_id int,
-    mentor_program_id int,
-    conference_id int
+    training_id bigserial,
+    mentor_program_id bigserial,
+    conference_id bigserial
 );
 
 CREATE TABLE notification (
-    id serial not null,
+    id bigserial not null,
     rec_time timestamp default now (),
     message varchar,
-    user_id int
+    user_id bigserial
 );
 
 CREATE TABLE video_course (
-    id serial not null,
+    id bigserial not null,
     rec_time timestamp default now (),
     description varchar,
     rating int,
-    user_id int
+    user_id bigserial
 );
 
 CREATE TABLE feedback (
-    id serial not null,
+    id bigserial not null,
     rec_time timestamp default now (),
     full_name varchar,
     email varchar,
     phone_number varchar,
     message varchar(1000),
-    video_course_id int
+    video_course_id bigserial
 );
 
 INSERT INTO user_group(id, name)

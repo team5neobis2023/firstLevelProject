@@ -34,12 +34,12 @@ public class OrderService {
 
     public ResponseEntity<String> addOrder(OrderDTO orderDTO) {
         try {
-            if (productRepo.findByTitle(orderDTO.getProductTitle()).isPresent() && userRepo.findByEmail(orderDTO.getUserEmail()).isPresent()) {
+            if (productRepo.findById(orderDTO.getProductId()).isPresent() && userRepo.findById(orderDTO.getUserId()).isPresent()) {
                 return ResponseEntity.badRequest().body("The order already exists");
             }
             Order order = new Order();
-            Product product = productRepo.findByTitle(orderDTO.getProductTitle()).get();
-            order.setUser(userRepo.findByEmail(orderDTO.getUserEmail()).get());
+            Product product = productRepo.findById(orderDTO.getProductId()).get();
+            order.setUser(userRepo.findById(orderDTO.getUserId()).get());
             order.setProduct(product);
             order.setAmount(product.getPrice());
             orderRepo.save(order);
@@ -52,8 +52,8 @@ public class OrderService {
     public ResponseEntity<?> updateOrder(Long id, OrderDTO orderDTO) {
         return orderRepo.findById(id)
                 .map(order -> {
-                    Product product = productRepo.findByTitle(orderDTO.getProductTitle()).get();
-                    order.setUser(userRepo.findByEmail(orderDTO.getUserEmail()).get());
+                    Product product = productRepo.findById(orderDTO.getProductId()).get();
+                    order.setUser(userRepo.findById(orderDTO.getUserId()).get());
                     order.setProduct(product);
                     order.setAmount(product.getPrice());
                     orderRepo.save(order);
