@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserGroupRepository extends JpaRepository<UserGroup, Integer> {
 
-    UserGroup findById(int id);
+    UserGroup findById(long id);
 }
