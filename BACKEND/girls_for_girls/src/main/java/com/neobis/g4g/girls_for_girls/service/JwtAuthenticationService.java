@@ -3,9 +3,11 @@ package com.neobis.g4g.girls_for_girls.service;
 import com.neobis.g4g.girls_for_girls.data.dto.LoginDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.TokenDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.File;
 import com.neobis.g4g.girls_for_girls.data.entity.RefreshToken;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
+import com.neobis.g4g.girls_for_girls.repository.FileRepository;
 import com.neobis.g4g.girls_for_girls.repository.RefreshTokenRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
@@ -40,12 +42,13 @@ public class JwtAuthenticationService {
     private final TokenGenerator tokenGenerator;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
+    private final FileRepository fileRepository;
     @Autowired
     public JwtAuthenticationService(UserRepository userRepository, UserGroupRepository userGroupRepository,
                                     UserDetailsManager userDetailsManager, EmailService emailService,
                                     DaoAuthenticationProvider daoAuthenticationProvider, TokenGenerator tokenGenerator,
                                     RefreshTokenRepository refreshTokenRepository,
-                                    @Qualifier("jwtRefreshTokenAuthProvider") JwtAuthenticationProvider jwtAuthenticationProvider) {
+                                    @Qualifier("jwtRefreshTokenAuthProvider") JwtAuthenticationProvider jwtAuthenticationProvider, FileRepository fileRepository) {
         this.userRepository = userRepository;
         this.userGroupRepository = userGroupRepository;
         this.userDetailsManager = userDetailsManager;
@@ -54,10 +57,13 @@ public class JwtAuthenticationService {
         this.tokenGenerator = tokenGenerator;
         this.refreshTokenRepository = refreshTokenRepository;
         this.jwtAuthenticationProvider = jwtAuthenticationProvider;
+        this.fileRepository = fileRepository;
     }
 
     public ResponseEntity<?> register(UserDTO userDTO, HttpServletRequest request) {
         User user = new User();
+
+        File file = fileRepository.findById(userDTO.getFile_id()).get();
 
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
@@ -66,7 +72,7 @@ public class JwtAuthenticationService {
         user.setLastName(userDTO.getLastName());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setPlaceOfBirth(userDTO.getPlaceOfBirth());
-        user.setFile(userDTO.getFile());
+        user.setFile(file);
         user.setResetToken(UUID.randomUUID().toString());
 
 

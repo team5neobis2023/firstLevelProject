@@ -5,6 +5,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import com.neobis.g4g.girls_for_girls.service.UserManager;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +28,7 @@ public class UserController {
 
     @Operation(summary = "Получить аккаунт по его ID", tags = "Аккаунт")
     @GetMapping("/{id}")
-    public User getUser(@PathVariable int id) {
+    public User getUser(@PathVariable long id) {
         return userRepository.findById(id).get();
     }
 
@@ -35,6 +36,12 @@ public class UserController {
     @GetMapping()
     public List<User> getUsers() {
         return userRepository.findAll();
+    }
+
+    @GetMapping("/{id}/likedArticles")
+    @Operation(summary = "Получить все лайкнутые пользователем посты", tags = "Аккаунт")
+    public ResponseEntity<?> getAllArticlesByLikedUsersId(@PathVariable("id")  long id){
+        return userManager.getAllArticlesByLikedUsersId(id);
     }
 
     @Operation(summary = "Добавить новый аккаунт", tags = "Аккаунт")

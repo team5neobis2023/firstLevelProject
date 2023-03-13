@@ -1,5 +1,6 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,13 +18,13 @@ import java.util.List;
 @Table(name = "article")
 public class Article {
 
-    public Article(Timestamp recTime, Timestamp updateTime, String title, String description, Long viewsCount, List<User> likes, User userId) {
+    public Article(Timestamp recTime, Timestamp updateTime, String title, String description, Long viewsCount, List<User> likedUsers, User userId) {
         this.recTime = recTime;
         this.updateTime = updateTime;
         this.title = title;
         this.description = description;
         this.viewsCount = viewsCount;
-        this.likes = likes;
+        this.likedUsers = likedUsers;
         this.userId = userId;
     }
 
@@ -48,9 +49,11 @@ public class Article {
     private Long viewsCount;
 
     @ManyToMany(mappedBy = "likedArticles")
-    private List<User> likes;
+    @JsonIgnore
+    private List<User> likedUsers;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User userId;
 }
