@@ -64,6 +64,7 @@ public class MentorProgramService {
         if(userRepository.existsById(mentorProgramDTO.getUserId())){
             MentorProgram mentorProgram = toMentorProgram(mentorProgramDTO);
             mentorProgram.setUserId(userRepository.findById(mentorProgramDTO.getUserId()).get());
+            mentorProgram.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
             mentorProgramRepository.save(mentorProgram);
             return new ResponseEntity<>("Mentor program was added", HttpStatus.CREATED);
         }else{
@@ -83,6 +84,7 @@ public class MentorProgramService {
                 MentorProgram mentorProgram = toMentorProgram(mentorProgramDTO);
                 mentorProgram.setId(id);
                 mentorProgram.setUserId(userRepository.findById(mentorProgramDTO.getUserId()).get());
+                mentorProgram.setRecTime(mentorProgramRepository.findById(id).get().getRecTime());
                 mentorProgramRepository.save(mentorProgram);
                 return new ResponseEntity<>("Mentor program was updated", HttpStatus.CREATED);
             }else{
@@ -118,7 +120,6 @@ public class MentorProgramService {
     public static MentorProgram toMentorProgram(MentorProgramDTO mentorProgramDTO) {
         return MentorProgram.builder()
                 .description(mentorProgramDTO.getDescription())
-                .recTime(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
     }
 }

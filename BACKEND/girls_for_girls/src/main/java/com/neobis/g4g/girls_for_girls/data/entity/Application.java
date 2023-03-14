@@ -71,7 +71,7 @@ public class Application {
 
     @ManyToOne
     @JoinColumn(name = "training_id")
-    private Training trainingId;
+    private Training training;
 
     @ManyToOne
     @JoinColumn(name = "mentor_program_id")
@@ -79,6 +79,6 @@ public class Application {
 
     @ManyToOne
     @JoinColumn(name = "conference_id")
-    private Conference conferenceId;
+    private Conference conference;
 
 }

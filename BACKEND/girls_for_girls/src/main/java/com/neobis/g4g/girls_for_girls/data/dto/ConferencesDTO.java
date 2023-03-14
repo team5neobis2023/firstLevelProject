@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -28,6 +29,8 @@ public class ConferencesDTO {
     @NotEmpty(message = "Описание не может быть пустым")
     @Size(min = 5, message = "Описание должно содержать от 5 символов")
     private String description;
+
+    private Timestamp recTime;
 
     @NotNull(message = "Идентификатор пользователя не может быть пустым")
     private long userId;

@@ -65,6 +65,7 @@ public class VideoCourseService {
 
             VideoCourse videoCourse = toVideoCourse(videoCourseDTO);
             videoCourse.setUserId(userRepository.findById(videoCourseDTO.getUserId()).get());
+            videoCourse.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
             videoCourseRepository.save(videoCourse);
             return new ResponseEntity<>("VideoCourse was created", HttpStatus.CREATED);
 
@@ -84,7 +85,7 @@ public class VideoCourseService {
                 VideoCourse videoCourse = toVideoCourse(videoCourseDTO);
                 videoCourse.setId(id);
                 videoCourse.setUserId(userRepository.findById(videoCourseDTO.getUserId()).get());
-                videoCourse.setFeedbacks(feedbackRepository.findAllByVideoCourseId(id));
+                videoCourse.setRecTime(videoCourseRepository.findById(id).get().getRecTime());
                 videoCourseRepository.save(videoCourse);
                 return new ResponseEntity<>("VideoCourse was updated", HttpStatus.OK);
 
@@ -122,7 +123,6 @@ public class VideoCourseService {
     private VideoCourse toVideoCourse(VideoCourseDTO videoCourseDTO){
         return VideoCourse.builder()
                 .description(videoCourseDTO.getDescription())
-                .recTime(Timestamp.valueOf(LocalDateTime.now()))
                 .rating(videoCourseDTO.getRating())
                 .build();
     }

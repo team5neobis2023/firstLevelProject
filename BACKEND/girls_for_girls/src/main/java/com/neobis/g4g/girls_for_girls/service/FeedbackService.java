@@ -51,6 +51,7 @@ public class FeedbackService {
         if(videoCourseRepository.existsById(feedbackDTO.getVideoCourseId())){
             Feedback feedback = toFeedback(feedbackDTO);
             feedback.setVideoCourse(videoCourseRepository.findById(feedbackDTO.getVideoCourseId()).get());
+            feedback.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
             feedbackRepository.save(feedback);
             return new ResponseEntity<>("Feedback was added", HttpStatus.CREATED);
         }else{
@@ -69,6 +70,7 @@ public class FeedbackService {
                 Feedback feedback = toFeedback(feedbackDTO);
                 feedback.setId(id);
                 feedback.setVideoCourse(videoCourseRepository.findById(feedbackDTO.getVideoCourseId()).get());
+                feedback.setRecTime(feedbackRepository.findById(id).get().getRecTime());
                 feedbackRepository.save(feedback);
                 return new ResponseEntity<>("Feedback was updated", HttpStatus.CREATED);
             }else{
@@ -106,7 +108,6 @@ public class FeedbackService {
                 .fullName(feedbackDTO.getFullName())
                 .phoneNumber(feedbackDTO.getPhoneNumber())
                 .message(feedbackDTO.getMessage())
-                .recTime(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
     }
 

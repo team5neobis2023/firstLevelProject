@@ -4,6 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.ConferencesDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Conference;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
+import com.neobis.g4g.girls_for_girls.repository.ApplicationRepository;
 import com.neobis.g4g.girls_for_girls.repository.ConferencesRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO.toApplicationDTO;
 import static com.neobis.g4g.girls_for_girls.data.dto.ConferencesDTO.toConferencesDTO;
 import static com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO.toFeedbackDTO;
 
@@ -24,15 +26,25 @@ import static com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO.toFeedbackDTO;
 public class ConferenceService {
     private final ConferencesRepository conferencesRepository;
     private final UserRepository userRepository;
+    private final ApplicationRepository applicationRepository;
 
     @Autowired
-    public ConferenceService(ConferencesRepository conferencesRepository, UserRepository userRepository) {
+    public ConferenceService(ConferencesRepository conferencesRepository, UserRepository userRepository, ApplicationRepository applicationRepository) {
         this.conferencesRepository = conferencesRepository;
         this.userRepository = userRepository;
+        this.applicationRepository = applicationRepository;
     }
 
     public List<ConferencesDTO> getAllConferences(){
         return toConferencesDTO(conferencesRepository.findAll());
+    }
+
+    public ResponseEntity<?> getAllApplicationsByConferenceId(long id){
+        if(conferencesRepository.existsById(id)){
+            return ResponseEntity.ok(toApplicationDTO(applicationRepository.findAllByConferenceId(id)));
+        }else {
+            return new ResponseEntity<>("Conference with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
+        }
     }
 
     public ResponseEntity<?> getConferenceById(long id){
@@ -51,6 +63,7 @@ public class ConferenceService {
         if(userRepository.existsById(conferencesDTO.getUserId())){
             Conference conference = toConference(conferencesDTO);
             conference.setUserId(userRepository.findById(conferencesDTO.getUserId()).get());
+            conference.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
             conferencesRepository.save(conference);
             return new ResponseEntity<>("Conference was created", HttpStatus.CREATED);
         }else {
@@ -69,6 +82,7 @@ public class ConferenceService {
             if(userRepository.existsById(conferencesDTO.getUserId())){
                 Conference conference = toConference(conferencesDTO);
                 conference.setId(id);
+                conference.setRecTime(conferencesRepository.findById(id).get().getRecTime());
                 conference.setUserId(userRepository.findById(conferencesDTO.getUserId()).get());
                 conferencesRepository.save(conference);
                 return new ResponseEntity<>("Conference was updated", HttpStatus.CREATED);
@@ -106,7 +120,6 @@ public class ConferenceService {
         return Conference.builder()
                 .conferenceDate(conferencesDTO.getConferenceDate())
                 .description(conferencesDTO.getDescription())
-                .recTime(Timestamp.valueOf(LocalDateTime.now()))
                 .build();
     }
 }

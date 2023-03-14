@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ public class ApplicationDTO {
     @NotEmpty(message = "ФИО не может быть пустым")
     private String fullName;
 
+    @NotNull(message = "Дата рождения не может быть пустой")
     private Timestamp dateOfBirth;
 
     @NotEmpty(message = "Электронная почта не может быть пустой")
@@ -43,15 +45,19 @@ public class ApplicationDTO {
     @NotEmpty(message = "Достижения не могут быть пустыми")
     private String achievements;
 
+    @NotEmpty(message = "Поле провалы не может быть пустым")
     private String myFails;
 
     @NotEmpty(message = "Скиллы не могут быть пустыми")
     private String mySkills;
 
+    @NotNull(message = "Идентификатор тренинга не может быть пустым")
     private long trainingId;
 
+    @NotNull(message = "Идентификатор менторской программы не может быть пустым")
     private long mentorProgramId;
 
+    @NotNull(message = "Идентификатор конференции не может быть пустым")
     private long conferenceId;
 
     public static ApplicationDTO toApplicationDTO(Application application){
@@ -67,8 +73,8 @@ public class ApplicationDTO {
                 .myFails(application.getMyFails())
                 .mySkills(application.getMySkills())
                 .mentorProgramId(application.getMentorProgram().getId())
-                .trainingId(application.getTrainingId().getId())
-                .conferenceId(application.getConferenceId().getId())
+                .trainingId(application.getTraining().getId())
+                .conferenceId(application.getConference().getId())
                 .build();
     }
 

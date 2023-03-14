@@ -43,7 +43,4 @@ public class Conference {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conferenceId")
-    private Set<Application> applicationEntities;
-
 }

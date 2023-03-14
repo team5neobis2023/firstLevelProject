@@ -39,6 +39,4 @@ public class MentorProgram {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mentorProgram")
-    private List<Application> applicationEntities;
 }

@@ -43,6 +43,4 @@ public class VideoCourse {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "videoCourse")
-    private List<Feedback> feedbacks;
 }

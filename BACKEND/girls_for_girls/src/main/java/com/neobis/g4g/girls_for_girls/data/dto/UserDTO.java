@@ -9,6 +9,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -49,5 +51,9 @@ public class UserDTO {
                 .file_id(user.getFile().getId())
                 .phoneNumber(user.getPhoneNumber())
                 .build();
+    }
+
+    public static List<UserDTO> toUserDTO(List<User> users){
+        return users.stream().map(UserDTO::toUserDTO).collect(Collectors.toList());
     }
 }

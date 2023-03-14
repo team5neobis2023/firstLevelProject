@@ -11,4 +11,6 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     boolean existsByEmail(String email);
     List<Application> findAllByMentorProgramId(long id);
+    List<Application> findAllByTrainingId(long id);
+    List<Application> findAllByConferenceId(long id);
 }

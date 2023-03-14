@@ -41,6 +41,16 @@ public class ConferenceController {
         return conferenceService.getAllConferences();
     }
 
+    @GetMapping("/{id}/applications")
+    @Operation(
+            summary = "Получение заявок на конференцию по айди конференции",
+            tags = "Конференция"
+    )
+    public ResponseEntity<?> getAllApplicationsByConferenceId(@PathVariable("id")
+                                                                 @Parameter(description = "Идентификатор конференции") long id){
+        return conferenceService.getAllApplicationsByConferenceId(id);
+    }
+
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение конференции по айди",

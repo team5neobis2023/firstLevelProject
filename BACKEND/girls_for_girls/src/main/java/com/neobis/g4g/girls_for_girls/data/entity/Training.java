@@ -1,15 +1,20 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 @Data
-@Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
 @Table(name = "training")
 public class Training {
 
@@ -34,6 +39,4 @@ public class Training {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trainingId")
-    private Set<Application> applicationEntities;
 }
