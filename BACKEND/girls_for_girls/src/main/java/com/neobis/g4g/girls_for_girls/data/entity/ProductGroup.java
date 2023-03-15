@@ -20,6 +20,4 @@ public class ProductGroup {
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "productGroupId")
-    private Set<Product> productEntities;
 }

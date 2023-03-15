@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     public Order(User user, Product product, int amount, Timestamp orderDate) {

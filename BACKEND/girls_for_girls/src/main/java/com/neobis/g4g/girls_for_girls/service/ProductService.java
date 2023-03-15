@@ -4,6 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.ProductDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Product;
 import com.neobis.g4g.girls_for_girls.data.entity.ProductGroup;
 import com.neobis.g4g.girls_for_girls.repository.FileRepository;
+import com.neobis.g4g.girls_for_girls.repository.OrderRepo;
 import com.neobis.g4g.girls_for_girls.repository.ProductGroupRepo;
 import com.neobis.g4g.girls_for_girls.repository.ProductRepo;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.neobis.g4g.girls_for_girls.data.dto.OrderDTO.orderToOrderDtoList;
+
 @Service
 @AllArgsConstructor
 public class ProductService {
@@ -20,6 +23,7 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final ProductGroupRepo productGroupRepo;
     private final FileRepository fileRepo;
+    private final OrderRepo orderRepo;
 
     public List<ProductDTO> getAllProducts() {
         return ProductDTO.productToProductDtoList(productRepo.findAll());
@@ -30,6 +34,13 @@ public class ProductService {
             return ResponseEntity.ok(ProductDTO.productToProductDto(productRepo.findById(id).get()));
         }
         return new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<?> getAllOrdersByProductId(long id){
+        if(productRepo.existsById(id)){
+            return ResponseEntity.ok(orderToOrderDtoList(orderRepo.findAllByProductId(id)));
+        }
+        return new ResponseEntity<>("Product with id: " + id + " wasn't found", HttpStatus.NOT_FOUND);
     }
 
 
@@ -43,8 +54,8 @@ public class ProductService {
             product.setDescription(productDto.getDescription());
             product.setPrice(productDto.getPrice());
             product.setSize(productDto.getSize());
-            product.setFileId(fileRepo.findById(productDto.getFileId()).get());
-            product.setProductGroupId(productGroupRepo.findById(productDto.getGroupId()).get());
+            product.setFile(fileRepo.findById(productDto.getFileId()).get());
+            product.setProductGroup(productGroupRepo.findById(productDto.getGroupId()).get());
             productRepo.save(product);
             return new ResponseEntity<String>("Product is created", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -59,8 +70,8 @@ public class ProductService {
                     product.setDescription(productDTO.getDescription());
                     product.setPrice(productDTO.getPrice());
                     product.setSize(productDTO.getSize());
-                    product.setFileId(fileRepo.findById(productDTO.getFileId()).get());
-                    product.setProductGroupId(productGroupRepo.findById(productDTO.getGroupId()).get());
+                    product.setFile(fileRepo.findById(productDTO.getFileId()).get());
+                    product.setProductGroup(productGroupRepo.findById(productDTO.getGroupId()).get());
                     productRepo.save(product);
                     return ResponseEntity.ok("Product with this id: " + id + " updated");
                 }).orElse(new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND));

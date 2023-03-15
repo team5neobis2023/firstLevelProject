@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -41,6 +43,7 @@ public class OrderService {
             Product product = productRepo.findById(orderDTO.getProductId()).get();
             order.setUser(userRepo.findById(orderDTO.getUserId()).get());
             order.setProduct(product);
+            order.setOrderDate(Timestamp.valueOf(LocalDateTime.now()));
             order.setAmount(product.getPrice());
             orderRepo.save(order);
             return new ResponseEntity<String>("Product is created", HttpStatus.CREATED);
@@ -58,7 +61,7 @@ public class OrderService {
                     order.setAmount(product.getPrice());
                     orderRepo.save(order);
                     return ResponseEntity.ok("Order with this id: " + id + " updated");
-                }).orElse(new ResponseEntity<String>("Order with this id: " + id + " not foudn", HttpStatus.NOT_FOUND));
+                }).orElse(new ResponseEntity<>("Order with this id: " + id + " not foudn", HttpStatus.NOT_FOUND));
     }
 
     public ResponseEntity<String> deleteOrder(Long id) {

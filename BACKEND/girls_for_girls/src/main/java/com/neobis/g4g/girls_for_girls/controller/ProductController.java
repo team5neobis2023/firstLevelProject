@@ -43,6 +43,17 @@ public class ProductController {
         return productService.getProductId(id);
     }
 
+    @GetMapping("/{id}/orders")
+    @Operation(
+            summary = "Получить заказы по айди товара",
+            tags = "Товар"
+    )
+    public ResponseEntity<?> getAllOrdersByProductId(@PathVariable
+                                          @Parameter(description = "Идентификатор товара")
+                                          Long id) {
+        return productService.getAllOrdersByProductId(id);
+    }
+
     @Operation(
             summary = "Добавить товар",
             tags = "Товар"

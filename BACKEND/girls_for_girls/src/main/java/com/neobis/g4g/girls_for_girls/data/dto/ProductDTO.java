@@ -25,8 +25,8 @@ public class ProductDTO {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .size(product.getSize())
-                .groupId(product.getProductGroupId().getId())
-                .fileId(product.getFileId().getId())
+                .groupId(product.getProductGroup().getId())
+                .fileId(product.getFile().getId())
                 .build();
     }
 

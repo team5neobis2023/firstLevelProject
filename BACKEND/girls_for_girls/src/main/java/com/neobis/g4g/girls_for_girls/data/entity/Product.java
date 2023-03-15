@@ -29,12 +29,9 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "file_id")
-    private File fileId;
+    private File file;
 
     @ManyToOne
     @JoinColumn(name = "product_group_id")
-    private ProductGroup productGroupId;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private Set<Order> orderEntities;
+    private ProductGroup productGroup;
 }
