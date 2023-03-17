@@ -55,7 +55,7 @@ public class VideoCourseService {
         return new ResponseEntity<>("Video course with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<?> addVideoCourse(VideoCourseDTO videoCourseDTO,
+    public ResponseEntity<String> addVideoCourse(VideoCourseDTO videoCourseDTO,
                                             BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             throw new NotAddedException(getErrorMsg(bindingResult).toString());

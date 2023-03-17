@@ -1,25 +1,19 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
-@Entity
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Entity
 @Table(name = "orders")
 public class Order {
-
-    public Order(User user, Product product, int amount, Timestamp orderDate) {
-        this.user = user;
-        this.product = product;
-        this.amount = amount;
-        this.orderDate = orderDate;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

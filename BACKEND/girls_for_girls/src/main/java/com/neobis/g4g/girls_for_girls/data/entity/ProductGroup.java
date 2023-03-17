@@ -1,14 +1,16 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
-@Entity
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Entity
 @Table(name = "product_group")
 public class ProductGroup {
 
