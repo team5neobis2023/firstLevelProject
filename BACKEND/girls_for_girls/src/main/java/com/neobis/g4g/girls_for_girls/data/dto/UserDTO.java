@@ -36,6 +36,8 @@ public class UserDTO {
 
     private Long file_id;
 
+    private Long role_id;
+
     @NotEmpty(message = "Номер телефона не может быть пустым")
     private String phoneNumber;
 
