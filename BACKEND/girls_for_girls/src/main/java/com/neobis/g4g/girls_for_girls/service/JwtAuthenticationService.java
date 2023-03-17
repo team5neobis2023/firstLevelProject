@@ -3,11 +3,9 @@ package com.neobis.g4g.girls_for_girls.service;
 import com.neobis.g4g.girls_for_girls.data.dto.LoginDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.TokenDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.File;
 import com.neobis.g4g.girls_for_girls.data.entity.RefreshToken;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
-import com.neobis.g4g.girls_for_girls.repository.FileRepository;
 import com.neobis.g4g.girls_for_girls.repository.RefreshTokenRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
@@ -29,7 +27,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
-import java.util.UUID;
+import java.util.Random;
 
 @Slf4j
 @Service
@@ -42,13 +40,12 @@ public class JwtAuthenticationService {
     private final TokenGenerator tokenGenerator;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
-    private final FileRepository fileRepository;
     @Autowired
     public JwtAuthenticationService(UserRepository userRepository, UserGroupRepository userGroupRepository,
                                     UserDetailsManager userDetailsManager, EmailService emailService,
                                     DaoAuthenticationProvider daoAuthenticationProvider, TokenGenerator tokenGenerator,
                                     RefreshTokenRepository refreshTokenRepository,
-                                    @Qualifier("jwtRefreshTokenAuthProvider") JwtAuthenticationProvider jwtAuthenticationProvider, FileRepository fileRepository) {
+                                    @Qualifier("jwtRefreshTokenAuthProvider") JwtAuthenticationProvider jwtAuthenticationProvider) {
         this.userRepository = userRepository;
         this.userGroupRepository = userGroupRepository;
         this.userDetailsManager = userDetailsManager;
@@ -57,14 +54,11 @@ public class JwtAuthenticationService {
         this.tokenGenerator = tokenGenerator;
         this.refreshTokenRepository = refreshTokenRepository;
         this.jwtAuthenticationProvider = jwtAuthenticationProvider;
-        this.fileRepository = fileRepository;
     }
 
     public ResponseEntity<?> register(UserDTO userDTO, HttpServletRequest request) {
         User user = new User();
-
-        File file = fileRepository.findById(userDTO.getFile_id()).get();
-
+        Random random = new Random();
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
         user.setRole(userGroupRepository.findById(3));
@@ -72,8 +66,7 @@ public class JwtAuthenticationService {
         user.setLastName(userDTO.getLastName());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setPlaceOfBirth(userDTO.getPlaceOfBirth());
-        user.setFile(file);
-        user.setResetToken(UUID.randomUUID().toString());
+        user.setResetToken(String.valueOf(random.nextInt(1000, 9999)));
 
 
         try {
@@ -82,16 +75,13 @@ public class JwtAuthenticationService {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
-        String appUrl = request.getScheme() + "://" + request.getServerName() +":" +
-                request.getLocalPort() + "/api/v1/auth";
 
         // Email message
         SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
         passwordResetEmail.setFrom("g4g@gmail.com");
         passwordResetEmail.setTo(user.getEmail());
         passwordResetEmail.setSubject("Account activation");
-        passwordResetEmail.setText("To activate your account follow the link:\n" + appUrl
-                + "/active?token=" + user.getResetToken());
+        passwordResetEmail.setText("To activate your account enter this code: " + user.getResetToken());
 
         emailService.sendEmail(passwordResetEmail);
         log.info("Success send email to " + userDTO.getEmail());

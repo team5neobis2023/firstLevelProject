@@ -31,11 +31,10 @@ public class UserDTO {
 
     private String confirmPass;
 
-    private long role_id;
-
     @NotEmpty(message = "Место рождения не может быть пустым")
     private String placeOfBirth;
-    private long file_id;
+
+    private Long file_id;
 
     @NotEmpty(message = "Номер телефона не может быть пустым")
     private String phoneNumber;
@@ -47,7 +46,6 @@ public class UserDTO {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .placeOfBirth(user.getPlaceOfBirth())
-                .role_id(user.getRole().getId())
                 .file_id(user.getFile().getId())
                 .phoneNumber(user.getPhoneNumber())
                 .build();
