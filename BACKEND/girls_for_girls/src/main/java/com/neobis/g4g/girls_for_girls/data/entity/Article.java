@@ -1,33 +1,20 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Entity
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Entity
 @Table(name = "article")
 public class Article {
-
-    public Article(Timestamp recTime, Timestamp updateTime, String title, String description, Long viewsCount, List<User> likedUsers, User userId) {
-        this.recTime = recTime;
-        this.updateTime = updateTime;
-        this.title = title;
-        this.description = description;
-        this.viewsCount = viewsCount;
-        this.likedUsers = likedUsers;
-        this.userId = userId;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

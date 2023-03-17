@@ -67,7 +67,7 @@ public class VideoCourseController {
             summary = "Добавление видеокурса",
             tags = "Видеокурс"
     )
-    public ResponseEntity<?> addVideoCourse(@RequestBody @Valid VideoCourseDTO videoCourseDTO,
+    public ResponseEntity<String> addVideoCourse(@RequestBody @Valid VideoCourseDTO videoCourseDTO,
                                             BindingResult bindingResult){
         return videoCourseService.addVideoCourse(videoCourseDTO, bindingResult);
     }

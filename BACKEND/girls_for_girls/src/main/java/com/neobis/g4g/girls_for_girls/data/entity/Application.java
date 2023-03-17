@@ -1,36 +1,20 @@
 package com.neobis.g4g.girls_for_girls.data.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Data
-@Entity
-@NoArgsConstructor
+
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Entity
 @Table(name = "application")
 public class Application {
-
-    public Application(Timestamp recTime, String fullName, Timestamp dateOfBirth, String email, String address, String workFormat, String motivation, String aboutMe, String achievements, String myFails, String mySkills) {
-        this.recTime = recTime;
-        this.fullName = fullName;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-        this.address = address;
-        this.workFormat = workFormat;
-        this.motivation = motivation;
-        this.aboutMe = aboutMe;
-        this.achievements = achievements;
-        this.myFails = myFails;
-        this.mySkills = mySkills;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
