@@ -89,8 +89,8 @@ public class UserManager implements UserDetailsManager {
     public ResponseEntity<?> saveUser(UserDTO userDTO, User user){
         try {
 
-            UserGroup userGroup = userGroupRepository.findById(userDTO.getRole_id());
-            File file = fileRepository.findById(userDTO.getFile_id()).get();
+            UserGroup userGroup = userGroupRepository.findById(userDTO.getRole().getId());
+            File file = fileRepository.findById(userDTO.getFile().getId()).get();
             User newUser = new User();
 
             newUser.setEmail(userDTO.getEmail());
@@ -116,8 +116,8 @@ public class UserManager implements UserDetailsManager {
 
             if(exist) {
                 User user = userRepository.findByEmail(userDTO.getEmail()).get();
-                UserGroup role = userGroupRepository.findById(userDTO.getRole_id());
-                File file = fileRepository.findById(userDTO.getFile_id()).get();
+                UserGroup role = userGroupRepository.findById(userDTO.getRole().getId());
+                File file = fileRepository.findById(userDTO.getFile().getId()).get();
 
                 user.setEmail(userDTO.getEmail());
                 user.setFirstName(userDTO.getFirstName());
