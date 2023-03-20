@@ -57,7 +57,7 @@ public class Security implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("*")
-                .allowedOrigins("*")
+                .allowedOrigins("https://g4g.herokuapp.com")
                 .allowedHeaders("*")
                 .exposedHeaders("*")
                 .allowCredentials(false)
