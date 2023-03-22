@@ -5,6 +5,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.TokenDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.RefreshToken;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
+import com.neobis.g4g.girls_for_girls.exception.UserNotFoundException;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
 import com.neobis.g4g.girls_for_girls.repository.RefreshTokenRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
@@ -118,12 +119,23 @@ public class JwtAuthenticationService {
             return ResponseEntity.badRequest().body("This refresh was invalidated");
         }
 
+
         refreshTokenRepository.delete(refreshTokenEntity);
 
         Authentication authentication = jwtAuthenticationProvider
                 .authenticate(new BearerTokenAuthenticationToken(tokenDTO.getRefreshToken()));
 
-        return ResponseEntity.ok(tokenGenerator.createToken(authentication));
+        User user = userRepository.findById(refreshTokenEntity.getUserId()).orElseThrow(() -> new UserNotFoundException(null));
+
+        TokenDTO newTokenDTO = tokenGenerator.createToken(authentication);
+
+        RefreshToken newRefreshTokenEntity = new RefreshToken();
+
+        newRefreshTokenEntity.setUserId(user.getId());
+        newRefreshTokenEntity.setToken(newTokenDTO.getRefreshToken());
+        refreshTokenRepository.save(newRefreshTokenEntity);
+
+        return ResponseEntity.ok(newTokenDTO);
     }
 
     public ResponseEntity<String> activateAccount(String token) {
@@ -148,7 +160,7 @@ public class JwtAuthenticationService {
             return ResponseEntity.ok().body("Account activated successfully");
 
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token!");
         }
     }
 }
