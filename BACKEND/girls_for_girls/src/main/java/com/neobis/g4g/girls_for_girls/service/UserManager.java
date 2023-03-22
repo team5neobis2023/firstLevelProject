@@ -86,11 +86,10 @@ public class UserManager implements UserDetailsManager {
         }
     }
 
-    public ResponseEntity<?> saveUser(UserDTO userDTO, User user){
+    public ResponseEntity<?> saveUser(UserDTO userDTO){
         try {
 
-            UserGroup userGroup = userGroupRepository.findById(userDTO.getRole().getId());
-            File file = fileRepository.findById(userDTO.getFile().getId()).get();
+            UserGroup userGroup = userGroupRepository.findById(3);
             User newUser = new User();
 
             newUser.setEmail(userDTO.getEmail());
@@ -99,7 +98,6 @@ public class UserManager implements UserDetailsManager {
             newUser.setFirstName(userDTO.getFirstName());
             newUser.setLastName(userDTO.getLastName());
             newUser.setPhoneNumber(userDTO.getPhoneNumber());
-            newUser.setFile(file);
             newUser.setPlaceOfBirth(userDTO.getPlaceOfBirth());
             userRepository.save(newUser);
 
