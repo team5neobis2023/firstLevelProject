@@ -61,7 +61,7 @@ public class OrderService {
                     order.setAmount(product.getPrice());
                     orderRepo.save(order);
                     return ResponseEntity.ok("Order with this id: " + id + " updated");
-                }).orElse(new ResponseEntity<>("Order with this id: " + id + " not foudn", HttpStatus.NOT_FOUND));
+                }).orElse(new ResponseEntity<>("Order with this id: " + id + " not found", HttpStatus.NOT_FOUND));
     }
 
     public ResponseEntity<String> deleteOrder(Long id) {

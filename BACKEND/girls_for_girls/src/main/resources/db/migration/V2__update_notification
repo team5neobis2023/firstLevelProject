@@ -1,0 +1,2 @@
+ALTER TABLE notification add column readed boolean default false;
+alter table notification add constraint user_id foreign key (user_id) references users(id);

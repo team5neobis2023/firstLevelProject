@@ -2,12 +2,11 @@ package com.neobis.g4g.girls_for_girls.data.dto;
 
 import com.neobis.g4g.girls_for_girls.data.entity.File;
 import com.neobis.g4g.girls_for_girls.data.entity.UserGroup;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class UserDTO {
     private long id;

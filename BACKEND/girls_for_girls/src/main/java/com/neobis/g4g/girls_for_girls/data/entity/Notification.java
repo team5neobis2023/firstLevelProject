@@ -27,8 +27,11 @@ public class Notification {
     @Column(name = "message")
     private String message;
 
+    @Column(name = "readed")
+    private boolean readed;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
 }

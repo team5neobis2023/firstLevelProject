@@ -1,18 +1,13 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.NotificationDTO;
-import com.neobis.g4g.girls_for_girls.data.dto.ProductDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.Notification;
 import com.neobis.g4g.girls_for_girls.service.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,13 +34,48 @@ public class NotificationController {
     @GetMapping("/{id}")
     @Operation(
             summary = "Получить уведомление",
-            description = "Позволяет получить уведомление по его ID",
+            description = "Позволяет получить уведомление по ID пользователя",
             tags = "Уведомление"
     )
-    public ResponseEntity<?> getNotificationId(@PathVariable
-                                          @Parameter(description = "Идентификатор уведомления")
+    public ResponseEntity<?> getNotificationsByUserID(@PathVariable
+                                          @Parameter(description = "Идентификатор пользователя")
                                           Long id) {
-        return notificationService.getNotificationId(id);
+        return notificationService.getNotificationsByUserID(id);
+    }
+
+    @PostMapping
+    @Operation(
+            summary = "Добавить уведомление",
+            description = "Позволяет добавить уведомление",
+            tags = "Уведомление"
+    )
+    public ResponseEntity<?> addNotification(@RequestBody NotificationDTO notificationDTO) {
+        return notificationService.addNotification(notificationDTO);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Изменить уведомление",
+            description = "Позволяет изменять уведомление",
+            tags = "Уведомление"
+    )
+    public ResponseEntity<?> updateNotification(@PathVariable
+                                                    @Parameter(description = "Идентификатор уведомления")
+                                                    Long id,
+                                                    @RequestBody NotificationDTO notificationDTO) {
+        return notificationService.updateNotification(id, notificationDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(
+            summary = "Удалить уведомление",
+            description = "Позволяет удалять уведомление",
+            tags = "Уведомление"
+    )
+    public ResponseEntity<String> deleteNotification(@PathVariable
+                                                         @Parameter(description = "Идентификатор уведомления")
+                                                         Long id) {
+        return notificationService.deleteNotification(id);
     }
 
 }

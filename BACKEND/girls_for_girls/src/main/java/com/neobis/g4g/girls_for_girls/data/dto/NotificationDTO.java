@@ -2,23 +2,27 @@ package com.neobis.g4g.girls_for_girls.data.dto;
 
 import com.neobis.g4g.girls_for_girls.data.entity.Notification;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class NotificationDTO {
 
     private String message;
-    private User user;
+    private Long userId;
 
     public static NotificationDTO notificationToNorificationDto(Notification notification) {
         return NotificationDTO.builder()
                 .message(notification.getMessage())
-                .user(notification.getUserId())
+                .userId(notification.getUser().getId())
                 .build();
     }
 
