@@ -44,6 +44,12 @@ public class UserController {
         return userManager.getAllArticlesByLikedUsersId(id);
     }
 
+    @GetMapping("/{id}/notifications")
+    @Operation(summary = "Получить все уведомления пользователя", tags = "Аккаунт")
+    public ResponseEntity<?> getAllNotificationsByUserId(@PathVariable("id") long id){
+        return userManager.getAllNotificationsByUserId(id);
+    }
+
     @Operation(summary = "Добавить новый аккаунт", tags = "Аккаунт")
     @PostMapping()
     @PreAuthorize("hasAuthority('ADMIN')")

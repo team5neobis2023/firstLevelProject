@@ -5,10 +5,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.File;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.data.entity.UserGroup;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
-import com.neobis.g4g.girls_for_girls.repository.ArticleRepository;
-import com.neobis.g4g.girls_for_girls.repository.FileRepository;
-import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
-import com.neobis.g4g.girls_for_girls.repository.UserRepository;
+import com.neobis.g4g.girls_for_girls.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +16,10 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+
+import static com.neobis.g4g.girls_for_girls.data.dto.ArticleDTO.toArticleDTO;
+import static com.neobis.g4g.girls_for_girls.data.dto.NotificationDTO.notificationToNotificationDtoList;
+
 @Service
 public class UserManager implements UserDetailsManager {
 
@@ -27,15 +28,17 @@ public class UserManager implements UserDetailsManager {
     private final UserGroupRepository userGroupRepository;
     private final FileRepository fileRepository;
     private final ArticleRepository articleRepository;
+    private final NotificationRepo notificationRepo;
 
     @Autowired
     public UserManager(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository, FileRepository fileRepository, ArticleRepository articleRepository) {
+                       PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository, FileRepository fileRepository, ArticleRepository articleRepository, NotificationRepo notificationRepo) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userGroupRepository = userGroupRepository;
         this.fileRepository = fileRepository;
         this.articleRepository = articleRepository;
+        this.notificationRepo = notificationRepo;
     }
 
     @Override
@@ -80,7 +83,15 @@ public class UserManager implements UserDetailsManager {
 
     public ResponseEntity<?> getAllArticlesByLikedUsersId(long id){
         if(userRepository.existsById(id)){
-            return ResponseEntity.ok(articleRepository.findArticlesByLikedUsersId(id));
+            return ResponseEntity.ok(toArticleDTO(articleRepository.findArticlesByLikedUsersId(id)));
+        }else{
+            return new ResponseEntity<>("User with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    public ResponseEntity<?> getAllNotificationsByUserId(long id) {
+        if(userRepository.existsById(id)){
+            return ResponseEntity.ok(notificationToNotificationDtoList(notificationRepo.findAllByUserId(id)));
         }else{
             return new ResponseEntity<>("User with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
         }
