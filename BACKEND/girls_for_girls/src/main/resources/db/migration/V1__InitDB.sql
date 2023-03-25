@@ -24,7 +24,7 @@ CREATE TABLE users(
     id int primary key AUTO_INCREMENT,
     rec_time timestamp default now(),
     first_name varchar(255),
-    last_name varchar(255),
+    last_name varchar(255), 
     email varchar(255),
     password varchar(255),
     place_of_birth varchar(255),
