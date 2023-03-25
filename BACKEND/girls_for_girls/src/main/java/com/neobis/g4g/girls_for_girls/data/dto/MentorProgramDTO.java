@@ -3,10 +3,7 @@ package com.neobis.g4g.girls_for_girls.data.dto;
 import com.neobis.g4g.girls_for_girls.data.entity.Application;
 import com.neobis.g4g.girls_for_girls.data.entity.MentorProgram;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,9 +12,10 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class MentorProgramDTO {
     @NotEmpty(message = "Описание не может быть пустым")

@@ -15,14 +15,6 @@ import java.util.Set;
 @Entity
 @Table(name = "video_course")
 public class VideoCourse {
-
-    public VideoCourse(Timestamp recTime, String description, int rating, User userId) {
-        this.recTime = recTime;
-        this.description = description;
-        this.rating = rating;
-        this.userId = userId;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -39,6 +31,10 @@ public class VideoCourse {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private VideoCourseCategory videoCourseCategory;
 
 }

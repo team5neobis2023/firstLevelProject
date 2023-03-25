@@ -77,7 +77,7 @@ public class VideoCourseController {
             summary = "Обновление данных видеокурса по айди",
             tags = "Видеокурс"
     )
-    public ResponseEntity<?> updateVideoCourse(@PathVariable("id")
+    public ResponseEntity<String> updateVideoCourse(@PathVariable("id")
                                                @Parameter(description = "Идентификатор видеокурса") long id,
                                                @RequestBody @Valid VideoCourseDTO videoCourseDTO,
                                                BindingResult bindingResult){
@@ -89,7 +89,7 @@ public class VideoCourseController {
             summary = "Удаление видеокурса по айди",
             tags = "Видеокурс"
     )
-    public ResponseEntity<?> deleteVideoCourse(@PathVariable("id")
+    public ResponseEntity<String> deleteVideoCourse(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор видеокурса") long id){
         return videoCourseService.deleteVideoCourse(id);
     }

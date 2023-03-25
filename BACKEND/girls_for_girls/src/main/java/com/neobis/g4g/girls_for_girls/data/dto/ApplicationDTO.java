@@ -4,10 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.Application;
 import com.neobis.g4g.girls_for_girls.data.entity.Conference;
 import com.neobis.g4g.girls_for_girls.data.entity.MentorProgram;
 import com.neobis.g4g.girls_for_girls.data.entity.Training;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -16,9 +13,10 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ApplicationDTO {
     @NotEmpty(message = "ФИО не может быть пустым")
