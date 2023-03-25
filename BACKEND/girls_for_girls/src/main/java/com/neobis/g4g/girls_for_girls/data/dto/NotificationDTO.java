@@ -19,7 +19,7 @@ public class NotificationDTO {
     private String message;
     private Long userId;
 
-    public static NotificationDTO notificationToNorificationDto(Notification notification) {
+    public static NotificationDTO notificationToNotificationDto(Notification notification) {
         return NotificationDTO.builder()
                 .message(notification.getMessage())
                 .userId(notification.getUser().getId())
@@ -27,6 +27,6 @@ public class NotificationDTO {
     }
 
     public static List<NotificationDTO> notificationToNotificationDtoList(List<Notification> notifications) {
-        return notifications.stream().map(NotificationDTO::notificationToNorificationDto).collect(Collectors.toList());
+        return notifications.stream().map(NotificationDTO::notificationToNotificationDto).collect(Collectors.toList());
     }
 }
