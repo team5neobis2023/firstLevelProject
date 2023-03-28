@@ -19,4 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByResetToken(String resetToken);
 
     List<User> findUsersByLikedArticlesId(long id);
+
+    List<User> findUsersByRegionId(long id);
 }
