@@ -26,16 +26,18 @@ public class UserManager implements UserDetailsManager {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserGroupRepository userGroupRepository;
+    private final RegionRepository regionRepository;
     private final FileRepository fileRepository;
     private final ArticleRepository articleRepository;
     private final NotificationRepo notificationRepo;
 
     @Autowired
     public UserManager(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository, FileRepository fileRepository, ArticleRepository articleRepository, NotificationRepo notificationRepo) {
+                       PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository, RegionRepository regionRepository, FileRepository fileRepository, ArticleRepository articleRepository, NotificationRepo notificationRepo) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userGroupRepository = userGroupRepository;
+        this.regionRepository = regionRepository;
         this.fileRepository = fileRepository;
         this.articleRepository = articleRepository;
         this.notificationRepo = notificationRepo;
@@ -109,7 +111,7 @@ public class UserManager implements UserDetailsManager {
             newUser.setFirstName(userDTO.getFirstName());
             newUser.setLastName(userDTO.getLastName());
             newUser.setPhoneNumber(userDTO.getPhoneNumber());
-            newUser.setPlaceOfBirth(userDTO.getPlaceOfBirth());
+            newUser.setRegion(regionRepository.findById(userDTO.getRegion_id()).get());
             userRepository.save(newUser);
 
             return ResponseEntity.ok().body(newUser.getId());
@@ -135,7 +137,7 @@ public class UserManager implements UserDetailsManager {
                 user.setPhoneNumber(userDTO.getPhoneNumber());
                 user.setFile(file);
                 user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-                user.setPlaceOfBirth(userDTO.getPlaceOfBirth());
+                user.setRegion(regionRepository.findById(userDTO.getRegion_id()).get());
                 userRepository.save(user);
 
                 return ResponseEntity.ok().body(user.getId());

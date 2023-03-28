@@ -8,6 +8,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.UserNotFoundException;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
 import com.neobis.g4g.girls_for_girls.repository.RefreshTokenRepository;
+import com.neobis.g4g.girls_for_girls.repository.RegionRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserGroupRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import com.neobis.g4g.girls_for_girls.security.TokenGenerator;
@@ -35,6 +36,7 @@ import java.util.Random;
 public class JwtAuthenticationService {
     private final UserRepository userRepository;
     private final UserGroupRepository userGroupRepository;
+    private final RegionRepository regionRepository;
     private final UserDetailsManager userDetailsManager;
     private final EmailService emailService;
     private final DaoAuthenticationProvider daoAuthenticationProvider;
@@ -43,12 +45,13 @@ public class JwtAuthenticationService {
     private final JwtAuthenticationProvider jwtAuthenticationProvider;
     @Autowired
     public JwtAuthenticationService(UserRepository userRepository, UserGroupRepository userGroupRepository,
-                                    UserDetailsManager userDetailsManager, EmailService emailService,
+                                    RegionRepository regionRepository, UserDetailsManager userDetailsManager, EmailService emailService,
                                     DaoAuthenticationProvider daoAuthenticationProvider, TokenGenerator tokenGenerator,
                                     RefreshTokenRepository refreshTokenRepository,
                                     @Qualifier("jwtRefreshTokenAuthProvider") JwtAuthenticationProvider jwtAuthenticationProvider) {
         this.userRepository = userRepository;
         this.userGroupRepository = userGroupRepository;
+        this.regionRepository = regionRepository;
         this.userDetailsManager = userDetailsManager;
         this.emailService = emailService;
         this.daoAuthenticationProvider = daoAuthenticationProvider;
@@ -66,7 +69,7 @@ public class JwtAuthenticationService {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setPlaceOfBirth(userDTO.getPlaceOfBirth());
+        user.setRegion(regionRepository.findById(userDTO.getRegion_id()).get());
         user.setResetToken(String.valueOf(random.nextInt(1000, 9999)));
 
 

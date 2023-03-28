@@ -44,8 +44,9 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "place_of_birth")
-    private String placeOfBirth;
+    @ManyToOne
+    @JoinColumn(name = "region_id")
+    private Region region;
 
     @Column(name = "phone_number")
     private String phoneNumber;

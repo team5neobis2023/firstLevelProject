@@ -1,7 +1,6 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
-import com.neobis.g4g.girls_for_girls.data.dto.RegionDTO;
-import com.neobis.g4g.girls_for_girls.data.dto.VideoCourseCategoryDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.Region;
 import com.neobis.g4g.girls_for_girls.service.RegionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,7 +29,7 @@ public class RegionController {
             tags = "Регион"
     )
     @GetMapping
-    public List<RegionDTO> getAllRegions() {
+    public List<Region> getAllRegions() {
         return regionService.getAllRegions();
     }
 
@@ -45,4 +44,16 @@ public class RegionController {
                                                         Long id) {
         return regionService.getRegionById(id);
     }
+
+    @Operation(
+            summary = "Получить пользователей по айди региона",
+            tags = "Категории видеокурсов"
+    )
+    @GetMapping("/{id}/users")
+    public ResponseEntity<?> getAllUsersByRegionId(@PathVariable
+                                                       @Parameter(description = "Идентификатор региона")
+                                                       Long id) {
+        return regionService.getAllUsersByRegionId(id);
+    }
+
 }
