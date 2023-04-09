@@ -6,6 +6,7 @@ import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import com.neobis.g4g.girls_for_girls.service.UserManager;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,23 +28,27 @@ public class UserController {
     }
 
     @Operation(summary = "Получить аккаунт по его ID", tags = "Аккаунт")
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     public User getUser(@PathVariable long id) {
         return userRepository.findById(id).get();
     }
 
     @Operation(summary = "Получить все аккаунты и поиск по логину", tags = "Аккаунт")
+    @SecurityRequirement(name = "JWT")
     @GetMapping()
     public List<User> getUsers() {
         return userRepository.findAll();
     }
 
     @GetMapping("/{id}/likedArticles")
+    @SecurityRequirement(name = "JWT")
     @Operation(summary = "Получить все лайкнутые пользователем посты", tags = "Аккаунт")
     public ResponseEntity<?> getAllArticlesByLikedUsersId(@PathVariable("id")  long id){
         return userManager.getAllArticlesByLikedUsersId(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/notifications")
     @Operation(summary = "Получить все уведомления пользователя", tags = "Аккаунт")
     public ResponseEntity<?> getAllNotificationsByUserId(@PathVariable("id") long id){
@@ -51,6 +56,7 @@ public class UserController {
     }
 
     @Operation(summary = "Добавить новый аккаунт", tags = "Аккаунт")
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO, @AuthenticationPrincipal User authUser) {
@@ -58,6 +64,7 @@ public class UserController {
     }
 
     @Operation(summary = "Изменить аккаунт", tags = "Аккаунт")
+    @SecurityRequirement(name = "JWT")
     @PutMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO){

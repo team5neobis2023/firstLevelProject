@@ -7,6 +7,7 @@ import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.service.ApplicationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,7 @@ public class ApplicationController {
         this.applicationService = applicationService;
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех заявок",
@@ -40,6 +42,7 @@ public class ApplicationController {
         return applicationService.getAllApplications();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение заявки",
@@ -52,6 +55,7 @@ public class ApplicationController {
         return applicationService.getApplicationById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
             summary = "Добавление заявки",
@@ -62,6 +66,7 @@ public class ApplicationController {
         return applicationService.addApplication(applicationDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
             summary = "Обновление данных заявки",
@@ -74,6 +79,7 @@ public class ApplicationController {
         return applicationService.updateApplication(id, applicationDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удаление заявки",

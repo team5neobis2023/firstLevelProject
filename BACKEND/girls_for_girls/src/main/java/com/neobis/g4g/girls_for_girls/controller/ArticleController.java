@@ -4,6 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.ArticleDTO;
 import com.neobis.g4g.girls_for_girls.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -28,12 +29,14 @@ public class ArticleController {
         this.articleService = articleService;
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(summary = "Получение всех постов", tags = "Пост")
     public List<ArticleDTO> getAllArticles(){
         return articleService.getAllArticles();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(summary = "Получение поста по айди", tags = "Пост")
     public ResponseEntity<?> getArticleById(@PathVariable("id")
@@ -41,6 +44,7 @@ public class ArticleController {
         return articleService.getArticleById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(summary = "Добавление поста", tags = "Пост")
     public ResponseEntity<?> addArticle(@RequestBody @Valid ArticleDTO articleDTO,
@@ -48,6 +52,7 @@ public class ArticleController {
         return articleService.addArticle(articleDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(summary = "Обновление данных поста", tags = "Пост")
     public ResponseEntity<?> updateArticle(@PathVariable("id")
@@ -57,6 +62,7 @@ public class ArticleController {
         return articleService.updateArticle(id, articleDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(summary = "Удаление поста по айди", tags = "Пост")
     public ResponseEntity<?> deleteArticleById(@PathVariable("id")
@@ -64,6 +70,7 @@ public class ArticleController {
         return articleService.deleteArticleById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/likedUsers")
     @Operation(summary = "Получение пользователей лайкнувших пост по айди поста", tags = "Пост")
     public ResponseEntity<?> getAllLikedUsersByArticleId(@PathVariable("id") @Parameter(description = "Идентификатор поста") long id){

@@ -4,6 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.NotificationDTO;
 import com.neobis.g4g.girls_for_girls.service.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping
     @Operation(
             summary = "Получить все уведомления",
@@ -31,6 +33,7 @@ public class NotificationController {
         return notificationService.getAllNotifications();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получить уведомление",
@@ -43,6 +46,7 @@ public class NotificationController {
         return notificationService.getNotificationsByUserID(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping
     @Operation(
             summary = "Добавить уведомление",
@@ -53,6 +57,7 @@ public class NotificationController {
         return notificationService.addNotification(notificationDTO);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
             summary = "Изменить уведомление",
@@ -66,6 +71,7 @@ public class NotificationController {
         return notificationService.updateNotification(id, notificationDTO);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удалить уведомление",

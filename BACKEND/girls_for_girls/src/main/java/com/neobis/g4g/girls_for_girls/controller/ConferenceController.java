@@ -7,6 +7,7 @@ import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.service.ConferenceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class ConferenceController {
         this.conferenceService = conferenceService;
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех конференций",
@@ -41,6 +43,7 @@ public class ConferenceController {
         return conferenceService.getAllConferences();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/applications")
     @Operation(
             summary = "Получение заявок на конференцию по айди конференции",
@@ -51,6 +54,7 @@ public class ConferenceController {
         return conferenceService.getAllApplicationsByConferenceId(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение конференции по айди",
@@ -61,6 +65,7 @@ public class ConferenceController {
         return conferenceService.getConferenceById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
             summary = "Добавление конференции",
@@ -71,6 +76,7 @@ public class ConferenceController {
         return conferenceService.addConference(conferencesDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
             summary = "Обновление данных конференции",
@@ -83,6 +89,7 @@ public class ConferenceController {
         return conferenceService.updateConference(id, conferencesDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удаление конференции",

@@ -4,6 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.Region;
 import com.neobis.g4g.girls_for_girls.service.RegionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class RegionController {
             summary = "Получить все регионы",
             tags = "Регион"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping
     public List<Region> getAllRegions() {
         return regionService.getAllRegions();
@@ -38,6 +40,7 @@ public class RegionController {
             description = "Позволяет получить регион по его ID",
             tags = "Регион"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     public ResponseEntity<?> getRegionById(@PathVariable
                                                         @Parameter(description = "Идентификатор региона")
@@ -49,6 +52,7 @@ public class RegionController {
             summary = "Получить пользователей по айди региона",
             tags = "Категории видеокурсов"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/users")
     public ResponseEntity<?> getAllUsersByRegionId(@PathVariable
                                                        @Parameter(description = "Идентификатор региона")

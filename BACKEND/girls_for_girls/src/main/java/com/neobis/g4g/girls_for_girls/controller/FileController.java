@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,6 +29,7 @@ public class FileController {
         this.fileService = fileService;
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping("/upload")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MENTOR')")
     @Operation(summary = "Загрузка файла", tags = "Файлы")
@@ -42,6 +44,7 @@ public class FileController {
         return fileService.upload(files, productId, articleId, authUser);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/download")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MENTOR')")
     @Operation(summary = "Выгрузка файла", tags = "Файлы")
@@ -50,6 +53,7 @@ public class FileController {
         return fileService.download(fileCode);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/download/{productId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MENTOR')")
     @Operation(summary = "Выгрзука файла по Id продукта", tags = "Файлы")
@@ -58,6 +62,7 @@ public class FileController {
         return fileService.downloadByProductId(productId);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/download/{articleId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MENTOR')")
     @Operation(summary = "Выгрзука файла по Id статьи", tags = "Файлы")
@@ -66,6 +71,7 @@ public class FileController {
         return fileService.downloadByArticleId(articleId);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/delete")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MENTOR')")
     @Operation(summary = "Удаление файла", tags = "Файлы")

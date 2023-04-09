@@ -8,6 +8,7 @@ import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.service.TrainingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class TrainingController {
         this.trainingService = trainingService;
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех тренингов",
@@ -41,6 +43,7 @@ public class TrainingController {
         return trainingService.getAllTrainings();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/applications")
     @Operation(
             summary = "Получение заявок на тренинг по айди тренинга",
@@ -51,6 +54,7 @@ public class TrainingController {
         return trainingService.getAllApplicationsByTrainingId(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение тренинга по айди",
@@ -61,6 +65,7 @@ public class TrainingController {
         return trainingService.getTrainingById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
             summary = "Добавление тренинга",
@@ -71,6 +76,7 @@ public class TrainingController {
         return trainingService.addTraining(trainingDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
             summary = "Обновление данных тренинга",
@@ -83,6 +89,7 @@ public class TrainingController {
         return trainingService.updateTraining(id, trainingDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удаление тренинга",

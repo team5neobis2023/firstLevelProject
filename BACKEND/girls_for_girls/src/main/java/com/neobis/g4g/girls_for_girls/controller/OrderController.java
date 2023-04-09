@@ -5,6 +5,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.ProductDTO;
 import com.neobis.g4g.girls_for_girls.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping
     @Operation(
             summary = "Получение всех заказов",
@@ -32,6 +34,7 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение заказа",
@@ -44,7 +47,7 @@ public class OrderController {
         return orderService.getOrderId(id);
     }
 
-
+    @SecurityRequirement(name = "JWT")
     @Operation(
             summary = "Добавление заказа",
             tags = "Заказ"
@@ -59,6 +62,7 @@ public class OrderController {
             description = "Позволяет изменить заказ по его ID",
             tags = "Заказ"
     )
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(@PathVariable
                                            @Parameter(description = "Идентификатор заказа")
@@ -72,6 +76,7 @@ public class OrderController {
             description = "Позволяет удалить заказ по его ID",
             tags = "Заказ"
     )
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOrder(@PathVariable
                                                 @Parameter(description = "Идентификатор заказа")

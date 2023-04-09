@@ -8,6 +8,7 @@ import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.service.FeedbackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class FeedbackController {
         this.feedbackService = feedbackService;
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех отзывов",
@@ -43,6 +45,7 @@ public class FeedbackController {
         return feedbackService.getAllFeedbacks();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение отзыва по айди",
@@ -53,6 +56,7 @@ public class FeedbackController {
         return feedbackService.getFeedbackById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
             summary = "Добавление отзыва",
@@ -63,6 +67,7 @@ public class FeedbackController {
         return feedbackService.addFeedback(feedbackDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
             summary = "Обновление данных отзыва",
@@ -75,6 +80,7 @@ public class FeedbackController {
         return feedbackService.updateFeedback(id, feedbackDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удаление отзыва",

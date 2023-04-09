@@ -10,6 +10,7 @@ import com.neobis.g4g.girls_for_girls.service.ProductGroupService;
 import com.neobis.g4g.girls_for_girls.service.VideoCourseCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class VideoCourseCategoryController {
             summary = "Получить категории видеокурсов",
             tags = "Категории видеокурсов"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping
     public List<VideoCourseCategoryDTO> getAllVideoCourseCategories() {
         return videoCourseCategoryService.getAllVideoCourseCategories();
@@ -44,6 +46,7 @@ public class VideoCourseCategoryController {
             description = "Позволяет получить категорию по ее ID",
             tags = "Категории видеокурсов"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     public ResponseEntity<?> getVideoCourseCategoryById(@PathVariable
                                                @Parameter(description = "Идентификатор категории")
@@ -55,6 +58,7 @@ public class VideoCourseCategoryController {
             summary = "Получить видеокурсы по айди категории",
             tags = "Категории видеокурсов"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/videoCourses")
     public ResponseEntity<?> getAllVideoCoursesByVideoCourseCategoryId(@PathVariable
                                                         @Parameter(description = "Идентификатор категории")
@@ -66,6 +70,7 @@ public class VideoCourseCategoryController {
             summary = "Добавить категорию видеокурсов",
             tags = "Категории видеокурсов"
     )
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     public ResponseEntity<String> addVideoCourseCategory(@RequestBody @Valid VideoCourseCategoryDTO videoCourseCategoryDTO,
                                                     BindingResult bindingResult) {
@@ -77,6 +82,7 @@ public class VideoCourseCategoryController {
             description = "Позволяет изменить категорию по ее ID",
             tags = "Категории видеокурсов"
     )
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateVideoCourseCategory(@PathVariable
                                                 @Parameter(description = "Идентификатор категории") Long id,
@@ -90,6 +96,7 @@ public class VideoCourseCategoryController {
             description = "Позволяет удалить категорию по ее ID",
             tags = "Типы товара"
     )
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteVideoCourseCategoryById(@PathVariable
                                                      @Parameter(description = "Идентификатор категории")

@@ -4,6 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.ProductGroupDTO;
 import com.neobis.g4g.girls_for_girls.service.ProductGroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class ProductGroupController {
             summary = "Получить типы товара",
             tags = "Типы товара"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping
     public List<ProductGroupDTO> getAllProductGroups() {
         return productGroupService.getAllProductGroups();
@@ -36,6 +38,7 @@ public class ProductGroupController {
             description = "Позволяет получить тип товара по его ID",
             tags = "Типы товара"
     )
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductGroupId(@PathVariable
                                                    @Parameter(description = "Идентификатор типа товара")
@@ -47,6 +50,7 @@ public class ProductGroupController {
             summary = "Добавить тип товара",
             tags = "Типы товара"
     )
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     public ResponseEntity<?> addProductGroup(@RequestBody ProductGroupDTO productGroupDTO) {
         return productGroupService.addProductGroup(productGroupDTO);
@@ -57,6 +61,7 @@ public class ProductGroupController {
             description = "Позволяет изменить тип товара по его ID",
             tags = "Типы товара"
     )
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProductGroup(@PathVariable
                                                     @Parameter(description = "Идентификатор типа товара")
@@ -70,6 +75,7 @@ public class ProductGroupController {
             description = "Позволяет удалить тип товара по его ID",
             tags = "Типы товара"
     )
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProductGroup(@PathVariable
                                                          @Parameter(description = "Идентификатор типа товара")

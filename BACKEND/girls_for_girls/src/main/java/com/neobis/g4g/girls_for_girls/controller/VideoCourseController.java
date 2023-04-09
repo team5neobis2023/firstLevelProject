@@ -8,6 +8,7 @@ import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.service.VideoCourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ public class VideoCourseController {
         this.videoCourseService = videoCourseService;
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех видеокурсов",
@@ -42,6 +44,7 @@ public class VideoCourseController {
         return videoCourseService.getAllVideoCourses();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение видеокурса по айди",
@@ -52,6 +55,7 @@ public class VideoCourseController {
         return videoCourseService.getVideoCourseById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/feedbacks")
     @Operation(
             summary = "Получение отзывов по айди видеокурса",
@@ -62,6 +66,7 @@ public class VideoCourseController {
         return videoCourseService.getAllFeedbacksByVideoCourseId(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
             summary = "Добавление видеокурса",
@@ -72,6 +77,7 @@ public class VideoCourseController {
         return videoCourseService.addVideoCourse(videoCourseDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
             summary = "Обновление данных видеокурса по айди",
@@ -84,6 +90,7 @@ public class VideoCourseController {
         return videoCourseService.updateVideoCourse(id, videoCourseDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удаление видеокурса по айди",

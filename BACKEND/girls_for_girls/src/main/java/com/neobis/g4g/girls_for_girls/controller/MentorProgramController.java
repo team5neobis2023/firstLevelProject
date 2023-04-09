@@ -8,6 +8,7 @@ import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.service.MentorProgramService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class MentorProgramController {
         this.mentorProgramService = mentorProgramService;
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех менторских программ",
@@ -41,6 +43,7 @@ public class MentorProgramController {
         return mentorProgramService.getAllMentorPrograms();
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/applications")
     @Operation(
             summary = "Получение заявок на менторскую программу по айди программы",
@@ -51,6 +54,7 @@ public class MentorProgramController {
         return mentorProgramService.getAllApplicationsByMentorProgramId(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение менторской программы по айди",
@@ -61,6 +65,7 @@ public class MentorProgramController {
         return mentorProgramService.getMentorProgramById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
             summary = "Добавление менторской программы",
@@ -71,6 +76,7 @@ public class MentorProgramController {
         return mentorProgramService.addMentorProgram(mentorProgramDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
             summary = "Обновление данных менторской программы",
@@ -83,6 +89,7 @@ public class MentorProgramController {
         return mentorProgramService.updateMentorProgram(id, mentorProgramDTO, bindingResult);
     }
 
+    @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удаление менторской программы",
