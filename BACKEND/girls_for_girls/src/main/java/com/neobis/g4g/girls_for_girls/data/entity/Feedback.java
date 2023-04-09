@@ -25,14 +25,9 @@ public class Feedback {
     @Column(name = "rec_time")
     private Timestamp recTime;
 
-    @Column(name = "full_name")
-    private String fullName;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "message")
     private String message;

@@ -18,15 +18,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class FeedbackDTO {
-    @NotEmpty(message = "ФИО не может быть пустым")
-    private String fullName;
-
-    @NotEmpty(message = "Электронная почта не может быть пустой")
-    @Email(message = "Введите почту корректно")
-    private String email;
-
-    @NotEmpty(message = "Номер телефона не может быть пустым")
-    private String phoneNumber;
 
     @NotEmpty(message = "Отзыв не может быть пустым")
     @Size(min = 3, message = "Отзыв должен содержать от 3 символов")
@@ -37,13 +28,14 @@ public class FeedbackDTO {
     @NotNull(message = "Идентификатор видеокурса не может быть пустым")
     private long videoCourseId;
 
+    private long userId;
+
     public static FeedbackDTO toFeedbackDTO(Feedback feedback){
         return FeedbackDTO.builder()
-                .fullName(feedback.getFullName())
-                .email(feedback.getEmail())
                 .message(feedback.getMessage())
-                .phoneNumber(feedback.getPhoneNumber())
                 .videoCourseId(feedback.getVideoCourse().getId())
+                .recTime(feedback.getRecTime())
+                .userId(feedback.getUser().getId())
                 .build();
     }
 

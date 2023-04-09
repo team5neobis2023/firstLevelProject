@@ -2,6 +2,7 @@ package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.VideoCourseDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,8 +75,9 @@ public class VideoCourseController {
             tags = "Видеокурс"
     )
     public ResponseEntity<String> addVideoCourse(@RequestBody @Valid VideoCourseDTO videoCourseDTO,
-                                            BindingResult bindingResult){
-        return videoCourseService.addVideoCourse(videoCourseDTO, bindingResult);
+                                                 BindingResult bindingResult,
+                                                 @AuthenticationPrincipal User user){
+        return videoCourseService.addVideoCourse(videoCourseDTO, bindingResult, user);
     }
 
     @SecurityRequirement(name = "JWT")
@@ -86,8 +89,9 @@ public class VideoCourseController {
     public ResponseEntity<String> updateVideoCourse(@PathVariable("id")
                                                @Parameter(description = "Идентификатор видеокурса") long id,
                                                @RequestBody @Valid VideoCourseDTO videoCourseDTO,
-                                               BindingResult bindingResult){
-        return videoCourseService.updateVideoCourse(id, videoCourseDTO, bindingResult);
+                                               BindingResult bindingResult,
+                                                    @AuthenticationPrincipal User user){
+        return videoCourseService.updateVideoCourse(id, videoCourseDTO, bindingResult, user);
     }
 
     @SecurityRequirement(name = "JWT")

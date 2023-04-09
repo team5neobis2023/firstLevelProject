@@ -1,6 +1,7 @@
 package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.VideoCourseDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.data.entity.VideoCourse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
@@ -55,15 +56,15 @@ public class VideoCourseService {
     }
 
     public ResponseEntity<String> addVideoCourse(VideoCourseDTO videoCourseDTO,
-                                            BindingResult bindingResult) {
+                                            BindingResult bindingResult,
+                                                 User user) {
         if(bindingResult.hasErrors()){
             throw new NotAddedException(getErrorMsg(bindingResult).toString());
         }
 
-        if(userRepository.existsById(videoCourseDTO.getUserId())){
             if(videoCourseCategoryRepository.existsById(videoCourseDTO.getVideoCourseCategoryId())) {
                 VideoCourse videoCourse = toVideoCourse(videoCourseDTO);
-                videoCourse.setUser(userRepository.findById(videoCourseDTO.getUserId()).get());
+                videoCourse.setUser(user);
                 videoCourse.setVideoCourseCategory(videoCourseCategoryRepository.findById(videoCourseDTO.getVideoCourseCategoryId()).get());
                 videoCourse.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
                 videoCourseRepository.save(videoCourse);
@@ -71,23 +72,21 @@ public class VideoCourseService {
             }else{
                 return new ResponseEntity<>("Please write correctly video course category id", HttpStatus.BAD_REQUEST);
             }
-        }else{
-            return new ResponseEntity<>("Please write correctly user id", HttpStatus.BAD_REQUEST);
         }
-    }
+
 
     public ResponseEntity<String> updateVideoCourse(Long id, VideoCourseDTO videoCourseDTO,
-                                               BindingResult bindingResult){
+                                               BindingResult bindingResult,
+                                                    User user){
         if(bindingResult.hasErrors()){
             throw new NotUpdatedException(getErrorMsg(bindingResult).toString());
         }
 
         if(videoCourseRepository.findById(id).isPresent()){
-            if(userRepository.existsById(videoCourseDTO.getUserId())){
                 if(videoCourseCategoryRepository.existsById(videoCourseDTO.getVideoCourseCategoryId())) {
                     VideoCourse videoCourse = toVideoCourse(videoCourseDTO);
                     videoCourse.setId(id);
-                    videoCourse.setUser(userRepository.findById(videoCourseDTO.getUserId()).get());
+                    videoCourse.setUser(user);
                     videoCourse.setVideoCourseCategory(videoCourseCategoryRepository.findById(videoCourseDTO.getVideoCourseCategoryId()).get());
                     videoCourse.setRecTime(videoCourseRepository.findById(id).get().getRecTime());
                     videoCourseRepository.save(videoCourse);
@@ -95,10 +94,6 @@ public class VideoCourseService {
                 }else{
                     return new ResponseEntity<>("Please write correctly video course category id", HttpStatus.BAD_REQUEST);
                 }
-            }else{
-                return new ResponseEntity<>("Please write correctly user id", HttpStatus.BAD_REQUEST);
-            }
-
         }else {
             return new ResponseEntity<>("VideoCourse with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
         }

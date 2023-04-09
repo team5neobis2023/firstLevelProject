@@ -34,7 +34,4 @@ public class Product {
     @JoinColumn(name = "file_id")
     private File file;
 
-    @ManyToOne
-    @JoinColumn(name = "product_group_id")
-    private ProductGroup productGroup;
 }

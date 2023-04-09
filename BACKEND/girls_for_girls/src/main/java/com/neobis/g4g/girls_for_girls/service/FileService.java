@@ -34,7 +34,7 @@ public class FileService {
     public ResponseEntity<?> upload(
             MultipartFile[] files,
             Integer productId,
-            Integer articelId,
+            Integer articleId,
             User authUser) {
         List<File> fileEntities = new ArrayList<>();
 
@@ -57,8 +57,8 @@ public class FileService {
                     if(productId != null) {
                         fileEntity.setProductId(productId);
                     }
-                    if(articelId != null){
-                        fileEntity.setArticleId(articelId);
+                    if(articleId != null){
+                        fileEntity.setArticleId(articleId);
                     }
                     fileEntity.setFileCode(code);
                     fileEntity.setUserId(authUser.getId());

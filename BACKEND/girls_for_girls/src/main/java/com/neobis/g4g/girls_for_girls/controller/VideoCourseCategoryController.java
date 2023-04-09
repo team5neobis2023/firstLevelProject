@@ -1,12 +1,9 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
-import com.neobis.g4g.girls_for_girls.data.dto.ProductGroupDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.VideoCourseCategoryDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.VideoCourseCategory;
 import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
-import com.neobis.g4g.girls_for_girls.service.ProductGroupService;
 import com.neobis.g4g.girls_for_girls.service.VideoCourseCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
