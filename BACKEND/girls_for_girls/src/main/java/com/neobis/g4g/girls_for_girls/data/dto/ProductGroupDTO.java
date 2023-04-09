@@ -1,6 +1,5 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
-import com.neobis.g4g.girls_for_girls.data.entity.ProductGroup;
 import lombok.*;
 
 import java.util.List;

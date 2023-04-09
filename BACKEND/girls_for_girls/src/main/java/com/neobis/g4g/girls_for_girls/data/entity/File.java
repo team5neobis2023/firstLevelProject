@@ -37,6 +37,9 @@ public class File {
     @Column(name = "article_id")
     private int articleId;
 
+    @Column(name = "speaker_id")
+    private int speakerId;
+
     @Column(name = "user_id")
     private long userId;
 

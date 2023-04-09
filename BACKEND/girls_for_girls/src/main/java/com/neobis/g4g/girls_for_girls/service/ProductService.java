@@ -2,7 +2,6 @@ package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ProductDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Product;
-import com.neobis.g4g.girls_for_girls.data.entity.ProductGroup;
 import com.neobis.g4g.girls_for_girls.repository.FileRepository;
 import com.neobis.g4g.girls_for_girls.repository.OrderRepo;
 import com.neobis.g4g.girls_for_girls.repository.ProductGroupRepo;

@@ -38,10 +38,11 @@ public class FileController {
     @Schema(implementation = File.class)), description = "Тело запроса должно содержать объект JSON, представляющий создание файла.")
     public ResponseEntity<?> upload(
             @RequestParam("files") MultipartFile[] files,
-            @RequestParam(value = "productId", required = false) Integer productId,
-            @RequestParam(value = "articleId", required = false) Integer articleId,
+            @RequestParam(value = "product", required = false) Integer productId,
+            @RequestParam(value = "article", required = false) Integer articleId,
+            @RequestParam(value = "speaker", required = false) Integer speakerId,
             @AuthenticationPrincipal User authUser) {
-        return fileService.upload(files, productId, articleId, authUser);
+        return fileService.upload(files, productId, articleId, speakerId, authUser);
     }
 
     @SecurityRequirement(name = "JWT")
