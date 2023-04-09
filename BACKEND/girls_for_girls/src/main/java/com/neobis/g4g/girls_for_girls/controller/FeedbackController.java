@@ -2,6 +2,7 @@ package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Feedback;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -63,8 +65,9 @@ public class FeedbackController {
             tags = "Отзыв"
     )
     public ResponseEntity<?> addFeedback(@RequestBody @Valid FeedbackDTO feedbackDTO,
-                                         BindingResult bindingResult){
-        return feedbackService.addFeedback(feedbackDTO, bindingResult);
+                                         BindingResult bindingResult,
+                                         @AuthenticationPrincipal User user){
+        return feedbackService.addFeedback(feedbackDTO, bindingResult, user);
     }
 
     @SecurityRequirement(name = "JWT")
@@ -76,8 +79,9 @@ public class FeedbackController {
     public ResponseEntity<?> updateFeedback(@PathVariable("id")
                                             @Parameter(description = "Идентификатор отзыва") long id,
                                             @RequestBody @Valid FeedbackDTO feedbackDTO,
-                                            BindingResult bindingResult){
-        return feedbackService.updateFeedback(id, feedbackDTO, bindingResult);
+                                            BindingResult bindingResult,
+                                            @AuthenticationPrincipal User user){
+        return feedbackService.updateFeedback(id, feedbackDTO, bindingResult, user);
     }
 
     @SecurityRequirement(name = "JWT")

@@ -3,7 +3,6 @@ package com.neobis.g4g.girls_for_girls.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter

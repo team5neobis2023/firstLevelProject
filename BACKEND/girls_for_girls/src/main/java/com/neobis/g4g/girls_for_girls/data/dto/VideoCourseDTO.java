@@ -23,14 +23,11 @@ public class VideoCourseDTO {
 
     private int rating;
 
-    private long userId;
-
     private long videoCourseCategoryId;
 
     public static VideoCourseDTO toVideoCourseDTO(VideoCourse videoCourse){
         return VideoCourseDTO.builder()
                 .description(videoCourse.getDescription())
-                .userId(videoCourse.getUser().getId())
                 .recTime(videoCourse.getRecTime())
                 .rating(videoCourse.getRating())
                 .videoCourseCategoryId(videoCourse.getVideoCourseCategory().getId())
