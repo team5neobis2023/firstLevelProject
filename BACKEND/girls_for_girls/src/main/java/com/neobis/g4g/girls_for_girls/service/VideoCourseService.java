@@ -5,10 +5,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.data.entity.VideoCourse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
-import com.neobis.g4g.girls_for_girls.repository.FeedbackRepository;
-import com.neobis.g4g.girls_for_girls.repository.UserRepository;
-import com.neobis.g4g.girls_for_girls.repository.VideoCourseCategoryRepository;
-import com.neobis.g4g.girls_for_girls.repository.VideoCourseRepository;
+import com.neobis.g4g.girls_for_girls.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,12 +26,14 @@ public class VideoCourseService {
     private final UserRepository userRepository;
     private final FeedbackRepository feedbackRepository;
     private final VideoCourseCategoryRepository videoCourseCategoryRepository;
+    private final SpeakerRepository speakerRepository;
     @Autowired
-    public VideoCourseService(VideoCourseRepository videoCourseRepository, UserRepository userRepository, FeedbackRepository feedbackRepository, VideoCourseCategoryRepository videoCourseCategoryRepository) {
+    public VideoCourseService(VideoCourseRepository videoCourseRepository, UserRepository userRepository, FeedbackRepository feedbackRepository, VideoCourseCategoryRepository videoCourseCategoryRepository, SpeakerRepository speakerRepository) {
         this.videoCourseRepository = videoCourseRepository;
         this.userRepository = userRepository;
         this.feedbackRepository = feedbackRepository;
         this.videoCourseCategoryRepository = videoCourseCategoryRepository;
+        this.speakerRepository = speakerRepository;
     }
 
     public List<VideoCourseDTO> getAllVideoCourses(){
@@ -63,12 +62,16 @@ public class VideoCourseService {
         }
 
             if(videoCourseCategoryRepository.existsById(videoCourseDTO.getVideoCourseCategoryId())) {
-                VideoCourse videoCourse = toVideoCourse(videoCourseDTO);
-                videoCourse.setUser(user);
-                videoCourse.setVideoCourseCategory(videoCourseCategoryRepository.findById(videoCourseDTO.getVideoCourseCategoryId()).get());
-                videoCourse.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
-                videoCourseRepository.save(videoCourse);
-                return new ResponseEntity<>("VideoCourse was created", HttpStatus.CREATED);
+                if(speakerRepository.existsById(videoCourseDTO.getSpeakerId())) {
+                    VideoCourse videoCourse = toVideoCourse(videoCourseDTO);
+                    videoCourse.setUser(user);
+                    videoCourse.setVideoCourseCategory(videoCourseCategoryRepository.findById(videoCourseDTO.getVideoCourseCategoryId()).get());
+                    videoCourse.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
+                    videoCourseRepository.save(videoCourse);
+                    return new ResponseEntity<>("VideoCourse was created", HttpStatus.CREATED);
+                }else {
+                    return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
+                }
             }else{
                 return new ResponseEntity<>("Please write correctly video course category id", HttpStatus.BAD_REQUEST);
             }
@@ -84,13 +87,17 @@ public class VideoCourseService {
 
         if(videoCourseRepository.findById(id).isPresent()){
                 if(videoCourseCategoryRepository.existsById(videoCourseDTO.getVideoCourseCategoryId())) {
-                    VideoCourse videoCourse = toVideoCourse(videoCourseDTO);
-                    videoCourse.setId(id);
-                    videoCourse.setUser(user);
-                    videoCourse.setVideoCourseCategory(videoCourseCategoryRepository.findById(videoCourseDTO.getVideoCourseCategoryId()).get());
-                    videoCourse.setRecTime(videoCourseRepository.findById(id).get().getRecTime());
-                    videoCourseRepository.save(videoCourse);
-                    return new ResponseEntity<>("VideoCourse was updated", HttpStatus.OK);
+                    if(speakerRepository.existsById(videoCourseDTO.getSpeakerId())) {
+                        VideoCourse videoCourse = toVideoCourse(videoCourseDTO);
+                        videoCourse.setId(id);
+                        videoCourse.setUser(user);
+                        videoCourse.setVideoCourseCategory(videoCourseCategoryRepository.findById(videoCourseDTO.getVideoCourseCategoryId()).get());
+                        videoCourse.setRecTime(videoCourseRepository.findById(id).get().getRecTime());
+                        videoCourseRepository.save(videoCourse);
+                        return new ResponseEntity<>("VideoCourse was updated", HttpStatus.OK);
+                    }else{
+                        return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
+                    }
                 }else{
                     return new ResponseEntity<>("Please write correctly video course category id", HttpStatus.BAD_REQUEST);
                 }

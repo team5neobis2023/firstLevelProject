@@ -6,6 +6,7 @@ import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.repository.ApplicationRepository;
 import com.neobis.g4g.girls_for_girls.repository.ConferencesRepository;
+import com.neobis.g4g.girls_for_girls.repository.SpeakerRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,12 +28,14 @@ public class ConferenceService {
     private final ConferencesRepository conferencesRepository;
     private final UserRepository userRepository;
     private final ApplicationRepository applicationRepository;
+    private final SpeakerRepository speakerRepository;
 
     @Autowired
-    public ConferenceService(ConferencesRepository conferencesRepository, UserRepository userRepository, ApplicationRepository applicationRepository) {
+    public ConferenceService(ConferencesRepository conferencesRepository, UserRepository userRepository, ApplicationRepository applicationRepository, SpeakerRepository speakerRepository) {
         this.conferencesRepository = conferencesRepository;
         this.userRepository = userRepository;
         this.applicationRepository = applicationRepository;
+        this.speakerRepository = speakerRepository;
     }
 
     public List<ConferencesDTO> getAllConferences(){
@@ -61,11 +64,15 @@ public class ConferenceService {
         }
 
         if(userRepository.existsById(conferencesDTO.getUserId())){
-            Conference conference = toConference(conferencesDTO);
-            conference.setUserId(userRepository.findById(conferencesDTO.getUserId()).get());
-            conference.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
-            conferencesRepository.save(conference);
-            return new ResponseEntity<>("Conference was created", HttpStatus.CREATED);
+            if(speakerRepository.existsById(conferencesDTO.getSpeakerId())) {
+                Conference conference = toConference(conferencesDTO);
+                conference.setUserId(userRepository.findById(conferencesDTO.getUserId()).get());
+                conference.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
+                conferencesRepository.save(conference);
+                return new ResponseEntity<>("Conference was created", HttpStatus.CREATED);
+            }else{
+                return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
+            }
         }else {
             return new ResponseEntity<>("Write user id correctly", HttpStatus.BAD_REQUEST);
         }
@@ -78,14 +85,17 @@ public class ConferenceService {
         }
 
         if(conferencesRepository.findById(id).isPresent()){
-
             if(userRepository.existsById(conferencesDTO.getUserId())){
-                Conference conference = toConference(conferencesDTO);
-                conference.setId(id);
-                conference.setRecTime(conferencesRepository.findById(id).get().getRecTime());
-                conference.setUserId(userRepository.findById(conferencesDTO.getUserId()).get());
-                conferencesRepository.save(conference);
-                return new ResponseEntity<>("Conference was updated", HttpStatus.CREATED);
+                if(speakerRepository.existsById(conferencesDTO.getSpeakerId())) {
+                    Conference conference = toConference(conferencesDTO);
+                    conference.setId(id);
+                    conference.setRecTime(conferencesRepository.findById(id).get().getRecTime());
+                    conference.setUserId(userRepository.findById(conferencesDTO.getUserId()).get());
+                    conferencesRepository.save(conference);
+                    return new ResponseEntity<>("Conference was updated", HttpStatus.CREATED);
+                }else {
+                    return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
+                }
             }else {
                 return new ResponseEntity<>("Write user id correctly", HttpStatus.BAD_REQUEST);
             }

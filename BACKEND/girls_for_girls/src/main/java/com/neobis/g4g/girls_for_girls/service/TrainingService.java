@@ -1,12 +1,11 @@
 package com.neobis.g4g.girls_for_girls.service;
 
-import com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.TrainingDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.Application;
 import com.neobis.g4g.girls_for_girls.data.entity.Training;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.repository.ApplicationRepository;
+import com.neobis.g4g.girls_for_girls.repository.SpeakerRepository;
 import com.neobis.g4g.girls_for_girls.repository.TrainingRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +27,14 @@ public class TrainingService {
     private final TrainingRepository trainingRepository;
     private final UserRepository userRepository;
     private final ApplicationRepository applicationRepository;
+    private final SpeakerRepository speakerRepository;
 
     @Autowired
-    public TrainingService(TrainingRepository trainingRepository, UserRepository userRepository, ApplicationRepository applicationRepository) {
+    public TrainingService(TrainingRepository trainingRepository, UserRepository userRepository, ApplicationRepository applicationRepository, SpeakerRepository speakerRepository) {
         this.trainingRepository = trainingRepository;
         this.userRepository = userRepository;
         this.applicationRepository = applicationRepository;
+        this.speakerRepository = speakerRepository;
     }
 
     public List<TrainingDTO> getAllTrainings(){
@@ -62,13 +63,17 @@ public class TrainingService {
         }
 
         if(userRepository.existsById(trainingDTO.getUserId())){
+            if(speakerRepository.existsById(trainingDTO.getSpeakerId())) {
 
-            Training training = toTraining(trainingDTO);
-            training.setUserId(userRepository.findById(trainingDTO.getUserId()).get());
-            training.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
-            trainingRepository.save(training);
-            return new ResponseEntity<>("Training was created", HttpStatus.CREATED);
+                Training training = toTraining(trainingDTO);
+                training.setUser(userRepository.findById(trainingDTO.getUserId()).get());
+                training.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
+                trainingRepository.save(training);
+                return new ResponseEntity<>("Training was created", HttpStatus.CREATED);
 
+            }else{
+                return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
+            }
         }else{
             return new ResponseEntity<>("Please write correctly user id", HttpStatus.BAD_REQUEST);
         }
@@ -82,13 +87,16 @@ public class TrainingService {
 
         if(trainingRepository.findById(id).isPresent()){
             if(userRepository.existsById(trainingDTO.getUserId())){
-                Training training = toTraining(trainingDTO);
-                training.setId(id);
-                training.setUserId(userRepository.findById(trainingDTO.getUserId()).get());
-                training.setRecTime(trainingRepository.findById(id).get().getRecTime());
-                trainingRepository.save(training);
-                return new ResponseEntity<>("Training was updated", HttpStatus.OK);
-
+                if(speakerRepository.existsById(trainingDTO.getSpeakerId())) {
+                    Training training = toTraining(trainingDTO);
+                    training.setId(id);
+                    training.setUser(userRepository.findById(trainingDTO.getUserId()).get());
+                    training.setRecTime(trainingRepository.findById(id).get().getRecTime());
+                    trainingRepository.save(training);
+                    return new ResponseEntity<>("Training was updated", HttpStatus.OK);
+                }else{
+                    return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
+                }
             }else{
                 return new ResponseEntity<>("Please write correctly user id", HttpStatus.BAD_REQUEST);
             }

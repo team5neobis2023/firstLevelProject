@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class ProductDTO {
-
+    private long id;
     private String title;
     private String description;
     private int price;
@@ -21,6 +21,7 @@ public class ProductDTO {
 
     public static ProductDTO productToProductDto(Product product) {
         return ProductDTO.builder()
+                .id(product.getId())
                 .title(product.getTitle())
                 .description(product.getDescription())
                 .price(product.getPrice())

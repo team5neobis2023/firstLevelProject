@@ -33,8 +33,11 @@ public class ConferencesDTO {
     @NotNull(message = "Идентификатор пользователя не может быть пустым")
     private long userId;
 
+    private long speakerId;
+
     public static ConferencesDTO toConferencesDTO(Conference conference){
         return ConferencesDTO.builder()
+                .speakerId(conference.getSpeaker().getId())
                 .conferenceDate(conference.getConferenceDate())
                 .description(conference.getDescription())
                 .userId(conference.getUserId().getId())

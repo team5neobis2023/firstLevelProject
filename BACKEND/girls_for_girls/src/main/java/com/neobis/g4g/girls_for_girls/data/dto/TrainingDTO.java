@@ -27,11 +27,14 @@ public class TrainingDTO {
     @NotNull(message = "Идентификатор пользователя не может быть пустым")
     private long userId;
 
+    private long speakerId;
+
     public static TrainingDTO toTrainingDTO(Training training){
         return TrainingDTO.builder()
                 .recTime(training.getRecTime())
                 .description(training.getDescription())
-                .userId(training.getUserId().getId())
+                .userId(training.getUser().getId())
+                .speakerId(training.getSpeaker().getId())
                 .build();
     }
 

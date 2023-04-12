@@ -33,4 +33,8 @@ public class Conference {
     @JoinColumn(name = "user_id")
     private User userId;
 
+    @ManyToOne
+    @JoinColumn(name = "speaker_id")
+    private Speaker speaker;
+
 }

@@ -25,8 +25,11 @@ public class VideoCourseDTO {
 
     private long videoCourseCategoryId;
 
+    private long speakerId;
+
     public static VideoCourseDTO toVideoCourseDTO(VideoCourse videoCourse){
         return VideoCourseDTO.builder()
+                .speakerId(videoCourse.getSpeaker().getId())
                 .description(videoCourse.getDescription())
                 .recTime(videoCourse.getRecTime())
                 .rating(videoCourse.getRating())

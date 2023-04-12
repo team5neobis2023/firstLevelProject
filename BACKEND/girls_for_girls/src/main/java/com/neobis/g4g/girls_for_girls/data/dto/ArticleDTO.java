@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class ArticleDTO {
+    private long id;
     private Timestamp recTime;
 
     private Timestamp updateTime;
@@ -28,6 +29,7 @@ public class ArticleDTO {
 
     public static ArticleDTO toArticleDTO(Article article){
         return ArticleDTO.builder()
+                .id(article.getId())
                 .description(article.getDescription())
                 .recTime(article.getRecTime())
                 .title(article.getTitle())

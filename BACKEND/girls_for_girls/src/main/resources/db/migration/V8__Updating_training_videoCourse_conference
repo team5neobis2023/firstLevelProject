@@ -1,0 +1,3 @@
+ALTER TABLE video_course ADD COLUMN speaker_id bigint references speaker(id);
+ALTER TABLE training ADD COLUMN speaker_id bigint references speaker(id);
+ALTER TABLE conference ADD COLUMN speaker_id bigint references speaker(id);
