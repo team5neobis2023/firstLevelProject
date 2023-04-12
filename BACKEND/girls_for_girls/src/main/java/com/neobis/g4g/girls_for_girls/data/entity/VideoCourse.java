@@ -34,6 +34,10 @@ public class VideoCourse {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "speaker_id")
+    private Speaker speaker;
+
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private VideoCourseCategory videoCourseCategory;
 
