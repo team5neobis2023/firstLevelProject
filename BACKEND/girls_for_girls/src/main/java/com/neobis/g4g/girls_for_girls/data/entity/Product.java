@@ -28,8 +28,4 @@ public class Product {
 
     @Column(name = "size")
     private String size;
-
-    @ManyToOne
-    @JoinColumn(name = "file_id")
-    private File file;
 }

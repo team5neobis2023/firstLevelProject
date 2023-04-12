@@ -51,7 +51,6 @@ public class ProductService {
             product.setDescription(productDto.getDescription());
             product.setPrice(productDto.getPrice());
             product.setSize(productDto.getSize());
-            product.setFile(fileRepo.findById(productDto.getFileId()).get());
             productRepo.save(product);
             return new ResponseEntity<String>("Product is created", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -66,7 +65,6 @@ public class ProductService {
                     product.setDescription(productDTO.getDescription());
                     product.setPrice(productDTO.getPrice());
                     product.setSize(productDTO.getSize());
-                    product.setFile(fileRepo.findById(productDTO.getFileId()).get());
                     productRepo.save(product);
                     return ResponseEntity.ok("Product with this id: " + id + " updated");
                 }).orElse(new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND));
