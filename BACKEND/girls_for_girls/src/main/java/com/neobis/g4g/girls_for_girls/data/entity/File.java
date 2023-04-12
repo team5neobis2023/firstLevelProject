@@ -32,13 +32,13 @@ public class File {
     private Timestamp recTime;
 
     @Column(name = "product_id")
-    private int productId;
+    private long productId;
 
     @Column(name = "article_id")
-    private int articleId;
+    private long articleId;
 
     @Column(name = "speaker_id")
-    private int speakerId;
+    private long speakerId;
 
     @Column(name = "user_id")
     private long userId;
