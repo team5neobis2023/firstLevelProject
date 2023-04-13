@@ -41,20 +41,19 @@ public class ProductService {
     }
 
 
-    public ResponseEntity<String> addProduct(ProductDTO productDto) {
+    public ResponseEntity<Long> addProduct(ProductDTO productDto) {
         try {
             if (productRepo.findByTitle(productDto.getTitle()).isPresent()) {
-                return ResponseEntity.badRequest().body("The product already exists");
+                return ResponseEntity.badRequest().body(0L);
             }
             Product product = new Product();
             product.setTitle(productDto.getTitle());
             product.setDescription(productDto.getDescription());
             product.setPrice(productDto.getPrice());
             product.setSize(productDto.getSize());
-            productRepo.save(product);
-            return new ResponseEntity<String>("Product is created", HttpStatus.CREATED);
+            return new ResponseEntity<Long>(productRepo.save(product).getId(), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<String>("Product isn't created", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Long>(0L, HttpStatus.BAD_REQUEST);
         }
     }
 

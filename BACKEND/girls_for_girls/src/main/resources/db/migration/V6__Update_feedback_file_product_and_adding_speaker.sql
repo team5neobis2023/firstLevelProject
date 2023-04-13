@@ -14,5 +14,5 @@ CREATE TABLE speaker(
 
 ALTER TABLE file ADD speaker_id bigint references speaker(id);
 
+alter table product drop foreign key product_ibfk_1;
 ALTER TABLE product DROP COLUMN product_group_id;
-DROP TABLE product_group;
