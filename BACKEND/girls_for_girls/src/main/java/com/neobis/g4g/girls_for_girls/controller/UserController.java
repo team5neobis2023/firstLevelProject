@@ -1,18 +1,25 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.neobis.g4g.girls_for_girls.data.dto.ChangePassDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
+import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
+import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import com.neobis.g4g.girls_for_girls.service.UserManager;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -55,6 +62,15 @@ public class UserController {
         return userManager.getAllNotificationsByUserId(id);
     }
 
+    @SecurityRequirement(name = "JWT")
+    @PostMapping("/change-password")
+    @Operation(summary = "Изменить пароль", tags = "Аккаунт")
+    public ResponseEntity<?> changePassword(@RequestBody @Valid ChangePassDTO changePassDTO,
+                                            BindingResult bindingResult,
+                                            @AuthenticationPrincipal User user){
+        return userManager.changePassword(changePassDTO, bindingResult, user);
+    }
+
     @Operation(summary = "Добавить новый аккаунт", tags = "Аккаунт")
     @SecurityRequirement(name = "JWT")
     @PostMapping()
@@ -69,5 +85,11 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO){
         return userManager.updateUser(userDTO);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(NotUpdatedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
