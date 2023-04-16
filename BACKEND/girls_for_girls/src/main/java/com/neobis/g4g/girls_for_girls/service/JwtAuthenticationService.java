@@ -61,17 +61,22 @@ public class JwtAuthenticationService {
     }
 
     public ResponseEntity<?> register(UserDTO userDTO, HttpServletRequest request) {
-        User user = new User();
-        Random random = new Random();
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setRole(userGroupRepository.findById(3));
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setRegion(regionRepository.findById(userDTO.getRegion_id()).get());
-        user.setResetToken(String.valueOf(random.nextInt(1000, 9999)));
 
+        User user = new User();
+
+        if (userDTO.getPassword().equals(userDTO.getConfirmPass())) {
+            Random random = new Random();
+            user.setEmail(userDTO.getEmail());
+            user.setPassword(userDTO.getPassword());
+            user.setRole(userGroupRepository.findById(3));
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setPhoneNumber(userDTO.getPhoneNumber());
+            user.setRegion(regionRepository.findById(userDTO.getRegion_id()).get());
+            user.setResetToken(String.valueOf(random.nextInt(1000, 9999)));
+        } else {
+            return new ResponseEntity<String>("The password does not match the password confirmation", HttpStatus.FORBIDDEN);
+        }
 
         try {
             userDetailsManager.createUser(user);
