@@ -43,7 +43,7 @@ public class ProductController {
     public ResponseEntity<?> getProductId(@PathVariable
                                               @Parameter(description = "Идентификатор товара")
                                               Long id) {
-        return productService.getProductId(id);
+        return productService.getProductById(id);
     }
 
     @GetMapping("/{id}/orders")
@@ -64,7 +64,7 @@ public class ProductController {
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping()
-    public ResponseEntity<?> addProduct(@RequestBody ProductDTO productDTO) {
+    public ResponseEntity<Long> addProduct(@RequestBody ProductDTO productDTO) {
         return productService.addProduct(productDTO);
     }
 
