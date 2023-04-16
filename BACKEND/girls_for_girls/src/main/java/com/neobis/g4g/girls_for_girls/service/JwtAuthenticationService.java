@@ -116,7 +116,7 @@ public class JwtAuthenticationService {
 
             return ResponseEntity.ok(tokenDTO);
         } catch (BadCredentialsException e) {
-            return ResponseEntity.badRequest().body("incorrect username or password");
+            return ResponseEntity.badRequest().body("incorrect email or password");
         }
     }
 
