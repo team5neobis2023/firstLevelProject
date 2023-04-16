@@ -4,6 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.entity.Article;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,13 +15,17 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class ArticleDTO {
+
     private long id;
+
     private Timestamp recTime;
 
     private Timestamp updateTime;
 
+    @NotEmpty(message = "Статья не может быть пустой")
     private String title;
 
+    @NotEmpty(message = "Описание не может быть пустой")
     private String description;
 
     private Long viewsCount;
