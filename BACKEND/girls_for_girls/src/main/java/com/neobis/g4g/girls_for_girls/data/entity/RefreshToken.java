@@ -23,7 +23,7 @@ public class RefreshToken {
     @Column(name = "rec_time")
     private Timestamp recTime;
 
-    @Column(name = "token")
+    @Column(name = "token", length = 1000)
     private String token;
 
     @Column(name = "user_id")

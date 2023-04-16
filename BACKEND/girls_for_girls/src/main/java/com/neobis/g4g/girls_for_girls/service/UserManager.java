@@ -1,9 +1,11 @@
 package com.neobis.g4g.girls_for_girls.service;
 
+import com.neobis.g4g.girls_for_girls.data.dto.ChangePassDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.File;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.data.entity.UserGroup;
+import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.exception.UsernameAlreadyExistException;
 import com.neobis.g4g.girls_for_girls.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 import static com.neobis.g4g.girls_for_girls.data.dto.ArticleDTO.toArticleDTO;
 import static com.neobis.g4g.girls_for_girls.data.dto.NotificationDTO.notificationToNotificationDtoList;
@@ -69,6 +74,26 @@ public class UserManager implements UserDetailsManager {
     @Override
     public void changePassword(String oldPassword, String newPassword) {
         // TODO Auto-generated method stub
+    }
+
+    public ResponseEntity<?> changePassword(ChangePassDTO changePassDTO,
+                                            BindingResult bindingResult,
+                                            User user){
+        if(bindingResult.hasErrors()){
+            throw new NotUpdatedException(getErrorMsg(bindingResult).toString());
+        }
+
+        if(changePassDTO.getNewPassword().equals(changePassDTO.getConfirmNewPassword())) {
+            if (passwordEncoder.matches(changePassDTO.getOldPassword(), user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(changePassDTO.getNewPassword()));
+                userRepository.save(user);
+                return ResponseEntity.ok("Password was updated");
+            }else{
+                return new ResponseEntity<>("Write old password correctly", HttpStatus.BAD_REQUEST);
+            }
+        }else{
+            return new ResponseEntity<>("New password doesn't match with new password confirmation", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
@@ -147,5 +172,17 @@ public class UserManager implements UserDetailsManager {
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().body("Internal server error");
         }
+    }
+
+    private StringBuilder getErrorMsg(BindingResult bindingResult){
+        StringBuilder errorMsg = new StringBuilder();
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            errorMsg.append(error.getField())
+                    .append(" - ")
+                    .append(error.getDefaultMessage())
+                    .append("; ");
+        }
+        return errorMsg;
     }
 }

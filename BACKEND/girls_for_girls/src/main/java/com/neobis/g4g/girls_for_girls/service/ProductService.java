@@ -26,9 +26,9 @@ public class ProductService {
         return ProductDTO.productToProductDtoList(productRepo.findAll());
     }
 
-    public ResponseEntity<?> getProductId(Long id) {
+    public ResponseEntity<?> getProductById(Long id) {
         if (productRepo.findById(id).isPresent()) {
-            return ResponseEntity.ok(ProductDTO.productToProductDto(productRepo.findById(id).get()));
+           return ResponseEntity.ok(ProductDTO.productToProductDto(productRepo.findById(id).get()));
         }
         return new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND);
     }
@@ -53,7 +53,7 @@ public class ProductService {
             product.setSize(productDto.getSize());
             return new ResponseEntity<Long>(productRepo.save(product).getId(), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<Long>(0L, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Long>(0L , HttpStatus.BAD_REQUEST);
         }
     }
 
