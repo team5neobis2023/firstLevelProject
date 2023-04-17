@@ -22,11 +22,14 @@ public class SpeakerDTO {
     @NotEmpty(message = "Информация не может быть пустой")
     private String full_info;
 
+    private String image_url;
+
     public static SpeakerDTO toSpeakerDTO(Speaker speaker){
         return SpeakerDTO.builder()
                 .id(speaker.getId())
                 .full_info(speaker.getFull_info())
                 .full_name(speaker.getFull_name())
+                .image_url(speaker.getImage_url())
                 .build();
     }
 

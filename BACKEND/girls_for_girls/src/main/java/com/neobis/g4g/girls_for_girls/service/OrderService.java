@@ -15,6 +15,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.neobis.g4g.girls_for_girls.data.dto.OrderDTO.orderToOrderDto;
+import static com.neobis.g4g.girls_for_girls.data.dto.OrderDTO.orderToOrderDtoList;
+
 @Service
 @AllArgsConstructor
 public class OrderService {
@@ -24,14 +27,14 @@ public class OrderService {
     private final UserRepository userRepo;
 
     public List<OrderDTO> getAllOrders() {
-        return OrderDTO.orderToOrderDtoList(orderRepo.findAll());
+        return orderToOrderDtoList(orderRepo.findAll());
     }
 
-    public ResponseEntity<?> getOrderId(Long id) {
+    public ResponseEntity<?> getOrderById(Long id) {
         if (orderRepo.findById(id).isPresent()) {
-            return ResponseEntity.ok(OrderDTO.orderToOrderDto(orderRepo.findById(id).get()));
+            return ResponseEntity.ok(orderToOrderDto(orderRepo.findById(id).get()));
         }
-        return new ResponseEntity<String>("Order with this id: " + id + " not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Order with this id: " + id + " not found", HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<String> addOrder(OrderDTO orderDTO) {
@@ -46,9 +49,9 @@ public class OrderService {
             order.setOrderDate(Timestamp.valueOf(LocalDateTime.now()));
             order.setAmount(product.getPrice());
             orderRepo.save(order);
-            return new ResponseEntity<String>("Product is created", HttpStatus.CREATED);
+            return new ResponseEntity<>("Product is created", HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<String>("Product isn't created", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Product isn't created", HttpStatus.BAD_REQUEST);
         }
     }
 

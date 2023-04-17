@@ -1,0 +1,10 @@
+ALTER TABLE users DROP COLUMN file_id;
+ALTER TABLE users ADD COLUMN image_url varchar;
+
+ALTER TABLE product DROP COLUMN file_id;
+ALTER TABLE product ADD COLUMN image_url varchar;
+
+DROP TABLE file;
+
+ALTER TABLE video_course ADD video_url varchar;
+

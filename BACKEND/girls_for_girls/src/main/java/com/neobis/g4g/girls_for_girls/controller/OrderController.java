@@ -44,7 +44,7 @@ public class OrderController {
     public ResponseEntity<?> getOrderId(@PathVariable
                                           @Parameter(description = "Идентификатор заказа")
                                           Long id) {
-        return orderService.getOrderId(id);
+        return orderService.getOrderById(id);
     }
 
     @SecurityRequirement(name = "JWT")

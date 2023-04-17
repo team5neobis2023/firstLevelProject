@@ -34,4 +34,8 @@ public class Order {
     @Column(name = "order_date")
     private Timestamp orderDate;
 
+    @ManyToOne
+    @JoinColumn(name = "size_id")
+    private Size size;
+
 }

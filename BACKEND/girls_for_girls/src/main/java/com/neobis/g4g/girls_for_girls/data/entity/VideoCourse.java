@@ -26,6 +26,9 @@ public class VideoCourse {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "video_url")
+    private String video_url;
+
     @Column(name = "rating")
     private int rating;
 

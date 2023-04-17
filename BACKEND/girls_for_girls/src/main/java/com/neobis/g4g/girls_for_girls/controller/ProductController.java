@@ -40,7 +40,7 @@ public class ProductController {
             tags = "Товар"
     )
     @SecurityRequirement(name = "JWT")
-    public ResponseEntity<?> getProductId(@PathVariable
+    public ResponseEntity<?> getProductById(@PathVariable
                                               @Parameter(description = "Идентификатор товара")
                                               Long id) {
         return productService.getProductById(id);
@@ -75,7 +75,7 @@ public class ProductController {
     )
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable
+    public ResponseEntity<String> updateProduct(@PathVariable
                                                 @Parameter(description = "Идентификатор товара")
                                                 Long id,
                                                 @RequestBody ProductDTO productDTO) {

@@ -1,7 +1,5 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
-import com.neobis.g4g.girls_for_girls.data.entity.File;
-import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.data.entity.UserGroup;
 import lombok.*;
 
@@ -20,6 +18,6 @@ public class UserDTO {
     private String confirmPass;
     private UserGroup role;
     private Long region_id;
-    private File file;
+    private String image_url;
     private String phoneNumber;
 }

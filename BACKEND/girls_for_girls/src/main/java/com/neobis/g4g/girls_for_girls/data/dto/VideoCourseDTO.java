@@ -27,6 +27,8 @@ public class VideoCourseDTO {
 
     private long speakerId;
 
+    private String video_url;
+
     public static VideoCourseDTO toVideoCourseDTO(VideoCourse videoCourse){
         return VideoCourseDTO.builder()
                 .speakerId(videoCourse.getSpeaker().getId())
@@ -34,6 +36,7 @@ public class VideoCourseDTO {
                 .recTime(videoCourse.getRecTime())
                 .rating(videoCourse.getRating())
                 .videoCourseCategoryId(videoCourse.getVideoCourseCategory().getId())
+                .video_url(videoCourse.getVideo_url())
                 .build();
     }
 
