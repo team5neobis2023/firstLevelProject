@@ -2,9 +2,9 @@ package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ProductDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Product;
-import com.neobis.g4g.girls_for_girls.repository.FileRepository;
 import com.neobis.g4g.girls_for_girls.repository.OrderRepo;
 import com.neobis.g4g.girls_for_girls.repository.ProductRepo;
+import com.neobis.g4g.girls_for_girls.repository.SizeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.neobis.g4g.girls_for_girls.data.dto.OrderDTO.orderToOrderDtoList;
+import static com.neobis.g4g.girls_for_girls.data.dto.ProductDTO.productToProductDto;
 
 @Service
 @AllArgsConstructor
 public class ProductService {
 
     private final ProductRepo productRepo;
-    private final FileRepository fileRepo;
     private final OrderRepo orderRepo;
+    private final SizeRepository sizeRepository;
 
     public List<ProductDTO> getAllProducts() {
         return ProductDTO.productToProductDtoList(productRepo.findAll());
@@ -28,9 +29,9 @@ public class ProductService {
 
     public ResponseEntity<?> getProductById(Long id) {
         if (productRepo.findById(id).isPresent()) {
-           return ResponseEntity.ok(ProductDTO.productToProductDto(productRepo.findById(id).get()));
+           return ResponseEntity.ok(productToProductDto(productRepo.findById(id).get()));
         }
-        return new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<?> getAllOrdersByProductId(long id){
@@ -50,23 +51,23 @@ public class ProductService {
             product.setTitle(productDto.getTitle());
             product.setDescription(productDto.getDescription());
             product.setPrice(productDto.getPrice());
-            product.setSize(productDto.getSize());
-            return new ResponseEntity<Long>(productRepo.save(product).getId(), HttpStatus.CREATED);
+            product.setSizes(sizeRepository.findAll());
+            return ResponseEntity.ok(productRepo.save(product).getId());
         } catch (Exception e) {
-            return new ResponseEntity<Long>(0L , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(0L , HttpStatus.BAD_REQUEST);
         }
     }
 
-    public ResponseEntity<?> updateProduct(Long id, ProductDTO productDTO) {
+    public ResponseEntity<String> updateProduct(Long id, ProductDTO productDTO) {
         return productRepo.findById(id)
                 .map(product -> {
                     product.setTitle(productDTO.getTitle());
                     product.setDescription(productDTO.getDescription());
                     product.setPrice(productDTO.getPrice());
-                    product.setSize(productDTO.getSize());
+                    product.setSizes(sizeRepository.findAll());
                     productRepo.save(product);
                     return ResponseEntity.ok("Product with this id: " + id + " updated");
-                }).orElse(new ResponseEntity<String>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND));
+                }).orElse(new ResponseEntity<>("Product with this id: " + id + " not found", HttpStatus.NOT_FOUND));
     }
 
 
@@ -75,6 +76,6 @@ public class ProductService {
             productRepo.deleteById(id);
             return ResponseEntity.ok("Product is deleted");
         }
-        else return new ResponseEntity<String>("There is no such product", HttpStatus.NOT_FOUND);
+        else return new ResponseEntity<>("There is no such product", HttpStatus.NOT_FOUND);
     }
 }

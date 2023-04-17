@@ -16,6 +16,7 @@ public class OrderDTO {
 
     private Long userId;
     private Long productId;
+    private Long sizeId;
     private int amount;
     private Timestamp orderDate;
 
@@ -25,6 +26,7 @@ public class OrderDTO {
                 .productId(order.getProduct().getId())
                 .amount(order.getAmount())
                 .orderDate(order.getOrderDate())
+                .sizeId(order.getId())
                 .build();
     }
 

@@ -15,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +42,14 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUser(@PathVariable long id) {
         return userRepository.findById(id).get();
+    }
+
+    @Operation(summary = "Получить свою информацию", tags = "Аккаунт")
+    @SecurityRequirement(name = "JWT")
+    @GetMapping("/myinfo")
+    public User getMyInfo() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
     }
 
     @Operation(summary = "Получить все аккаунты и поиск по логину", tags = "Аккаунт")

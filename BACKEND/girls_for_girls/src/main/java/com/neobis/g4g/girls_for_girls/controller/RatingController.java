@@ -37,7 +37,7 @@ public class RatingController {
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping()
-    public ResponseEntity<?> addRating(@RequestBody @Valid RatingDTO ratingDTO,
+    public ResponseEntity<String> addRating(@RequestBody @Valid RatingDTO ratingDTO,
                                        BindingResult bindingResult,
                                        @AuthenticationPrincipal User user) {
         return ratingService.addRating(ratingDTO, bindingResult, user);

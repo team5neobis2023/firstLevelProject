@@ -35,6 +35,9 @@ public class Article {
     @Column(name = "views_count")
     private Long viewsCount;
 
+    @Column(name = "image_url")
+    private String image_url;
+
     @ManyToMany(mappedBy = "likedArticles")
     @JsonIgnore
     private List<User> likedUsers;

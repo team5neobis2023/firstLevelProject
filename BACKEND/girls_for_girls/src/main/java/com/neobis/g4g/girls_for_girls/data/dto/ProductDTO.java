@@ -1,7 +1,7 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
-import com.neobis.g4g.girls_for_girls.data.entity.File;
 import com.neobis.g4g.girls_for_girls.data.entity.Product;
+import com.neobis.g4g.girls_for_girls.data.entity.Size;
 import lombok.*;
 
 import java.util.List;
@@ -17,7 +17,9 @@ public class ProductDTO {
     private String title;
     private String description;
     private int price;
-    private String size;
+    private List<Size> sizes;
+
+    private String imageUrl;
 
     public static ProductDTO productToProductDto(Product product) {
         return ProductDTO.builder()
@@ -25,7 +27,8 @@ public class ProductDTO {
                 .title(product.getTitle())
                 .description(product.getDescription())
                 .price(product.getPrice())
-                .size(product.getSize())
+                .sizes(product.getSizes())
+                .imageUrl(product.getImage_url())
                 .build();
     }
 

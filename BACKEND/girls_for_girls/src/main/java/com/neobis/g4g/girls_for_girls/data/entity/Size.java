@@ -10,20 +10,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "speaker")
-public class Speaker {
+@Table(name = "size")
+public class Size {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "full_name")
-    private String full_name;
-
-    @Column(name = "full_info")
-    private String full_info;
-
-    @Column(name = "image_url")
-    private String image_url;
-
+    @Column(name = "name")
+    private String name;
 }

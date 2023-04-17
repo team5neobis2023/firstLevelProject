@@ -2,7 +2,6 @@ package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ChangePassDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.UserDTO;
-import com.neobis.g4g.girls_for_girls.data.entity.File;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.data.entity.UserGroup;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
@@ -32,18 +31,16 @@ public class UserManager implements UserDetailsManager {
     private final PasswordEncoder passwordEncoder;
     private final UserGroupRepository userGroupRepository;
     private final RegionRepository regionRepository;
-    private final FileRepository fileRepository;
     private final ArticleRepository articleRepository;
     private final NotificationRepo notificationRepo;
 
     @Autowired
     public UserManager(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository, RegionRepository regionRepository, FileRepository fileRepository, ArticleRepository articleRepository, NotificationRepo notificationRepo) {
+                       PasswordEncoder passwordEncoder, UserGroupRepository userGroupRepository, RegionRepository regionRepository, ArticleRepository articleRepository, NotificationRepo notificationRepo) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userGroupRepository = userGroupRepository;
         this.regionRepository = regionRepository;
-        this.fileRepository = fileRepository;
         this.articleRepository = articleRepository;
         this.notificationRepo = notificationRepo;
     }
@@ -153,14 +150,12 @@ public class UserManager implements UserDetailsManager {
             if(exist) {
                 User user = userRepository.findByEmail(userDTO.getEmail()).get();
                 UserGroup role = userGroupRepository.findById(userDTO.getRole().getId());
-                File file = fileRepository.findById(userDTO.getFile().getId()).get();
 
                 user.setEmail(userDTO.getEmail());
                 user.setFirstName(userDTO.getFirstName());
                 user.setRole(role);
                 user.setLastName(userDTO.getLastName());
                 user.setPhoneNumber(userDTO.getPhoneNumber());
-                user.setFile(file);
                 user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
                 user.setRegion(regionRepository.findById(userDTO.getRegion_id()).get());
                 userRepository.save(user);

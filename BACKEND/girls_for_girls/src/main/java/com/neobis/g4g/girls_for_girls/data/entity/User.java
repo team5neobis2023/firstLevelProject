@@ -56,10 +56,8 @@ public class User implements UserDetails {
     @JoinColumn(name = "group_id")
     private UserGroup role;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "file_id")
-    private File file;
+    @Column(name = "image_url")
+    private String image_url;
 
     @ManyToMany()
     @JoinTable(

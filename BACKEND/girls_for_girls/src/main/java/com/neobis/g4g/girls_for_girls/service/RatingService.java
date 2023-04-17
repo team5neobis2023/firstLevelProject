@@ -29,7 +29,7 @@ public class RatingService {
         this.videoCourseRepository = videoCourseRepository;
     }
 
-    public ResponseEntity<?> addRating(RatingDTO ratingDTO,
+    public ResponseEntity<String> addRating(RatingDTO ratingDTO,
                                        BindingResult bindingResult,
                                        User user) {
         if(bindingResult.hasErrors()){
