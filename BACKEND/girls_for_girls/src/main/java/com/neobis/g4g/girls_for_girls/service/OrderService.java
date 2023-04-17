@@ -39,7 +39,7 @@ public class OrderService {
 
     public ResponseEntity<String> addOrder(OrderDTO orderDTO) {
         try {
-            if (productRepo.findById(orderDTO.getProductId()).isPresent() && userRepo.findById(orderDTO.getUserId()).isPresent()) {
+            if (orderRepo.findByProductIdAndUserId(orderDTO.getProductId(), orderDTO.getUserId()).isPresent()) {
                 return ResponseEntity.badRequest().body("The order already exists");
             }
             Order order = new Order();
@@ -49,9 +49,9 @@ public class OrderService {
             order.setOrderDate(Timestamp.valueOf(LocalDateTime.now()));
             order.setAmount(product.getPrice());
             orderRepo.save(order);
-            return new ResponseEntity<>("Product is created", HttpStatus.CREATED);
+            return ResponseEntity.ok("Order was created");
         } catch (Exception e) {
-            return new ResponseEntity<>("Product isn't created", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Order wasn't created", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -70,8 +70,8 @@ public class OrderService {
     public ResponseEntity<String> deleteOrder(Long id) {
         if (orderRepo.existsById(id)) {
             productRepo.deleteById(id);
-            return ResponseEntity.ok("Product is deleted");
+            return ResponseEntity.ok("Order is deleted");
         }
-        else return new ResponseEntity<String>("There is no such product", HttpStatus.NOT_FOUND);
+        else return new ResponseEntity<>("There is no such order", HttpStatus.NOT_FOUND);
     }
 }

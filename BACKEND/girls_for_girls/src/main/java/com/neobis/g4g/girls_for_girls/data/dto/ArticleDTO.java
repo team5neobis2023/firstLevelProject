@@ -30,8 +30,6 @@ public class ArticleDTO {
 
     private Long viewsCount;
 
-    private long userId;
-
     private String image_url;
 
     public static ArticleDTO toArticleDTO(Article article){
@@ -42,7 +40,6 @@ public class ArticleDTO {
                 .title(article.getTitle())
                 .updateTime(article.getUpdateTime())
                 .viewsCount(article.getViewsCount())
-                .userId(article.getUserId().getId())
                 .image_url(article.getImage_url())
                 .build();
     }

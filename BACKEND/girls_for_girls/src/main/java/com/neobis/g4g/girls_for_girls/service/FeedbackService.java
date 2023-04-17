@@ -59,7 +59,7 @@ public class FeedbackService {
             feedback.setUser(user);
             feedback.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
             feedbackRepository.save(feedback);
-            return new ResponseEntity<>("Feedback was added", HttpStatus.CREATED);
+            return ResponseEntity.ok("Feedback was added");
         }else{
             return new ResponseEntity<>("Write video course id correctly", HttpStatus.BAD_REQUEST);
         }
@@ -80,7 +80,7 @@ public class FeedbackService {
                     feedback.setUser(user);
                     feedback.setRecTime(feedbackRepository.findById(id).get().getRecTime());
                     feedbackRepository.save(feedback);
-                    return new ResponseEntity<>("Feedback was updated", HttpStatus.CREATED);
+                    return ResponseEntity.ok("Feedback was updated");
             }else{
                 return new ResponseEntity<>("Write video course id correctly", HttpStatus.BAD_REQUEST);
             }

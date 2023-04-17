@@ -43,7 +43,6 @@ public class Article {
     private List<User> likedUsers;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 }

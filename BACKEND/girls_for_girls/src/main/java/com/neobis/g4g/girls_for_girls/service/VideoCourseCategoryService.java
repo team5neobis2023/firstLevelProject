@@ -61,7 +61,7 @@ public class VideoCourseCategoryService {
                 .name(videoCourseCategoryDTO.getName())
                 .build()
         );
-        return new ResponseEntity<>("VideoCourse category was created", HttpStatus.CREATED);
+        return ResponseEntity.ok("VideoCourse category was created");
     }
 
     public ResponseEntity<String> updateVideoCourseCategory(Long id, VideoCourseCategoryDTO videoCourseCategoryDTO,

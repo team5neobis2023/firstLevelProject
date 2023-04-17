@@ -68,7 +68,7 @@ public class VideoCourseService {
                     videoCourse.setVideoCourseCategory(videoCourseCategoryRepository.findById(videoCourseDTO.getVideoCourseCategoryId()).get());
                     videoCourse.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
                     videoCourseRepository.save(videoCourse);
-                    return new ResponseEntity<>("VideoCourse was created", HttpStatus.CREATED);
+                    return ResponseEntity.ok("VideoCourse was created");
                 }else {
                     return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
                 }
