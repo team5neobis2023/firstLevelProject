@@ -51,7 +51,7 @@ public class SpeakerService {
                         .full_name(speakerDTO.getFull_name())
                         .build()
         );
-        return new ResponseEntity<>("Speaker was created", HttpStatus.CREATED);
+        return ResponseEntity.ok("Speaker was created");
     }
 
     public ResponseEntity<String> updateSpeaker(Long id, SpeakerDTO speakerDTO,

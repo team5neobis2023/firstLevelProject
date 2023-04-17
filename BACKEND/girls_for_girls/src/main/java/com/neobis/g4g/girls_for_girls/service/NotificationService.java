@@ -32,7 +32,7 @@ public class NotificationService {
                 return ResponseEntity.ok(NotificationDTO.notificationToNotificationDtoList(notificationRepo.findAllByUserId(userId)));
             }
         } else {
-            return new ResponseEntity<String>("User with this id: " + userId + " not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User with this id: " + userId + " not found", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -42,9 +42,9 @@ public class NotificationService {
             notification.setUser(userRepository.findById(notificationDTO.getUserId()).get());
             notification.setMessage(notificationDTO.getMessage());
             notificationRepo.save(notification);
-            return new ResponseEntity<String>("Notification is created", HttpStatus.CREATED);
+            return ResponseEntity.ok("Notification is created");
         } catch (Exception e) {
-            return new ResponseEntity<String>("Notification isn't created", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Notification isn't created", HttpStatus.BAD_REQUEST);
         }
     }
 

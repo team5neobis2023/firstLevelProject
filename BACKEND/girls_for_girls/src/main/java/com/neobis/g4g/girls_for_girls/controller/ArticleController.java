@@ -1,14 +1,17 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ArticleDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
+import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import com.neobis.g4g.girls_for_girls.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +26,12 @@ import java.util.List;
 )
 public class ArticleController {
     private final ArticleService articleService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, UserRepository userRepository) {
         this.articleService = articleService;
+        this.userRepository = userRepository;
     }
 
     @SecurityRequirement(name = "JWT")
@@ -49,7 +54,9 @@ public class ArticleController {
     @Operation(summary = "Добавление поста", tags = "Пост")
     public ResponseEntity<?> addArticle(@RequestBody @Valid ArticleDTO articleDTO,
                                         BindingResult bindingResult){
-        return articleService.addArticle(articleDTO, bindingResult);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
+        return articleService.addArticle(articleDTO, bindingResult, user);
     }
 
     @SecurityRequirement(name = "JWT")
@@ -59,7 +66,9 @@ public class ArticleController {
                                            @Parameter(description = "Идентификатор поста") long id,
                                            @RequestBody @Valid ArticleDTO articleDTO,
                                            BindingResult bindingResult){
-        return articleService.updateArticle(id, articleDTO, bindingResult);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
+        return articleService.updateArticle(id, articleDTO, bindingResult, user);
     }
 
     @SecurityRequirement(name = "JWT")

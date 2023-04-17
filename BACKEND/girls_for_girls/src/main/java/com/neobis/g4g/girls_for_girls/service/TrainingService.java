@@ -69,7 +69,7 @@ public class TrainingService {
                 training.setUser(userRepository.findById(trainingDTO.getUserId()).get());
                 training.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
                 trainingRepository.save(training);
-                return new ResponseEntity<>("Training was created", HttpStatus.CREATED);
+                return ResponseEntity.ok("Training was created");
 
             }else{
                 return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);

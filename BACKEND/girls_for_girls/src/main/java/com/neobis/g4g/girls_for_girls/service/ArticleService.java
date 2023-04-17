@@ -2,6 +2,7 @@ package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ArticleDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Article;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.repository.ArticleRepository;
@@ -43,42 +44,37 @@ public class ArticleService {
     }
 
     public ResponseEntity<?> addArticle(ArticleDTO articleDTO,
-                                        BindingResult bindingResult){
+                                        BindingResult bindingResult,
+                                        User user){
         if(bindingResult.hasErrors()){
             throw new NotAddedException(getErrorMsg(bindingResult).toString());
         }
 
-        if(userRepository.existsById(articleDTO.getUserId())){
             Article article = toArticle(articleDTO);
             article.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
-            article.setUserId(userRepository.findById(articleDTO.getUserId()).get());
+            article.setUser(user);
+            article.setViewsCount(0L);
             articleRepository.save(article);
-            return new ResponseEntity<>("Article was created", HttpStatus.CREATED);
-        }else{
-            return new ResponseEntity<>("Write correctly user id", HttpStatus.BAD_REQUEST);
-        }
+            return ResponseEntity.ok("Article was created");
 
     }
 
     public ResponseEntity<?> updateArticle(long id,
                                            ArticleDTO articleDTO,
-                                           BindingResult bindingResult){
+                                           BindingResult bindingResult,
+                                           User user){
         if(bindingResult.hasErrors()){
             throw new NotUpdatedException(getErrorMsg(bindingResult).toString());
         }
 
         if(articleRepository.existsById(id)){
-            if(userRepository.existsById(articleDTO.getUserId())){
                 Article article = toArticle(articleDTO);
                 article.setId(id);
                 article.setRecTime(articleRepository.findById(id).get().getRecTime());
-                article.setUserId(userRepository.findById(articleDTO.getUserId()).get());
+                article.setUser(user);
                 article.setLikedUsers(userRepository.findUsersByLikedArticlesId(id));
                 articleRepository.save(article);
-                return new ResponseEntity<>("Article was updated", HttpStatus.CREATED);
-            }else{
-                return new ResponseEntity<>("Write correctly user id", HttpStatus.BAD_REQUEST);
-            }
+                return ResponseEntity.ok("Article was updated");
         }else{
             return new ResponseEntity<>("Article with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
         }

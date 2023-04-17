@@ -69,7 +69,7 @@ public class ConferenceService {
                 conference.setUserId(userRepository.findById(conferencesDTO.getUserId()).get());
                 conference.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
                 conferencesRepository.save(conference);
-                return new ResponseEntity<>("Conference was created", HttpStatus.CREATED);
+                return ResponseEntity.ok("Conference was created");
             }else{
                 return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
             }
@@ -92,7 +92,7 @@ public class ConferenceService {
                     conference.setRecTime(conferencesRepository.findById(id).get().getRecTime());
                     conference.setUserId(userRepository.findById(conferencesDTO.getUserId()).get());
                     conferencesRepository.save(conference);
-                    return new ResponseEntity<>("Conference was updated", HttpStatus.CREATED);
+                    return ResponseEntity.ok("Conference was updated");
                 }else {
                     return new ResponseEntity<>("Please write correctly speaker id", HttpStatus.BAD_REQUEST);
                 }
