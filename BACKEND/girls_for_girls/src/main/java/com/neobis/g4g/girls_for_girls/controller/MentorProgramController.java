@@ -95,7 +95,7 @@ public class MentorProgramController {
             summary = "Удаление менторской программы",
             tags = "Менторская программа"
     )
-    public ResponseEntity<?> deleteConference(@PathVariable("id")
+    public ResponseEntity<?> deleteMentorProgram(@PathVariable("id")
                                               @Parameter(description = "Идентификатор менторской программы") long id){
         return mentorProgramService.deleteMentorProgram(id);
     }
