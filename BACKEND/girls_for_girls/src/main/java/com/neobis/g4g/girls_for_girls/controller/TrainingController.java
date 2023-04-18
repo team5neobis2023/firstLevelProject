@@ -71,7 +71,7 @@ public class TrainingController {
             summary = "Добавление тренинга",
             tags = "Тренинг"
     )
-    public ResponseEntity<?> addMentorProgram(@RequestBody @Valid TrainingDTO trainingDTO,
+    public ResponseEntity<?> addTraining(@RequestBody @Valid TrainingDTO trainingDTO,
                                               BindingResult bindingResult){
         return trainingService.addTraining(trainingDTO, bindingResult);
     }
@@ -82,7 +82,7 @@ public class TrainingController {
             summary = "Обновление данных тренинга",
             tags = "Тренинг"
     )
-    public ResponseEntity<?> updateMentorProgram(@PathVariable("id")
+    public ResponseEntity<?> updateTraining(@PathVariable("id")
                                                  @Parameter(description = "Идентификатор тренинга") long id,
                                                  @RequestBody @Valid TrainingDTO trainingDTO,
                                                  BindingResult bindingResult){
@@ -95,7 +95,7 @@ public class TrainingController {
             summary = "Удаление тренинга",
             tags = "Тренинг"
     )
-    public ResponseEntity<?> deleteConference(@PathVariable("id")
+    public ResponseEntity<?> deleteTraining(@PathVariable("id")
                                               @Parameter(description = "Идентификатор тренинга") long id){
         return trainingService.deleteTraining(id);
     }

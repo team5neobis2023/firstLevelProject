@@ -70,7 +70,7 @@ public class SizeController {
             summary = "Удаление размера",
             tags = "Размер"
     )
-    public ResponseEntity<?> deleteSpeaker(@PathVariable("id")
+    public ResponseEntity<?> deleteQuestion(@PathVariable("id")
                                            @Parameter(description = "Идентификатор размера") long id){
         return sizeService.deleteSize(id);
     }
