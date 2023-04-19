@@ -5,7 +5,10 @@ import com.neobis.g4g.girls_for_girls.data.entity.Product;
 import com.neobis.g4g.girls_for_girls.repository.OrderRepo;
 import com.neobis.g4g.girls_for_girls.repository.ProductRepo;
 import com.neobis.g4g.girls_for_girls.repository.SizeRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,17 +17,31 @@ import java.util.List;
 
 import static com.neobis.g4g.girls_for_girls.data.dto.OrderDTO.orderToOrderDtoList;
 import static com.neobis.g4g.girls_for_girls.data.dto.ProductDTO.productToProductDto;
+import static com.neobis.g4g.girls_for_girls.data.dto.ProductDTO.productToProductDtoList;
 
 @Service
-@AllArgsConstructor
 public class ProductService {
 
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
     private final SizeRepository sizeRepository;
 
+    @Autowired
+    public ProductService(ProductRepo productRepo, OrderRepo orderRepo, SizeRepository sizeRepository) {
+        this.productRepo = productRepo;
+        this.orderRepo = orderRepo;
+        this.sizeRepository = sizeRepository;
+    }
+
     public List<ProductDTO> getAllProducts() {
-        return ProductDTO.productToProductDtoList(productRepo.findAll());
+        return productToProductDtoList(productRepo.findAll());
+    }
+
+    public List<ProductDTO> getProducts(int page, int size, String sortBy) {
+        Sort sort = Sort.by(sortBy);
+        PageRequest pageRequest = PageRequest.of((page-1), size, sort);
+        Page<Product> productPage = productRepo.findAll(pageRequest);
+        return productToProductDtoList(productPage.getContent());
     }
 
     public ResponseEntity<?> getProductById(Long id) {
@@ -78,4 +95,5 @@ public class ProductService {
         }
         else return new ResponseEntity<>("There is no such product", HttpStatus.NOT_FOUND);
     }
+
 }

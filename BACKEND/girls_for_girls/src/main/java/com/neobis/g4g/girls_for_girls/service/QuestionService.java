@@ -4,7 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.QuestionDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Question;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.repository.QuestionRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -17,9 +17,13 @@ import java.util.List;
 import static com.neobis.g4g.girls_for_girls.data.dto.QuestionDTO.toQuestionDTO;
 
 @Service
-@AllArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
+
+    @Autowired
+    public QuestionService(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
+    }
 
     public List<QuestionDTO> getAllQuestions(){
         return toQuestionDTO(questionRepository.findAll());

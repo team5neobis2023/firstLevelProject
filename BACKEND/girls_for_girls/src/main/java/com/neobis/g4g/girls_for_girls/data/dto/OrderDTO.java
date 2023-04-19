@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class OrderDTO {
-
     private Long userId;
     private Long productId;
     private Long sizeId;
@@ -26,7 +25,7 @@ public class OrderDTO {
                 .productId(order.getProduct().getId())
                 .amount(order.getAmount())
                 .orderDate(order.getOrderDate())
-                .sizeId(order.getId())
+                .sizeId(order.getSize().getId())
                 .build();
     }
 

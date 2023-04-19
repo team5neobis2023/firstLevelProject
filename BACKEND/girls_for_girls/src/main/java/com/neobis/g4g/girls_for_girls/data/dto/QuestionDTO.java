@@ -36,6 +36,7 @@ public class QuestionDTO {
 
     public static QuestionDTO toQuestionDTO(Question question){
         return QuestionDTO.builder()
+                .id(question.getId())
                 .email(question.getEmail())
                 .full_name(question.getFull_name())
                 .question(question.getQuestion())
