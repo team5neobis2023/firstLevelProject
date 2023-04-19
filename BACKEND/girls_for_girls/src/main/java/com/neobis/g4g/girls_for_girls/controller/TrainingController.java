@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,6 +72,7 @@ public class TrainingController {
             summary = "Добавление тренинга",
             tags = "Тренинг"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> addTraining(@RequestBody @Valid TrainingDTO trainingDTO,
                                               BindingResult bindingResult){
         return trainingService.addTraining(trainingDTO, bindingResult);
@@ -82,6 +84,7 @@ public class TrainingController {
             summary = "Обновление данных тренинга",
             tags = "Тренинг"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateTraining(@PathVariable("id")
                                                  @Parameter(description = "Идентификатор тренинга") long id,
                                                  @RequestBody @Valid TrainingDTO trainingDTO,
@@ -95,6 +98,7 @@ public class TrainingController {
             summary = "Удаление тренинга",
             tags = "Тренинг"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteTraining(@PathVariable("id")
                                               @Parameter(description = "Идентификатор тренинга") long id){
         return trainingService.deleteTraining(id);

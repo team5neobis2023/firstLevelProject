@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
@@ -38,14 +39,12 @@ public class ArticleController {
         this.userRepository = userRepository;
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(summary = "Получение всех постов", tags = "Пост")
     public List<ArticleDTO> getAllArticles(){
         return articleService.getAllArticles();
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(summary = "Получение поста по айди", tags = "Пост")
     public ResponseEntity<?> getArticleById(@PathVariable("id")
@@ -56,6 +55,7 @@ public class ArticleController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(summary = "Добавление поста", tags = "Пост")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> addArticle(@RequestBody @Valid ArticleDTO articleDTO,
                                         BindingResult bindingResult){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -66,6 +66,7 @@ public class ArticleController {
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(summary = "Обновление данных поста", tags = "Пост")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateArticle(@PathVariable("id")
                                            @Parameter(description = "Идентификатор поста") long id,
                                            @RequestBody @Valid ArticleDTO articleDTO,
@@ -78,12 +79,12 @@ public class ArticleController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(summary = "Удаление поста по айди", tags = "Пост")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> deleteArticleById(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор поста") long id){
         return articleService.deleteArticleById(id);
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/likedUsers")
     @Operation(summary = "Получение пользователей лайкнувших пост по айди поста", tags = "Пост")
     public ResponseEntity<?> getAllLikedUsersByArticleId(@PathVariable("id") @Parameter(description = "Идентификатор поста") long id){

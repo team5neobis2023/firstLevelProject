@@ -33,7 +33,6 @@ public class RegionController {
             summary = "Получить все регионы",
             tags = "Регион"
     )
-    @SecurityRequirement(name = "JWT")
     @GetMapping
     public List<Region> getAllRegions() {
         return regionService.getAllRegions();
@@ -44,7 +43,6 @@ public class RegionController {
             description = "Позволяет получить регион по его ID",
             tags = "Регион"
     )
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     public ResponseEntity<?> getRegionById(@PathVariable
                                                         @Parameter(description = "Идентификатор региона")

@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,6 @@ public class SpeakerController {
         this.speakerService = speakerService;
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех спикеров",
@@ -42,7 +42,6 @@ public class SpeakerController {
         return speakerService.getAllSpeakers();
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение спикера по айди",
@@ -59,6 +58,7 @@ public class SpeakerController {
             summary = "Добавление спикера",
             tags = "Спикер"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> addSpeaker(@RequestBody @Valid SpeakerDTO speakerDTO,
                                          BindingResult bindingResult){
         return speakerService.addSpeaker(speakerDTO, bindingResult);
@@ -70,6 +70,7 @@ public class SpeakerController {
             summary = "Обновление данных спикера",
             tags = "Спикер"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateSpeaker(@PathVariable("id")
                                             @Parameter(description = "Идентификатор спикера") long id,
                                             @RequestBody @Valid SpeakerDTO speakerDTO,
@@ -83,6 +84,7 @@ public class SpeakerController {
             summary = "Удаление спикера",
             tags = "Спикер"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteSpeaker(@PathVariable("id")
                                             @Parameter(description = "Идентификатор спикера") long id){
         return speakerService.deleteSpeakerById(id);

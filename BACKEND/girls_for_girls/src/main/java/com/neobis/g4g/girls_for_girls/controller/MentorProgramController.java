@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,6 +72,7 @@ public class MentorProgramController {
             summary = "Добавление менторской программы",
             tags = "Менторская программа"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> addMentorProgram(@RequestBody @Valid MentorProgramDTO mentorProgramDTO,
                                            BindingResult bindingResult){
         return mentorProgramService.addMentorProgram(mentorProgramDTO, bindingResult);
@@ -82,6 +84,7 @@ public class MentorProgramController {
             summary = "Обновление данных менторской программы",
             tags = "Менторская программа"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateMentorProgram(@PathVariable("id")
                                               @Parameter(description = "Идентификатор менторской программы") long id,
                                               @RequestBody @Valid MentorProgramDTO mentorProgramDTO,
@@ -95,6 +98,7 @@ public class MentorProgramController {
             summary = "Удаление менторской программы",
             tags = "Менторская программа"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteMentorProgram(@PathVariable("id")
                                               @Parameter(description = "Идентификатор менторской программы") long id){
         return mentorProgramService.deleteMentorProgram(id);

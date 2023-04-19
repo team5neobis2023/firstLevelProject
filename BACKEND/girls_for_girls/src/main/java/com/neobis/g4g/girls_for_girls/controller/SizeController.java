@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,6 @@ public class SizeController {
         this.sizeService = sizeService;
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех размеров",
@@ -42,7 +42,6 @@ public class SizeController {
         return sizeService.getAllSizes();
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение размера по айди",
@@ -59,6 +58,7 @@ public class SizeController {
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping()
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> addSize(@RequestBody @Valid SizeDTO sizeDTO,
                                             BindingResult bindingResult) {
         return sizeService.addSize(sizeDTO, bindingResult);
@@ -70,6 +70,7 @@ public class SizeController {
             summary = "Удаление размера",
             tags = "Размер"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteQuestion(@PathVariable("id")
                                            @Parameter(description = "Идентификатор размера") long id){
         return sizeService.deleteSize(id);
