@@ -2,6 +2,9 @@ package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ArticleDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
+import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
+import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
+import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import com.neobis.g4g.girls_for_girls.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +12,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,7 +56,7 @@ public class ArticleController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(summary = "Добавление поста", tags = "Пост")
-    public ResponseEntity<?> addArticle(@RequestBody @Valid ArticleDTO articleDTO,
+    public ResponseEntity<String> addArticle(@RequestBody @Valid ArticleDTO articleDTO,
                                         BindingResult bindingResult){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
@@ -74,7 +78,7 @@ public class ArticleController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(summary = "Удаление поста по айди", tags = "Пост")
-    public ResponseEntity<?> deleteArticleById(@PathVariable("id")
+    public ResponseEntity<String> deleteArticleById(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор поста") long id){
         return articleService.deleteArticleById(id);
     }
@@ -84,5 +88,17 @@ public class ArticleController {
     @Operation(summary = "Получение пользователей лайкнувших пост по айди поста", tags = "Пост")
     public ResponseEntity<?> getAllLikedUsersByArticleId(@PathVariable("id") @Parameter(description = "Идентификатор поста") long id){
         return articleService.getAllLikedUsersByArticleId(id);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(NotAddedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> handleException(NotUpdatedException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

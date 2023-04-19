@@ -2,24 +2,25 @@ package com.neobis.g4g.girls_for_girls.service;
 
 import com.neobis.g4g.girls_for_girls.data.dto.SizeDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Size;
-import com.neobis.g4g.girls_for_girls.data.entity.Training;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.repository.SizeRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class SizeService {
     private final SizeRepository sizeRepository;
+
+    @Autowired
+    public SizeService(SizeRepository sizeRepository) {
+        this.sizeRepository = sizeRepository;
+    }
 
     public List<Size> getAllSizes(){
         return sizeRepository.findAll();

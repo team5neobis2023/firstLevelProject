@@ -4,7 +4,7 @@ import com.neobis.g4g.girls_for_girls.service.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,13 +14,17 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/image")
-@RequiredArgsConstructor
 @Tag(
         name = "Контроллер для работы фотографиями",
         description = "В этом контроллере вы сможете добавлять фотографии"
 )
 public class ImageController {
     private final ImageService imageService;
+
+    @Autowired
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
+    }
 
     @SecurityRequirement(name = "JWT")
     @PostMapping(value = "/upload/product/{productId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

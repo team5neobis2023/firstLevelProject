@@ -17,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class QuestionController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение размера по айди",
+            summary = "Получение вопроса по айди",
             tags = "Вопрос"
     )
     @PreAuthorize("hasAuthority('ADMIN')")

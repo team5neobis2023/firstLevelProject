@@ -43,7 +43,7 @@ public class ArticleService {
         }
     }
 
-    public ResponseEntity<?> addArticle(ArticleDTO articleDTO,
+    public ResponseEntity<String> addArticle(ArticleDTO articleDTO,
                                         BindingResult bindingResult,
                                         User user){
         if(bindingResult.hasErrors()){
@@ -81,7 +81,7 @@ public class ArticleService {
 
     }
 
-    public ResponseEntity<?> deleteArticleById(Long id){
+    public ResponseEntity<String> deleteArticleById(Long id){
         if(articleRepository.existsById(id)){
             articleRepository.deleteById(id);
             return ResponseEntity.ok("Article was deleted");
