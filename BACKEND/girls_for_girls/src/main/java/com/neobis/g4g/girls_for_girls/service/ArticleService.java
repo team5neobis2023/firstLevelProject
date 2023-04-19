@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.neobis.g4g.girls_for_girls.data.dto.ArticleDTO.toArticleDTO;
+import static com.neobis.g4g.girls_for_girls.data.dto.GetLikedUserDTO.toGetLikedUserDTO;
 
 @Service
 public class ArticleService {
@@ -92,7 +93,7 @@ public class ArticleService {
 
     public ResponseEntity<?> getAllLikedUsersByArticleId(long id){
         if(articleRepository.existsById(id)){
-            return ResponseEntity.ok(userRepository.findUsersByLikedArticlesId(id));
+            return ResponseEntity.ok(toGetLikedUserDTO(userRepository.findUsersByLikedArticlesId(id)));
         }else{
             return new ResponseEntity<>("Article with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
         }

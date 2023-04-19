@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,6 +74,7 @@ public class VideoCourseCategoryController {
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping()
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> addVideoCourseCategory(@RequestBody @Valid VideoCourseCategoryDTO videoCourseCategoryDTO,
                                                     BindingResult bindingResult) {
         return videoCourseCategoryService.addVideoCourseCategory(videoCourseCategoryDTO, bindingResult);
@@ -85,6 +87,7 @@ public class VideoCourseCategoryController {
     )
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> updateVideoCourseCategory(@PathVariable
                                                 @Parameter(description = "Идентификатор категории") Long id,
                                                 @RequestBody @Valid VideoCourseCategoryDTO videoCourseCategoryDTO,
@@ -99,6 +102,7 @@ public class VideoCourseCategoryController {
     )
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> deleteVideoCourseCategoryById(@PathVariable
                                                      @Parameter(description = "Идентификатор категории")
                                                      Long id) {

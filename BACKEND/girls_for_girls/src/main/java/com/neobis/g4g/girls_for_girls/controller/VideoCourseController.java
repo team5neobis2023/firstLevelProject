@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -74,6 +75,7 @@ public class VideoCourseController {
             summary = "Добавление видеокурса",
             tags = "Видеокурс"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> addVideoCourse(@RequestBody @Valid VideoCourseDTO videoCourseDTO,
                                                  BindingResult bindingResult,
                                                  @AuthenticationPrincipal User user){
@@ -86,6 +88,7 @@ public class VideoCourseController {
             summary = "Обновление данных видеокурса по айди",
             tags = "Видеокурс"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> updateVideoCourse(@PathVariable("id")
                                                @Parameter(description = "Идентификатор видеокурса") long id,
                                                @RequestBody @Valid VideoCourseDTO videoCourseDTO,
@@ -100,6 +103,7 @@ public class VideoCourseController {
             summary = "Удаление видеокурса по айди",
             tags = "Видеокурс"
     )
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> deleteVideoCourse(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор видеокурса") long id){
         return videoCourseService.deleteVideoCourse(id);
