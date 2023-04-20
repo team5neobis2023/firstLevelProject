@@ -16,6 +16,5 @@ public class AddBasketDTO {
     @NotNull(message = "Айди размера не может быть null")
     private long sizeId;
 
-    @NotNull(message = "Количество не может быть null")
     private int amount;
 }

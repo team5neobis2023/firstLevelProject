@@ -70,6 +70,38 @@ public class BasketService {
         }
     }
 
+    public ResponseEntity<String> updateBasket(AddBasketDTO addBasketDTO,
+                                              BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            throw new NotAddedException(getErrorMsg(bindingResult).toString());
+        }
+
+        if (productRepo.existsById(addBasketDTO.getProductId())){
+            if(sizeRepository.existsById(addBasketDTO.getSizeId())){
+                if(basketRepository.existsByProductIdAndUser(addBasketDTO.getProductId(), getCurrentUser())) {
+                    Basket basket = basketRepository.findByProductIdAndUser(addBasketDTO.getProductId(), getCurrentUser()).get();
+                    basketRepository.save(
+                            Basket.builder()
+                                    .id(basket.getId())
+                                    .amount(addBasketDTO.getAmount())
+                                    .size(sizeRepository.findById(addBasketDTO.getSizeId()).get())
+                                    .product(productRepo.findById(addBasketDTO.getProductId()).get())
+                                    .user(basket.getUser())
+                                    .build()
+                    );
+                    return ResponseEntity.ok("Basket updated");
+                }else{
+                    return ResponseEntity.badRequest().body("Doesn't exist in basket");
+                }
+            }else{
+                return ResponseEntity.badRequest().body("Write sizeId correctly");
+            }
+        }else{
+            return ResponseEntity.badRequest().body("Write productId correctly");
+        }
+    }
+
     public ResponseEntity<String> deleteFromBasketById(DeleteFromBasketDTO deleteFromBasketDTO){
         if(basketRepository.existsById(deleteFromBasketDTO.getId())){
             basketRepository.deleteById(deleteFromBasketDTO.getId());
