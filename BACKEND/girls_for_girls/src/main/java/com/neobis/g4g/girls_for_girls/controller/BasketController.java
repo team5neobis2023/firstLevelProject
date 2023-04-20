@@ -44,9 +44,17 @@ public class BasketController {
     @PostMapping()
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Добавление в корзину", tags = "Корзина")
-    public ResponseEntity<?> addToBasket(@RequestBody @Valid AddBasketDTO addBasketDTO,
+    public ResponseEntity<String> addToBasket(@RequestBody @Valid AddBasketDTO addBasketDTO,
                                         BindingResult bindingResult){
         return basketService.addToBasket(addBasketDTO, bindingResult);
+    }
+
+    @PutMapping()
+    @SecurityRequirement(name = "JWT")
+    @Operation(summary = "Обновление корзины", tags = "Корзина")
+    public ResponseEntity<String> updateBasket(@RequestBody @Valid AddBasketDTO addBasketDTO,
+                                         BindingResult bindingResult){
+        return basketService.updateBasket(addBasketDTO, bindingResult);
     }
 
     @SecurityRequirement(name = "JWT")
