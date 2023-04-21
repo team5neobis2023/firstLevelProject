@@ -1,12 +1,14 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ProductDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.Product;
 import com.neobis.g4g.girls_for_girls.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
+    @GetMapping()
     @Operation(
             summary = "Получить все товары",
             tags = "Товар"
@@ -49,16 +51,15 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
-    @GetMapping("/search")
+    @GetMapping("/byPages")
     @Operation(
             summary = "Получить товары",
             description = "Позволяет получить товары с пагинацией и сортировкой",
             tags = "Товар"
     )
-    public List<ProductDTO> getProducts(@RequestParam("page") int page,
-                                         @RequestParam("size") int size,
-                                         @RequestParam("sortBy") String sortBy) {
-        return productService.getProducts(page, size, sortBy);
+    public Page<Product> getProducts(@RequestParam("page") int page,
+                                     @RequestParam("size") int size) {
+        return productService.getProducts(page, size);
     }
 
     @GetMapping("/{id}/orders")
