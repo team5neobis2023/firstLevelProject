@@ -37,11 +37,8 @@ public class ProductService {
         return productToProductDtoList(productRepo.findAll());
     }
 
-    public List<ProductDTO> getProducts(int page, int size, String sortBy) {
-        Sort sort = Sort.by(sortBy);
-        PageRequest pageRequest = PageRequest.of((page-1), size, sort);
-        Page<Product> productPage = productRepo.findAll(pageRequest);
-        return productToProductDtoList(productPage.getContent());
+    public Page<Product> getProducts(int page, int size) {
+        return productRepo.findAll(PageRequest.of(page, size));
     }
 
     public ResponseEntity<?> getProductById(Long id) {
