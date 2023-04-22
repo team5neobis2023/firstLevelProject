@@ -15,7 +15,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/v1/image")
 @Tag(
-        name = "Контроллер для работы фотографиями",
+        name = "Контроллер для работы c фотографиями",
         description = "В этом контроллере вы сможете добавлять фотографии"
 )
 public class ImageController {
@@ -29,8 +29,7 @@ public class ImageController {
     @SecurityRequirement(name = "JWT")
     @PostMapping(value = "/upload/product/{productId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
-            summary = "Добавление фотографии к продукту по айди",
-            tags = "Фото"
+            summary = "Добавление фотографии к продукту по айди"
     )
     public ResponseEntity<String> saveProductImage(@PathVariable("productId") Long productId,
                                                   @RequestPart MultipartFile file) throws IOException {
@@ -40,8 +39,7 @@ public class ImageController {
     @SecurityRequirement(name = "JWT")
     @PostMapping(value = "/upload/article/{articleId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
-            summary = "Добавление фотографии к статье по айди",
-            tags = "Фото"
+            summary = "Добавление фотографии к статье по айди"
     )
     public ResponseEntity<String> saveArticleImage(@PathVariable("articleId") Long articleId,
                                                    @RequestPart MultipartFile file) throws IOException {
@@ -51,8 +49,7 @@ public class ImageController {
     @SecurityRequirement(name = "JWT")
     @PostMapping(value = "/upload/speaker/{speakerId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
-            summary = "Добавление фотографии спикера по айди",
-            tags = "Фото"
+            summary = "Добавление фотографии спикера по айди"
     )
     public ResponseEntity<String> saveSpeakerImage(@PathVariable("speakerId") Long speakerId,
                                                    @RequestPart MultipartFile file) throws IOException {
@@ -62,8 +59,7 @@ public class ImageController {
     @SecurityRequirement(name = "JWT")
     @PostMapping(value = "/upload/user", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
-            summary = "Добавление фотографии профиля",
-            tags = "Фото"
+            summary = "Добавление фотографии профиля"
     )
     public ResponseEntity<String> saveProductImage(@RequestPart MultipartFile file) throws IOException {
         return imageService.saveForUser(file);

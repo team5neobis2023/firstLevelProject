@@ -35,8 +35,7 @@ public class ApplicationController {
     @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
-            summary = "Получение всех заявок",
-            tags = "Заявка"
+            summary = "Получение всех заявок"
     )
     public List<ApplicationDTO> getAllApplications(){
         return applicationService.getAllApplications();
@@ -46,8 +45,7 @@ public class ApplicationController {
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение заявки",
-            description = "Получение заявки по конкретному айди",
-            tags = "Заявка"
+            description = "Получение заявки по конкретному айди"
     )
     public ResponseEntity<?> getApplicationById(@PathVariable("id")
                                                  @Parameter(description = "Идентификатор заявки")
@@ -58,8 +56,7 @@ public class ApplicationController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
-            summary = "Добавление заявки",
-            tags = "Заявка"
+            summary = "Добавление заявки"
     )
     public ResponseEntity<?> addApplication(@RequestBody @Valid ApplicationDTO applicationDTO,
                                             BindingResult bindingResult){
@@ -69,8 +66,7 @@ public class ApplicationController {
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
-            summary = "Обновление данных заявки",
-            tags = "Заявка"
+            summary = "Обновление данных заявки"
     )
     public ResponseEntity<?> updateApplication(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор заявки") long id,
@@ -82,8 +78,7 @@ public class ApplicationController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление заявки",
-            tags = "Заявка"
+            summary = "Удаление заявки"
     )
     public ResponseEntity<?> deleteApplication(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор заявки") long id){

@@ -30,8 +30,7 @@ public class RegionController {
     }
 
     @Operation(
-            summary = "Получить все регионы",
-            tags = "Регион"
+            summary = "Получить все регионы"
     )
     @GetMapping
     public List<Region> getAllRegions() {
@@ -40,8 +39,7 @@ public class RegionController {
 
     @Operation(
             summary = "Получить регион",
-            description = "Позволяет получить регион по его ID",
-            tags = "Регион"
+            description = "Позволяет получить регион по его ID"
     )
     @GetMapping("/{id}")
     public ResponseEntity<?> getRegionById(@PathVariable
@@ -51,8 +49,7 @@ public class RegionController {
     }
 
     @Operation(
-            summary = "Получить пользователей по айди региона",
-            tags = "Категории видеокурсов"
+            summary = "Получить пользователей по айди региона"
     )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/users")

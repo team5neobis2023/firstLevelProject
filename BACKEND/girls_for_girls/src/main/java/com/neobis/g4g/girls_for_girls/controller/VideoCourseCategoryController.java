@@ -34,8 +34,7 @@ public class VideoCourseCategoryController {
     }
 
     @Operation(
-            summary = "Получить категории видеокурсов",
-            tags = "Категории видеокурсов"
+            summary = "Получить категории видеокурсов"
     )
     @SecurityRequirement(name = "JWT")
     @GetMapping
@@ -45,8 +44,7 @@ public class VideoCourseCategoryController {
 
     @Operation(
             summary = "Получить категорию видеокурса",
-            description = "Позволяет получить категорию по ее ID",
-            tags = "Категории видеокурсов"
+            description = "Позволяет получить категорию по ее ID"
     )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
@@ -57,8 +55,7 @@ public class VideoCourseCategoryController {
     }
 
     @Operation(
-            summary = "Получить видеокурсы по айди категории",
-            tags = "Категории видеокурсов"
+            summary = "Получить видеокурсы по айди категории"
     )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/videoCourses")
@@ -69,8 +66,7 @@ public class VideoCourseCategoryController {
     }
 
     @Operation(
-            summary = "Добавить категорию видеокурсов",
-            tags = "Категории видеокурсов"
+            summary = "Добавить категорию видеокурсов"
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping()
@@ -82,8 +78,7 @@ public class VideoCourseCategoryController {
 
     @Operation(
             summary = "Изменить категорию видеокурса",
-            description = "Позволяет изменить категорию по ее ID",
-            tags = "Категории видеокурсов"
+            description = "Позволяет изменить категорию по ее ID"
     )
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
@@ -97,8 +92,7 @@ public class VideoCourseCategoryController {
 
     @Operation(
             summary = "Удалить категорию видеокурсов",
-            description = "Позволяет удалить категорию по ее ID",
-            tags = "Типы товара"
+            description = "Позволяет удалить категорию по ее ID"
     )
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")

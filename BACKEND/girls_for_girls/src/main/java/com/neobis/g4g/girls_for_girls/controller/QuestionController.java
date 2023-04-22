@@ -34,8 +34,7 @@ public class QuestionController {
     @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
-            summary = "Получение всех вопросов",
-            tags = "Вопрос"
+            summary = "Получение всех вопросов"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<QuestionDTO> getAllQuestions(){
@@ -45,8 +44,7 @@ public class QuestionController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение вопроса по айди",
-            tags = "Вопрос"
+            summary = "Получение вопроса по айди"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getQuestionById(@PathVariable("id")
@@ -55,8 +53,7 @@ public class QuestionController {
     }
 
     @Operation(
-            summary = "Добавить вопрос",
-            tags = "Вопрос"
+            summary = "Добавить вопрос"
     )
     @PostMapping()
     public ResponseEntity<String> addQuestion(@RequestBody @Valid QuestionDTO questionDTO,
@@ -67,8 +64,7 @@ public class QuestionController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление вопроса",
-            tags = "Вопрос"
+            summary = "Удаление вопроса"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteQuestion(@PathVariable("id")

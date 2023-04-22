@@ -35,8 +35,7 @@ public class SizeController {
 
     @GetMapping()
     @Operation(
-            summary = "Получение всех размеров",
-            tags = "Размер"
+            summary = "Получение всех размеров"
     )
     public List<Size> getAllSizes(){
         return sizeService.getAllSizes();
@@ -44,8 +43,7 @@ public class SizeController {
 
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение размера по айди",
-            tags = "Размер"
+            summary = "Получение размера по айди"
     )
     public ResponseEntity<?> getSizeById(@PathVariable("id")
                                             @Parameter(description = "Идентификатор размера") long id){
@@ -53,8 +51,7 @@ public class SizeController {
     }
 
     @Operation(
-            summary = "Добавить размер",
-            tags = "Размер"
+            summary = "Добавить размер"
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping()
@@ -67,8 +64,7 @@ public class SizeController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление размера",
-            tags = "Размер"
+            summary = "Удаление размера"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteQuestion(@PathVariable("id")

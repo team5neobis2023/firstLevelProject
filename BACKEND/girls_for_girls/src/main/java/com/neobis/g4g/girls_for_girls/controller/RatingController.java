@@ -33,8 +33,7 @@ public class RatingController {
     }
 
     @Operation(
-            summary = "Добавить рейтинг",
-            tags = "Рейтинг"
+            summary = "Добавить рейтинг"
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping()
@@ -47,8 +46,7 @@ public class RatingController {
     @SecurityRequirement(name = "JWT")
     @PutMapping()
     @Operation(
-            summary = "Обновление рейтинга",
-            tags = "Рейтинг"
+            summary = "Обновление рейтинга"
     )
     public ResponseEntity<?> updateRating(@RequestBody @Valid RatingDTO ratingDTO,
                                           BindingResult bindingResult,

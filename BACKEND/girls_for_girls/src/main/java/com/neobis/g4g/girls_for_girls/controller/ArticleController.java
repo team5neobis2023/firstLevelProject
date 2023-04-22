@@ -40,13 +40,13 @@ public class ArticleController {
     }
 
     @GetMapping()
-    @Operation(summary = "Получение всех постов", tags = "Пост")
+    @Operation(summary = "Получение всех постов")
     public List<ArticleDTO> getAllArticles(){
         return articleService.getAllArticles();
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Получение поста по айди", tags = "Пост")
+    @Operation(summary = "Получение поста по айди")
     public ResponseEntity<?> getArticleById(@PathVariable("id")
                                             @Parameter(description = "Идентификатор поста") long id){
         return articleService.getArticleById(id);
@@ -54,7 +54,7 @@ public class ArticleController {
 
     @SecurityRequirement(name = "JWT")
     @PostMapping()
-    @Operation(summary = "Добавление поста", tags = "Пост")
+    @Operation(summary = "Добавление поста")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> addArticle(@RequestBody @Valid ArticleDTO articleDTO,
                                         BindingResult bindingResult){
@@ -65,7 +65,7 @@ public class ArticleController {
 
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
-    @Operation(summary = "Обновление данных поста", tags = "Пост")
+    @Operation(summary = "Обновление данных поста")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateArticle(@PathVariable("id")
                                            @Parameter(description = "Идентификатор поста") long id,
@@ -78,7 +78,7 @@ public class ArticleController {
 
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
-    @Operation(summary = "Удаление поста по айди", tags = "Пост")
+    @Operation(summary = "Удаление поста по айди")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> deleteArticleById(@PathVariable("id")
                                                    @Parameter(description = "Идентификатор поста") long id){
@@ -86,7 +86,7 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}/likedUsers")
-    @Operation(summary = "Получение пользователей лайкнувших пост по айди поста", tags = "Пост")
+    @Operation(summary = "Получение пользователей лайкнувших пост по айди поста")
     public ResponseEntity<?> getAllLikedUsersByArticleId(@PathVariable("id") @Parameter(description = "Идентификатор поста") long id){
         return articleService.getAllLikedUsersByArticleId(id);
     }
