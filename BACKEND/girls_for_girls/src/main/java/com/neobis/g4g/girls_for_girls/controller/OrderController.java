@@ -30,8 +30,7 @@ public class OrderController {
     @SecurityRequirement(name = "JWT")
     @GetMapping
     @Operation(
-            summary = "Получение всех заказов",
-            tags = "Заказ"
+            summary = "Получение всех заказов"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<OrderDTO> getAllOrders() {
@@ -41,8 +40,7 @@ public class OrderController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/myOrders")
     @Operation(
-            summary = "Получение заказов авторизованного пользователя",
-            tags = "Заказ"
+            summary = "Получение заказов авторизованного пользователя"
     )
     public List<OrderDTO> getMyOrders() {
         return orderService.getMyOrders();
@@ -51,8 +49,7 @@ public class OrderController {
     @SecurityRequirement(name = "JWT")
     @Operation(
             summary = "Оформление заказа",
-            description = "Вся корзина пользователя превращается в заказ",
-            tags = "Заказ"
+            description = "Вся корзина пользователя превращается в заказ"
     )
     @PostMapping()
     public ResponseEntity<String> addOrder() {
@@ -61,8 +58,7 @@ public class OrderController {
 
     @Operation(
             summary = "Удалить заказ",
-            description = "Позволяет удалить заказ по его ID",
-            tags = "Заказ"
+            description = "Позволяет удалить заказ по его ID"
     )
     @SecurityRequirement(name = "JWT")
     @PreAuthorize("hasAuthority('ADMIN')")

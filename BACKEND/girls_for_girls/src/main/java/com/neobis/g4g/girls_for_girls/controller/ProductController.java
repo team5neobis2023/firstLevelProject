@@ -32,8 +32,7 @@ public class ProductController {
 
     @GetMapping()
     @Operation(
-            summary = "Получить все товары",
-            tags = "Товар"
+            summary = "Получить все товары"
     )
     public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
@@ -42,8 +41,7 @@ public class ProductController {
     @GetMapping("/{id}")
     @Operation(
             summary = "Получить товар",
-            description = "Позволяет получить товар по его ID",
-            tags = "Товар"
+            description = "Позволяет получить товар по его ID"
     )
     public ResponseEntity<?> getProductById(@PathVariable
                                               @Parameter(description = "Идентификатор товара")
@@ -54,8 +52,7 @@ public class ProductController {
     @GetMapping("/byPages")
     @Operation(
             summary = "Получить товары",
-            description = "Позволяет получить товары с пагинацией и сортировкой",
-            tags = "Товар"
+            description = "Позволяет получить товары с пагинацией и сортировкой"
     )
     public Page<Product> getProducts(@RequestParam("page") int page,
                                      @RequestParam("size") int size) {
@@ -64,8 +61,7 @@ public class ProductController {
 
     @GetMapping("/{id}/orders")
     @Operation(
-            summary = "Получить заказы по айди товара",
-            tags = "Товар"
+            summary = "Получить заказы по айди товара"
     )
     @SecurityRequirement(name = "JWT")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -76,8 +72,7 @@ public class ProductController {
     }
 
     @Operation(
-            summary = "Добавить товар",
-            tags = "Товар"
+            summary = "Добавить товар"
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping()
@@ -88,8 +83,7 @@ public class ProductController {
 
     @Operation(
             summary = "Изменить товар",
-            description = "Позволяет изменить товар по его ID",
-            tags = "Товар"
+            description = "Позволяет изменить товар по его ID"
     )
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
@@ -103,8 +97,7 @@ public class ProductController {
 
     @Operation(
             summary = "Удалить товар",
-            description = "Позволяет удалить товар по его ID",
-            tags = "Товар"
+            description = "Позволяет удалить товар по его ID"
     )
     @SecurityRequirement(name = "JWT")
     @PreAuthorize("hasAuthority('ADMIN')")

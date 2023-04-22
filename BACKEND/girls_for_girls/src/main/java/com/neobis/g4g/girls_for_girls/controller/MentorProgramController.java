@@ -37,8 +37,7 @@ public class MentorProgramController {
     @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
-            summary = "Получение всех менторских программ",
-            tags = "Менторская программа"
+            summary = "Получение всех менторских программ"
     )
     public List<MentorProgramDTO> getAllMentorPrograms(){
         return mentorProgramService.getAllMentorPrograms();
@@ -47,8 +46,7 @@ public class MentorProgramController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/applications")
     @Operation(
-            summary = "Получение заявок на менторскую программу по айди программы",
-            tags = "Менторская программа"
+            summary = "Получение заявок на менторскую программу по айди программы"
     )
     public ResponseEntity<?> getAllApplicationsByMentorProgramId(@PathVariable("id")
                                                                       @Parameter(description = "Идентификатор менторской программы") long id){
@@ -58,8 +56,7 @@ public class MentorProgramController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение менторской программы по айди",
-            tags = "Менторская программа"
+            summary = "Получение менторской программы по айди"
     )
     public ResponseEntity<?> getMentorProgramById(@PathVariable("id")
                                                @Parameter(description = "Идентификатор менторской программы") long id){
@@ -69,8 +66,7 @@ public class MentorProgramController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
-            summary = "Добавление менторской программы",
-            tags = "Менторская программа"
+            summary = "Добавление менторской программы"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> addMentorProgram(@RequestBody @Valid MentorProgramDTO mentorProgramDTO,
@@ -81,8 +77,7 @@ public class MentorProgramController {
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
-            summary = "Обновление данных менторской программы",
-            tags = "Менторская программа"
+            summary = "Обновление данных менторской программы"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateMentorProgram(@PathVariable("id")
@@ -95,8 +90,7 @@ public class MentorProgramController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление менторской программы",
-            tags = "Менторская программа"
+            summary = "Удаление менторской программы"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteMentorProgram(@PathVariable("id")

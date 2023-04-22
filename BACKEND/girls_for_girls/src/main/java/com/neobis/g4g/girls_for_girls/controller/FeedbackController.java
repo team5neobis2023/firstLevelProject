@@ -40,8 +40,7 @@ public class FeedbackController {
     @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
-            summary = "Получение всех отзывов",
-            tags = "Отзыв"
+            summary = "Получение всех отзывов"
     )
     public List<FeedbackDTO> getAllFeedbacks(){
         return feedbackService.getAllFeedbacks();
@@ -50,8 +49,7 @@ public class FeedbackController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение отзыва по айди",
-            tags = "Отзыв"
+            summary = "Получение отзыва по айди"
     )
     public ResponseEntity<?> getFeedbackById(@PathVariable("id")
                                              @Parameter(description = "Идентификатор отзыва") long id){
@@ -61,8 +59,7 @@ public class FeedbackController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
-            summary = "Добавление отзыва",
-            tags = "Отзыв"
+            summary = "Добавление отзыва"
     )
     public ResponseEntity<?> addFeedback(@RequestBody @Valid FeedbackDTO feedbackDTO,
                                          BindingResult bindingResult,
@@ -73,8 +70,7 @@ public class FeedbackController {
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
-            summary = "Обновление данных отзыва",
-            tags = "Отзыв"
+            summary = "Обновление данных отзыва"
     )
     public ResponseEntity<?> updateFeedback(@PathVariable("id")
                                             @Parameter(description = "Идентификатор отзыва") long id,
@@ -87,8 +83,7 @@ public class FeedbackController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление отзыва",
-            tags = "Отзыв"
+            summary = "Удаление отзыва"
     )
     public ResponseEntity<?> deleteFeedback(@PathVariable("id")
                                             @Parameter(description = "Идентификатор отзыва") long id){

@@ -35,8 +35,7 @@ public class SpeakerController {
 
     @GetMapping()
     @Operation(
-            summary = "Получение всех спикеров",
-            tags = "Спикер"
+            summary = "Получение всех спикеров"
     )
     public List<SpeakerDTO> getAllSpeakers(){
         return speakerService.getAllSpeakers();
@@ -44,8 +43,7 @@ public class SpeakerController {
 
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение спикера по айди",
-            tags = "Спикер"
+            summary = "Получение спикера по айди"
     )
     public ResponseEntity<?> getSpeakerById(@PathVariable("id")
                                              @Parameter(description = "Идентификатор спикера") long id){
@@ -55,8 +53,7 @@ public class SpeakerController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
-            summary = "Добавление спикера",
-            tags = "Спикер"
+            summary = "Добавление спикера"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> addSpeaker(@RequestBody @Valid SpeakerDTO speakerDTO,
@@ -67,8 +64,7 @@ public class SpeakerController {
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
-            summary = "Обновление данных спикера",
-            tags = "Спикер"
+            summary = "Обновление данных спикера"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateSpeaker(@PathVariable("id")
@@ -81,8 +77,7 @@ public class SpeakerController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление спикера",
-            tags = "Спикер"
+            summary = "Удаление спикера"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteSpeaker(@PathVariable("id")

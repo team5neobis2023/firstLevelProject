@@ -40,8 +40,7 @@ public class VideoCourseController {
     @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
-            summary = "Получение всех видеокурсов",
-            tags = "Видеокурс"
+            summary = "Получение всех видеокурсов"
     )
     public List<VideoCourseDTO> getAllVideoCourses(){
         return videoCourseService.getAllVideoCourses();
@@ -50,8 +49,7 @@ public class VideoCourseController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение видеокурса по айди",
-            tags = "Видеокурс"
+            summary = "Получение видеокурса по айди"
     )
     public ResponseEntity<?> getVideoCourseById(@PathVariable("id")
                                              @Parameter(description = "Идентификатор видеокурса") long id){
@@ -61,8 +59,7 @@ public class VideoCourseController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/feedbacks")
     @Operation(
-            summary = "Получение отзывов по айди видеокурса",
-            tags = "Видеокурс"
+            summary = "Получение отзывов по айди видеокурса"
     )
     public ResponseEntity<?> getAllFeedbacksByVideoCourseId(@PathVariable("id")
                                                             @Parameter(description = "Идентификатор видеокурса") long id){
@@ -72,8 +69,7 @@ public class VideoCourseController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
-            summary = "Добавление видеокурса",
-            tags = "Видеокурс"
+            summary = "Добавление видеокурса"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> addVideoCourse(@RequestBody @Valid VideoCourseDTO videoCourseDTO,
@@ -85,8 +81,7 @@ public class VideoCourseController {
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
-            summary = "Обновление данных видеокурса по айди",
-            tags = "Видеокурс"
+            summary = "Обновление данных видеокурса по айди"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> updateVideoCourse(@PathVariable("id")
@@ -100,8 +95,7 @@ public class VideoCourseController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление видеокурса по айди",
-            tags = "Видеокурс"
+            summary = "Удаление видеокурса по айди"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> deleteVideoCourse(@PathVariable("id")

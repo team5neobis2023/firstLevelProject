@@ -30,8 +30,7 @@ public class NotificationController {
     @SecurityRequirement(name = "JWT")
     @GetMapping
     @Operation(
-            summary = "Получить все уведомления",
-            tags = "Уведомление"
+            summary = "Получить все уведомления"
     )
     private List<NotificationDTO> getAllNotifications() {
         return notificationService.getAllNotifications();
@@ -41,8 +40,7 @@ public class NotificationController {
     @GetMapping("/{id}")
     @Operation(
             summary = "Получить уведомление",
-            description = "Позволяет получить уведомление по ID пользователя",
-            tags = "Уведомление"
+            description = "Позволяет получить уведомление по ID пользователя"
     )
     public ResponseEntity<?> getNotificationsByUserID(@PathVariable
                                           @Parameter(description = "Идентификатор пользователя")
@@ -54,8 +52,7 @@ public class NotificationController {
     @PostMapping
     @Operation(
             summary = "Добавить уведомление",
-            description = "Позволяет добавить уведомление",
-            tags = "Уведомление"
+            description = "Позволяет добавить уведомление"
     )
     public ResponseEntity<?> addNotification(@RequestBody NotificationDTO notificationDTO) {
         return notificationService.addNotification(notificationDTO);
@@ -65,8 +62,7 @@ public class NotificationController {
     @PutMapping("/{id}")
     @Operation(
             summary = "Изменить уведомление",
-            description = "Позволяет изменять уведомление",
-            tags = "Уведомление"
+            description = "Позволяет изменять уведомление"
     )
     public ResponseEntity<?> updateNotification(@PathVariable
                                                     @Parameter(description = "Идентификатор уведомления")
@@ -79,8 +75,7 @@ public class NotificationController {
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удалить уведомление",
-            description = "Позволяет удалять уведомление",
-            tags = "Уведомление"
+            description = "Позволяет удалять уведомление"
     )
     public ResponseEntity<String> deleteNotification(@PathVariable
                                                          @Parameter(description = "Идентификатор уведомления")

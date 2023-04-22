@@ -36,8 +36,7 @@ public class ConferenceController {
 
     @GetMapping()
     @Operation(
-            summary = "Получение всех конференций",
-            tags = "Конференция"
+            summary = "Получение всех конференций"
     )
     public List<ConferencesDTO> getAllConferences(){
         return conferenceService.getAllConferences();
@@ -46,8 +45,7 @@ public class ConferenceController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/applications")
     @Operation(
-            summary = "Получение заявок на конференцию по айди конференции",
-            tags = "Конференция"
+            summary = "Получение заявок на конференцию по айди конференции"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> getAllApplicationsByConferenceId(@PathVariable("id")
@@ -57,8 +55,7 @@ public class ConferenceController {
 
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение конференции по айди",
-            tags = "Конференция"
+            summary = "Получение конференции по айди"
     )
     public ResponseEntity<?> getConferenceById(@PathVariable("id")
                                                @Parameter(description = "Идентификатор конференции") long id){
@@ -68,8 +65,7 @@ public class ConferenceController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
-            summary = "Добавление конференции",
-            tags = "Конференция"
+            summary = "Добавление конференции"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> addConference(@RequestBody @Valid ConferencesDTO conferencesDTO,
@@ -80,8 +76,7 @@ public class ConferenceController {
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
-            summary = "Обновление данных конференции",
-            tags = "Конференция"
+            summary = "Обновление данных конференции"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateConference(@PathVariable("id")

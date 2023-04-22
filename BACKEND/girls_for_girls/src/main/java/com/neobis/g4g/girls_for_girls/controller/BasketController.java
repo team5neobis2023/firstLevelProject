@@ -35,15 +35,14 @@ public class BasketController {
 
     @GetMapping()
     @SecurityRequirement(name = "JWT")
-    @Operation(summary = "Получение корзины авторизованного пользователя",
-            tags = "Корзина")
+    @Operation(summary = "Получение корзины авторизованного пользователя")
     public List<GetBasketDTO> getMyBasket(){
         return basketService.getMyBasket();
     }
 
     @PostMapping()
     @SecurityRequirement(name = "JWT")
-    @Operation(summary = "Добавление в корзину", tags = "Корзина")
+    @Operation(summary = "Добавление в корзину")
     public ResponseEntity<String> addToBasket(@RequestBody @Valid AddBasketDTO addBasketDTO,
                                         BindingResult bindingResult){
         return basketService.addToBasket(addBasketDTO, bindingResult);
@@ -51,7 +50,7 @@ public class BasketController {
 
     @PutMapping()
     @SecurityRequirement(name = "JWT")
-    @Operation(summary = "Обновление корзины", tags = "Корзина")
+    @Operation(summary = "Обновление корзины")
     public ResponseEntity<String> updateBasket(@RequestBody @Valid AddBasketDTO addBasketDTO,
                                          BindingResult bindingResult){
         return basketService.updateBasket(addBasketDTO, bindingResult);
@@ -59,7 +58,7 @@ public class BasketController {
 
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
-    @Operation(summary = "Удаление из корзины по айди", tags = "Корзина")
+    @Operation(summary = "Удаление из корзины по айди")
     public ResponseEntity<String> deleteFromBasket(@RequestBody DeleteFromBasketDTO deleteFromBasketDTO){
         return basketService.deleteFromBasketById(deleteFromBasketDTO);
     }

@@ -37,8 +37,7 @@ public class TrainingController {
     @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
-            summary = "Получение всех тренингов",
-            tags = "Тренинг"
+            summary = "Получение всех тренингов"
     )
     public List<TrainingDTO> getAllMentorPrograms(){
         return trainingService.getAllTrainings();
@@ -47,8 +46,7 @@ public class TrainingController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/applications")
     @Operation(
-            summary = "Получение заявок на тренинг по айди тренинга",
-            tags = "Тренинг"
+            summary = "Получение заявок на тренинг по айди тренинга"
     )
     public ResponseEntity<?> getAllApplicationsByMentorProgramId(@PathVariable("id")
                                                                  @Parameter(description = "Идентификатор тренинга") long id){
@@ -58,8 +56,7 @@ public class TrainingController {
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получение тренинга по айди",
-            tags = "Тренинг"
+            summary = "Получение тренинга по айди"
     )
     public ResponseEntity<?> getMentorProgramById(@PathVariable("id")
                                                   @Parameter(description = "Идентификатор тренинга") long id){
@@ -69,8 +66,7 @@ public class TrainingController {
     @SecurityRequirement(name = "JWT")
     @PostMapping()
     @Operation(
-            summary = "Добавление тренинга",
-            tags = "Тренинг"
+            summary = "Добавление тренинга"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> addTraining(@RequestBody @Valid TrainingDTO trainingDTO,
@@ -81,8 +77,7 @@ public class TrainingController {
     @SecurityRequirement(name = "JWT")
     @PutMapping("/{id}")
     @Operation(
-            summary = "Обновление данных тренинга",
-            tags = "Тренинг"
+            summary = "Обновление данных тренинга"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> updateTraining(@PathVariable("id")
@@ -95,8 +90,7 @@ public class TrainingController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление тренинга",
-            tags = "Тренинг"
+            summary = "Удаление тренинга"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteTraining(@PathVariable("id")
