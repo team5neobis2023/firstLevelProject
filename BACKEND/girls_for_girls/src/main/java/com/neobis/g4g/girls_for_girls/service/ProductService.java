@@ -8,6 +8,7 @@ import com.neobis.g4g.girls_for_girls.repository.SizeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,8 @@ public class ProductService {
         return productToProductDtoList(productRepo.findAll());
     }
 
-    public Page<Product> getProducts(int page, int size) {
-        return productRepo.findAll(PageRequest.of(page, size));
+    public Page<Product> getProducts(Pageable pageable) {
+        return productRepo.findAll(pageable);
     }
 
     public ResponseEntity<?> getProductById(Long id) {

@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -57,9 +59,8 @@ public class ProductController {
             description = "Позволяет получить товары с пагинацией и сортировкой",
             tags = "Товар"
     )
-    public Page<Product> getProducts(@RequestParam("page") int page,
-                                     @RequestParam("size") int size) {
-        return productService.getProducts(page, size);
+    public Page<Product> getProducts(@PageableDefault Pageable pageable) {
+        return productService.getProducts(pageable);
     }
 
     @GetMapping("/{id}/orders")
