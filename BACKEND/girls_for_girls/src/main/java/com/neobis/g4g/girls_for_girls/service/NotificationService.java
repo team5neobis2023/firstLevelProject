@@ -26,16 +26,8 @@ public class NotificationService {
         return NotificationDTO.notificationToNotificationDtoList(notificationRepo.findAll());
     }
 
-    public ResponseEntity<?> getNotificationsByUserID(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            if (notificationRepo.findAllByUserId(userId).isEmpty()) {
-                return new ResponseEntity<String>("There are no notifications for this user by id: " + userId, HttpStatus.NOT_FOUND);
-            } else {
-                return ResponseEntity.ok(NotificationDTO.notificationToNotificationDtoList(notificationRepo.findAllByUserId(userId)));
-            }
-        } else {
-            return new ResponseEntity<>("User with this id: " + userId + " not found", HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> getNotificationsByUser(User user) {
+        return ResponseEntity.ok(NotificationDTO.notificationToNotificationDtoList(notificationRepo.findAllByUserId(user.getId())));
     }
 
     public ResponseEntity<?> addNotification(NotificationDTO notificationDTO) {

@@ -30,7 +30,7 @@ public class NotificationController {
     }
 
     @SecurityRequirement(name = "JWT")
-    @GetMapping
+    @GetMapping("/get-all-notifications")
     @Operation(
             summary = "Получить все уведомления"
     )
@@ -39,15 +39,12 @@ public class NotificationController {
     }
 
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/{id}")
+    @GetMapping("/get-notifications-by-user")
     @Operation(
-            summary = "Получить уведомление",
-            description = "Позволяет получить уведомление по ID пользователя"
+            summary = "Получить уведомления по авторизованному пользователю"
     )
-    public ResponseEntity<?> getNotificationsByUserID(@PathVariable
-                                          @Parameter(description = "Идентификатор пользователя")
-                                          Long id) {
-        return notificationService.getNotificationsByUserID(id);
+    public ResponseEntity<?> getNotificationsByUser(@AuthenticationPrincipal User user) {
+        return notificationService.getNotificationsByUser(user);
     }
 
     @SecurityRequirement(name = "JWT")
