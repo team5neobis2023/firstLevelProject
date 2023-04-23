@@ -15,23 +15,19 @@ import java.util.stream.Collectors;
 @Builder
 public class NotificationDTO {
 
+    private Long notificationId;
     private String message;
-    private Timestamp recTime;
     private String header;
     private Long userId;
+    private Timestamp recTime;
 
     public static NotificationDTO notificationToNotificationDto(Notification notification) {
         return NotificationDTO.builder()
-                .header(notification.getHeader())
-                .userId(notification.getUser().getId())
-                .build();
-    }
-
-    public static NotificationDTO getDetailedNotification(Notification notification) {
-        return NotificationDTO.builder()
+                .notificationId(notification.getId())
                 .header(notification.getHeader())
                 .message(notification.getMessage())
                 .recTime(notification.getRecTime())
+                .userId(notification.getUser().getId())
                 .build();
     }
 

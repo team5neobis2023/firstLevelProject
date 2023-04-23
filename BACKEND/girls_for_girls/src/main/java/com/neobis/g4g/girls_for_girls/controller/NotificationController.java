@@ -83,4 +83,15 @@ public class NotificationController {
         return notificationService.deleteNotificationById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
+    @PostMapping("/{id}")
+    @Operation(
+            summary = "Прочтение уведомления"
+    )
+    public ResponseEntity<?> makeReadedNotificationById(@PathVariable
+                                                     @Parameter(description = "Идентификатор уведомления")
+                                                     Long id) {
+        return notificationService.makeReadedNotificationById(id);
+    }
+
 }

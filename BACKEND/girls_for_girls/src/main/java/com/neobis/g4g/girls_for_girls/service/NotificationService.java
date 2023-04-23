@@ -40,6 +40,7 @@ public class NotificationService {
         try {
             Notification notification = new Notification();
             notification.setUser(userRepository.findById(notificationDTO.getUserId()).get());
+            notification.setHeader(notificationDTO.getHeader());
             notification.setMessage(notificationDTO.getMessage());
             notificationRepo.save(notification);
             return ResponseEntity.ok("Notification is created");
@@ -65,5 +66,14 @@ public class NotificationService {
         } else {
             return new ResponseEntity<String>("There is no such notification", HttpStatus.NOT_FOUND);
         }
+    }
+
+    public ResponseEntity<?> makeReadedNotificationById(Long id) {
+        return notificationRepo.findById(id)
+                .map(notification -> {
+                    notification.setReaded(true);
+                    notificationRepo.save(notification);
+                    return ResponseEntity.ok("Readed");
+                }).orElse(new ResponseEntity<>("Notification with this id: " + id + " not found", HttpStatus.NOT_FOUND));
     }
 }
