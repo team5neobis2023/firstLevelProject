@@ -20,6 +20,9 @@ public class Notification {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "header")
+    private String header;
+
     @CreationTimestamp
     @Column(name = "rec_time")
     private Timestamp recTime;

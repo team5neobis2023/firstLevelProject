@@ -17,12 +17,20 @@ public class NotificationDTO {
 
     private String message;
     private Timestamp recTime;
+    private String header;
     private Long userId;
 
     public static NotificationDTO notificationToNotificationDto(Notification notification) {
         return NotificationDTO.builder()
-                .message(notification.getMessage())
+                .header(notification.getHeader())
                 .userId(notification.getUser().getId())
+                .build();
+    }
+
+    public static NotificationDTO getDetailedNotification(Notification notification) {
+        return NotificationDTO.builder()
+                .header(notification.getHeader())
+                .message(notification.getMessage())
                 .recTime(notification.getRecTime())
                 .build();
     }
