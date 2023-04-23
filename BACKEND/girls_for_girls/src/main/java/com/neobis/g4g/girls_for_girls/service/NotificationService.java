@@ -8,10 +8,12 @@ import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -76,4 +78,24 @@ public class NotificationService {
                     return ResponseEntity.ok("Readed");
                 }).orElse(new ResponseEntity<>("Notification with this id: " + id + " not found", HttpStatus.NOT_FOUND));
     }
+
+    public ResponseEntity<?> makeReadedAllNotifications() {
+        Optional<User> user = getUserAfterAuth();
+
+        if (notificationRepo.findAllByUserId(user.get().getId()).isEmpty()) {
+            return new ResponseEntity<String>("User with this id: " + user.get().getId() + " not found", HttpStatus.NOT_FOUND);
+        } else {
+            notificationRepo.findAllByUserId(user.get().getId()).forEach(notification -> {
+                notification.setReaded(true);
+                notificationRepo.save(notification);
+            });
+            return ResponseEntity.ok("Readed all notifications");
+        }
+    }
+
+    public Optional<User> getUserAfterAuth() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findByEmail(authentication.getName());
+    }
+
 }
