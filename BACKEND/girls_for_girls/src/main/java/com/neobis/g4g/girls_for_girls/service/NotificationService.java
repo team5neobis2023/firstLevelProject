@@ -79,23 +79,15 @@ public class NotificationService {
                 }).orElse(new ResponseEntity<>("Notification with this id: " + id + " not found", HttpStatus.NOT_FOUND));
     }
 
-    public ResponseEntity<?> makeReadedAllNotifications() {
-        Optional<User> user = getUserAfterAuth();
-
-        if (notificationRepo.findAllByUserId(user.get().getId()).isEmpty()) {
-            return new ResponseEntity<String>("User with this id: " + user.get().getId() + " not found", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> makeReadedAllNotifications(User user) {
+        if (notificationRepo.findAllByUserId(user.getId()).isEmpty()) {
+            return new ResponseEntity<String>("User with this id: " + user.getId() + " not found", HttpStatus.NOT_FOUND);
         } else {
-            notificationRepo.findAllByUserId(user.get().getId()).forEach(notification -> {
+            notificationRepo.findAllByUserId(user.getId()).forEach(notification -> {
                 notification.setReaded(true);
                 notificationRepo.save(notification);
             });
             return ResponseEntity.ok("Readed all notifications");
         }
     }
-
-    public Optional<User> getUserAfterAuth() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return userRepository.findByEmail(authentication.getName());
-    }
-
 }
