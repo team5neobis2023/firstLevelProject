@@ -102,12 +102,12 @@ public class BasketService {
         }
     }
 
-    public ResponseEntity<String> deleteFromBasketById(DeleteFromBasketDTO deleteFromBasketDTO){
-        if(basketRepository.existsById(deleteFromBasketDTO.getId())){
-            basketRepository.deleteById(deleteFromBasketDTO.getId());
+    public ResponseEntity<String> deleteFromBasketById(Long id){
+        if(basketRepository.existsById(id)){
+            basketRepository.deleteById(id);
             return ResponseEntity.ok("Successfully deleted");
         }else{
-            return ResponseEntity.badRequest().body("Basket with id " + deleteFromBasketDTO.getId() + " wasn't found");
+            return ResponseEntity.badRequest().body("Basket with id " + id + " wasn't found");
         }
     }
 

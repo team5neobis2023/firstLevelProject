@@ -59,8 +59,8 @@ public class BasketController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(summary = "Удаление из корзины по айди")
-    public ResponseEntity<String> deleteFromBasket(@RequestBody DeleteFromBasketDTO deleteFromBasketDTO){
-        return basketService.deleteFromBasketById(deleteFromBasketDTO);
+    public ResponseEntity<String> deleteFromBasket(@PathVariable("id") Long id){
+        return basketService.deleteFromBasketById(id);
     }
 
     @ExceptionHandler
