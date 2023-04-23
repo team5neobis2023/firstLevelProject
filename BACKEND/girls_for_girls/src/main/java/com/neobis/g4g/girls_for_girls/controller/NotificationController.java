@@ -84,9 +84,9 @@ public class NotificationController {
     }
 
     @SecurityRequirement(name = "JWT")
-    @PostMapping("/{id}")
+    @PutMapping("/readed-notification{id}")
     @Operation(
-            summary = "Прочтение уведомления"
+            summary = "Прочитать уведомление"
     )
     public ResponseEntity<?> makeReadedNotificationById(@PathVariable
                                                      @Parameter(description = "Идентификатор уведомления")
@@ -94,4 +94,12 @@ public class NotificationController {
         return notificationService.makeReadedNotificationById(id);
     }
 
+    @SecurityRequirement(name = "JWT")
+    @PutMapping("/readed-all-notifications")
+    @Operation(
+            summary = "Прочитать все уведомления"
+    )
+    public ResponseEntity<?> makeReadedAllNotifications() {
+        return notificationService.makeReadedAllNotifications();
+    }
 }
