@@ -48,7 +48,7 @@ public class NotificationService {
         }
     }
 
-    public ResponseEntity<?> updateNotification(Long id, NotificationDTO notificationDTO) {
+    public ResponseEntity<?> updateNotificationById(Long id, NotificationDTO notificationDTO) {
         return notificationRepo.findById(id)
                 .map(notification -> {
                     notification.setMessage(notificationDTO.getMessage());
@@ -58,7 +58,7 @@ public class NotificationService {
                 }).orElse(new ResponseEntity<>("Notification with this id: " + id + " not found", HttpStatus.NOT_FOUND));
     }
 
-    public ResponseEntity<String> deleteNotification(Long id) {
+    public ResponseEntity<String> deleteNotificationById(Long id) {
         if (notificationRepo.existsById(id)) {
             notificationRepo.deleteById(id);
             return ResponseEntity.ok("Notification is deleted");

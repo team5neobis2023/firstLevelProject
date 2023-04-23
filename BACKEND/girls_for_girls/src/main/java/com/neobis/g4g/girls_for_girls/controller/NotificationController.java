@@ -68,7 +68,7 @@ public class NotificationController {
                                                     @Parameter(description = "Идентификатор уведомления")
                                                     Long id,
                                                     @RequestBody NotificationDTO notificationDTO) {
-        return notificationService.updateNotification(id, notificationDTO);
+        return notificationService.updateNotificationById(id, notificationDTO);
     }
 
     @SecurityRequirement(name = "JWT")
@@ -80,7 +80,7 @@ public class NotificationController {
     public ResponseEntity<String> deleteNotification(@PathVariable
                                                          @Parameter(description = "Идентификатор уведомления")
                                                          Long id) {
-        return notificationService.deleteNotification(id);
+        return notificationService.deleteNotificationById(id);
     }
 
 }
