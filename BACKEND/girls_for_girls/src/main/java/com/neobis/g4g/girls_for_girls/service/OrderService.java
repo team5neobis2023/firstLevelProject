@@ -3,11 +3,15 @@ package com.neobis.g4g.girls_for_girls.service;
 import com.neobis.g4g.girls_for_girls.data.dto.OrderDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Basket;
 import com.neobis.g4g.girls_for_girls.data.entity.Order;
+import com.neobis.g4g.girls_for_girls.data.entity.Product;
 import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.repository.BasketRepository;
 import com.neobis.g4g.girls_for_girls.repository.OrderRepo;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.neobis.g4g.girls_for_girls.data.dto.OrderDTO.orderToOrderDtoList;
 
@@ -37,8 +42,13 @@ public class OrderService {
         return orderToOrderDtoList(orderRepo.findAll());
     }
 
-    public List<OrderDTO> getMyOrders(){
-        return orderToOrderDtoList(orderRepo.findByUser(getCurrentUser()));
+    public List<OrderDTO> getMyOrders(User user){
+        return orderToOrderDtoList(orderRepo.findByUser(user));
+    }
+
+    public Page<OrderDTO> getMyOrders(Pageable pageable, User user) {
+        List<OrderDTO> list = orderToOrderDtoList(orderRepo.findByUser(user));
+        return new PageImpl<>(list, pageable, list.size());
     }
 
     public ResponseEntity<String> addOrder() {
@@ -71,4 +81,5 @@ public class OrderService {
         }
         else return new ResponseEntity<>("There is no such order", HttpStatus.NOT_FOUND);
     }
+
 }

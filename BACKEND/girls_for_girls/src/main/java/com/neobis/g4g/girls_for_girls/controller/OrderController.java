@@ -1,14 +1,20 @@
 package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.OrderDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.Product;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,13 +43,22 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
+    @GetMapping("/myOrders/byPages")
+    @Operation(
+            summary = "Получить заказы авторизованного пользователя с пагинацией"
+    )
+    public Page<OrderDTO> getMyOrders(@PageableDefault Pageable pageable,
+                                      @AuthenticationPrincipal User user) {
+        return orderService.getMyOrders(pageable, user);
+    }
+
     @SecurityRequirement(name = "JWT")
     @GetMapping("/myOrders")
     @Operation(
             summary = "Получение заказов авторизованного пользователя"
     )
-    public List<OrderDTO> getMyOrders() {
-        return orderService.getMyOrders();
+    public List<OrderDTO> getMyOrders(@AuthenticationPrincipal User user) {
+        return orderService.getMyOrders(user);
     }
 
     @SecurityRequirement(name = "JWT")
