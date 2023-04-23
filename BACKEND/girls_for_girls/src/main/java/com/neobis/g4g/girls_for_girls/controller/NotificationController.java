@@ -83,7 +83,7 @@ public class NotificationController {
     }
 
     @SecurityRequirement(name = "JWT")
-    @PutMapping("/readed-notification{id}")
+    @PutMapping("/readed-notification/{id}")
     @Operation(
             summary = "Прочитать уведомление"
     )
