@@ -46,7 +46,6 @@ public class FeedbackController {
         return feedbackService.getAllFeedbacks();
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     @Operation(
             summary = "Получение отзыва по айди"

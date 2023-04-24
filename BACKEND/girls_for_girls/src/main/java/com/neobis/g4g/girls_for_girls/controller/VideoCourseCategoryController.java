@@ -36,7 +36,6 @@ public class VideoCourseCategoryController {
     @Operation(
             summary = "Получить категории видеокурсов"
     )
-    @SecurityRequirement(name = "JWT")
     @GetMapping
     public List<VideoCourseCategoryDTO> getAllVideoCourseCategories() {
         return videoCourseCategoryService.getAllVideoCourseCategories();
@@ -46,7 +45,6 @@ public class VideoCourseCategoryController {
             summary = "Получить категорию видеокурса",
             description = "Позволяет получить категорию по ее ID"
     )
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     public ResponseEntity<?> getVideoCourseCategoryById(@PathVariable
                                                @Parameter(description = "Идентификатор категории")

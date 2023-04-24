@@ -66,29 +66,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "article_id"))
     private List<Article> likedArticles;
 
-//    @JsonIgnore
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    private List<Order> orderEntities;
-//
-//    @JsonIgnore
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private List<Article> articleEntities;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private List<Training> trainingEntities;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private List<Conference> conferenceEntities;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private List<MentorProgram> mentorProgramEntities;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private List<Notification> notificationEntities;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
-//    private List<VideoCourse> videoCourseEntities;
-
     @Column(name = "reset_token")
     private String resetToken;
 

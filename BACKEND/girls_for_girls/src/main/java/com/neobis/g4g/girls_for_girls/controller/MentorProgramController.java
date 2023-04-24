@@ -34,7 +34,6 @@ public class MentorProgramController {
         this.mentorProgramService = mentorProgramService;
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех менторских программ"
@@ -91,7 +90,7 @@ public class MentorProgramController {
     @DeleteMapping("/{id}")
     @Operation(
             summary = "Удаление менторской программы"
-    )
+        )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteMentorProgram(@PathVariable("id")
                                               @Parameter(description = "Идентификатор менторской программы") long id){

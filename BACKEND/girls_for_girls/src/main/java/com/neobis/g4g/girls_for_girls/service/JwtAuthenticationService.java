@@ -75,7 +75,7 @@ public class JwtAuthenticationService {
             user.setRegion(regionRepository.findById(userDTO.getRegion_id()).get());
             user.setResetToken(String.valueOf(random.nextInt(1000, 9999)));
         } else {
-            return new ResponseEntity<String>("The password does not match the password confirmation", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("The password does not match the password confirmation", HttpStatus.FORBIDDEN);
         }
 
         try {
