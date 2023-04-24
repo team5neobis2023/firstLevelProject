@@ -89,8 +89,7 @@ public class ConferenceController {
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     @Operation(
-            summary = "Удаление конференции",
-            tags = "Конференция"
+            summary = "Удаление конференции"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> deleteConference(@PathVariable("id")
