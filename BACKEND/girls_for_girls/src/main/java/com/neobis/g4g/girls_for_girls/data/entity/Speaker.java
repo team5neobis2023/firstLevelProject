@@ -26,4 +26,13 @@ public class Speaker {
     @Column(name = "image_url")
     private String image_url;
 
+    @Column(name = "instagram")
+    private String instagram;
+
+    @Column(name = "whatsapp")
+    private String whatsapp;
+
+    @Column(name = "facebook")
+    private String facebook;
+
 }
