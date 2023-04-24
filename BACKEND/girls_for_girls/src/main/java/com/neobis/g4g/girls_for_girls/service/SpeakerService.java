@@ -49,6 +49,9 @@ public class SpeakerService {
                 Speaker.builder()
                         .full_info(speakerDTO.getFull_info())
                         .full_name(speakerDTO.getFull_name())
+                        .facebook(speakerDTO.getFacebook())
+                        .instagram(speakerDTO.getInstagram())
+                        .whatsapp(speakerDTO.getWhatsapp())
                         .build()
         );
         return ResponseEntity.ok("Speaker was created");
@@ -66,6 +69,9 @@ public class SpeakerService {
                             .id(id)
                             .full_name(speakerDTO.getFull_name())
                             .full_info(speakerDTO.getFull_info())
+                            .whatsapp(speakerDTO.getWhatsapp())
+                            .instagram(speakerDTO.getInstagram())
+                            .facebook(speakerDTO.getFacebook())
                             .build()
             );
             return new ResponseEntity<>("Speaker was updated", HttpStatus.OK);
