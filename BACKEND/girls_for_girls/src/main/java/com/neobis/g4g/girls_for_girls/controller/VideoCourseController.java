@@ -37,7 +37,6 @@ public class VideoCourseController {
         this.videoCourseService = videoCourseService;
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех видеокурсов"
@@ -56,7 +55,6 @@ public class VideoCourseController {
         return videoCourseService.getVideoCourseById(id);
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}/feedbacks")
     @Operation(
             summary = "Получение отзывов по айди видеокурса"

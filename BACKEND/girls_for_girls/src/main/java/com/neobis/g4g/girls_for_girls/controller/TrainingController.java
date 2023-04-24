@@ -34,7 +34,6 @@ public class TrainingController {
         this.trainingService = trainingService;
     }
 
-    @SecurityRequirement(name = "JWT")
     @GetMapping()
     @Operation(
             summary = "Получение всех тренингов"
