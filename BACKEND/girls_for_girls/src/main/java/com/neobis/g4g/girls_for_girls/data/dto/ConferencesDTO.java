@@ -1,17 +1,13 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
-import com.neobis.g4g.girls_for_girls.data.entity.Application;
 import com.neobis.g4g.girls_for_girls.data.entity.Conference;
-import com.neobis.g4g.girls_for_girls.data.entity.User;
 import lombok.*;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter

@@ -2,15 +2,9 @@ package com.neobis.g4g.girls_for_girls.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.neobis.g4g.girls_for_girls.data.entity.Article;
-import com.neobis.g4g.girls_for_girls.data.entity.Product;
-import com.neobis.g4g.girls_for_girls.data.entity.Speaker;
-import com.neobis.g4g.girls_for_girls.data.entity.User;
+import com.neobis.g4g.girls_for_girls.data.entity.*;
 import com.neobis.g4g.girls_for_girls.exception.FileEmptyException;
-import com.neobis.g4g.girls_for_girls.repository.ArticleRepository;
-import com.neobis.g4g.girls_for_girls.repository.ProductRepo;
-import com.neobis.g4g.girls_for_girls.repository.SpeakerRepository;
-import com.neobis.g4g.girls_for_girls.repository.UserRepository;
+import com.neobis.g4g.girls_for_girls.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +24,10 @@ public class ImageService {
     private final UserRepository userRepository;
     private final ProductRepo productRepo;
     private final ArticleRepository articleRepository;
+    private final MentorProgramRepository mentorProgramRepository;
+    private final TrainingRepository trainingRepository;
     private final SpeakerRepository speakerRepository;
+    private final MentorProgramApplicationRepository mentorProgramApplicationRepository;
 
     public ResponseEntity<String> saveForProduct(Long productId, MultipartFile file) throws IOException {
         if(productRepo.existsById(productId)){
@@ -72,6 +69,35 @@ public class ImageService {
         }
     }
 
+    public ResponseEntity<String> saveForMentorProgram(Long id, MultipartFile file) throws IOException {
+        if(mentorProgramRepository.existsById(id)){
+            MentorProgram mentorProgram = mentorProgramRepository.findById(id).get();
+            mentorProgram.setImage_url(saveImage(file));
+            mentorProgramRepository.save(mentorProgram);
+            return ResponseEntity.ok("Image was saved");
+        }else{
+            return ResponseEntity.badRequest().body("Mentor program with id " + id + " wasn't found");
+        }
+    }
+
+    public ResponseEntity<String> saveForTraining(Long id, MultipartFile file) throws IOException {
+        if(trainingRepository.existsById(id)){
+            Training training = trainingRepository.findById(id).get();
+            training.setImage_url(saveImage(file));
+            trainingRepository.save(training);
+            return ResponseEntity.ok("Image was saved");
+        }else{
+            return ResponseEntity.badRequest().body("Training with id " + id + " wasn't found");
+        }
+    }
+
+    public ResponseEntity<String> saveResume(Long id, MultipartFile file) throws IOException {
+        MentorProgramApplication mentorProgramApplication = mentorProgramApplicationRepository.findById(id).get();
+        mentorProgramApplication.setResumeUrl(saveImage(file));
+        mentorProgramApplicationRepository.save(mentorProgramApplication);
+        return ResponseEntity.ok("Image was saved");
+    }
+
 
     public String saveImage(MultipartFile file) throws IOException {
         if (file.isEmpty()) {
@@ -101,5 +127,4 @@ public class ImageService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
     }
-
 }

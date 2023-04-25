@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class NotificationDTO {
-
     private Long notificationId;
     private String message;
     private String header;

@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.neobis.g4g.girls_for_girls.data.dto.NotificationDTO.notificationToNotificationDto;
+import static com.neobis.g4g.girls_for_girls.data.dto.NotificationDTO.notificationToNotificationDtoList;
+
 @Service
 @AllArgsConstructor
 public class NotificationService {
@@ -22,23 +25,12 @@ public class NotificationService {
     private final NotificationRepo notificationRepo;
     private final UserRepository userRepository;
 
-    public List<NotificationDTO> getAllNotifications() {
-        return NotificationDTO.notificationToNotificationDtoList(notificationRepo.findAll());
+    public List<NotificationDTO> getNotificationsByUser(User user) {
+        return notificationToNotificationDtoList(notificationRepo.findAllByUser(user));
     }
 
-    public ResponseEntity<?> getNotificationsByUserID(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            if (notificationRepo.findAllByUserId(userId).isEmpty()) {
-                return new ResponseEntity<String>("There are no notifications for this user by id: " + userId, HttpStatus.NOT_FOUND);
-            } else {
-                return ResponseEntity.ok(NotificationDTO.notificationToNotificationDtoList(notificationRepo.findAllByUserId(userId)));
-            }
-        } else {
-            return new ResponseEntity<>("User with this id: " + userId + " not found", HttpStatus.NOT_FOUND);
-        }
-    }
 
-    public ResponseEntity<?> addNotification(NotificationDTO notificationDTO) {
+    public ResponseEntity<String> addNotification(NotificationDTO notificationDTO) {
         try {
             Notification notification = new Notification();
             notification.setUser(userRepository.findById(notificationDTO.getUserId()).get());

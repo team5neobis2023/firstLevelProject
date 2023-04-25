@@ -2,6 +2,7 @@ package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.MentorProgramDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.TrainingDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.Training;
 import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
@@ -38,7 +39,7 @@ public class TrainingController {
     @Operation(
             summary = "Получение всех тренингов"
     )
-    public List<TrainingDTO> getAllMentorPrograms(){
+    public List<Training> getAllTrainings(){
         return trainingService.getAllTrainings();
     }
 
@@ -47,7 +48,7 @@ public class TrainingController {
     @Operation(
             summary = "Получение заявок на тренинг по айди тренинга"
     )
-    public ResponseEntity<?> getAllApplicationsByMentorProgramId(@PathVariable("id")
+    public ResponseEntity<?> getAllApplicationsByTrainingId(@PathVariable("id")
                                                                  @Parameter(description = "Идентификатор тренинга") long id){
         return trainingService.getAllApplicationsByTrainingId(id);
     }
@@ -57,7 +58,7 @@ public class TrainingController {
     @Operation(
             summary = "Получение тренинга по айди"
     )
-    public ResponseEntity<?> getMentorProgramById(@PathVariable("id")
+    public ResponseEntity<?> getTrainingById(@PathVariable("id")
                                                   @Parameter(description = "Идентификатор тренинга") long id){
         return trainingService.getTrainingById(id);
     }

@@ -1,14 +1,18 @@
 package com.neobis.g4g.girls_for_girls.service;
 
-import com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.MentorProgramDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.MentorProgram;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
-import com.neobis.g4g.girls_for_girls.repository.ApplicationRepository;
+import com.neobis.g4g.girls_for_girls.repository.MentorProgramApplicationRepository;
+import com.neobis.g4g.girls_for_girls.repository.TrainingApplicationRepository;
 import com.neobis.g4g.girls_for_girls.repository.MentorProgramRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,29 +23,25 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO.toApplicationDTO;
+import static com.neobis.g4g.girls_for_girls.data.dto.MentorProgramApplicationDTO.toMentorProgramApplicationDTO;
 import static com.neobis.g4g.girls_for_girls.data.dto.MentorProgramDTO.toMentorProgramDTO;
 
 @Service
+@AllArgsConstructor
 public class MentorProgramService {
     private final MentorProgramRepository mentorProgramRepository;
     private final UserRepository userRepository;
-    private final ApplicationRepository applicationRepository;
+    private final MentorProgramApplicationRepository mentorProgramApplicationRepository;
 
-    @Autowired
-    public MentorProgramService(MentorProgramRepository mentorProgramRepository, UserRepository userRepository, ApplicationRepository applicationRepository) {
-        this.mentorProgramRepository = mentorProgramRepository;
-        this.userRepository = userRepository;
-        this.applicationRepository = applicationRepository;
-    }
 
-    public List<MentorProgramDTO> getAllMentorPrograms(){
-        return toMentorProgramDTO(mentorProgramRepository.findAll());
+    public Page<MentorProgram> getAllMentorPrograms(Pageable pageable){
+        List<MentorProgram> mentorProgramDTOS = mentorProgramRepository.findAll();
+        return new PageImpl<>(mentorProgramDTOS, pageable, mentorProgramDTOS.size());
     }
 
     public ResponseEntity<?> getMentorProgramById(long id){
         if(mentorProgramRepository.findById(id).isPresent()){
-            return ResponseEntity.ok(toMentorProgramDTO(mentorProgramRepository.findById(id).get()));
+            return ResponseEntity.ok(mentorProgramRepository.findById(id).get());
         }else{
             return new ResponseEntity<>("Mentor program with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
         }
@@ -49,7 +49,7 @@ public class MentorProgramService {
 
     public ResponseEntity<?> getAllApplicationsByMentorProgramId(long id){
         if(mentorProgramRepository.existsById(id)){
-            return ResponseEntity.ok(toApplicationDTO(applicationRepository.findAllByMentorProgramId(id)));
+            return ResponseEntity.ok(toMentorProgramApplicationDTO(mentorProgramApplicationRepository.findAllByMentorProgramId(id)));
         }else {
             return new ResponseEntity<>("Mentor program with id " + id + " wasn't found", HttpStatus.BAD_REQUEST);
         }

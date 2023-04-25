@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,6 +55,38 @@ public class ImageController {
     public ResponseEntity<String> saveSpeakerImage(@PathVariable("speakerId") Long speakerId,
                                                    @RequestPart MultipartFile file) throws IOException {
         return imageService.saveForSpeaker(speakerId, file);
+    }
+
+    @SecurityRequirement(name = "JWT")
+    @PostMapping(value = "/upload/mentor-program-application/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(
+            summary = "Добавление резюме по айди заявки на менторскую программу"
+    )
+    public ResponseEntity<String> saveResume(@PathVariable("id") Long id,
+                                                   @RequestPart MultipartFile file) throws IOException {
+        return imageService.saveResume(id, file);
+    }
+
+    @SecurityRequirement(name = "JWT")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(value = "/upload/mentor-program/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(
+            summary = "Добавление фото менторской программы"
+    )
+    public ResponseEntity<String> saveForMentorProgram(@PathVariable("id") Long id,
+                                             @RequestPart MultipartFile file) throws IOException {
+        return imageService.saveForMentorProgram(id, file);
+    }
+
+    @SecurityRequirement(name = "JWT")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @PostMapping(value = "/upload/training/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(
+            summary = "Добавление фото тренинга"
+    )
+    public ResponseEntity<String> saveForTraining(@PathVariable("id") Long id,
+                                                       @RequestPart MultipartFile file) throws IOException {
+        return imageService.saveForTraining(id, file);
     }
 
     @SecurityRequirement(name = "JWT")

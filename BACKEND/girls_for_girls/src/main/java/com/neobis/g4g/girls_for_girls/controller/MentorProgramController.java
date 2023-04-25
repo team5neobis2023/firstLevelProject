@@ -2,6 +2,7 @@ package com.neobis.g4g.girls_for_girls.controller;
 
 import com.neobis.g4g.girls_for_girls.data.dto.ConferencesDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.MentorProgramDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.MentorProgram;
 import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
@@ -11,6 +12,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,11 +42,12 @@ public class MentorProgramController {
     @Operation(
             summary = "Получение всех менторских программ"
     )
-    public List<MentorProgramDTO> getAllMentorPrograms(){
-        return mentorProgramService.getAllMentorPrograms();
+    public Page<MentorProgram> getAllMentorPrograms(@PageableDefault Pageable pageable){
+        return mentorProgramService.getAllMentorPrograms(pageable);
     }
 
     @SecurityRequirement(name = "JWT")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}/applications")
     @Operation(
             summary = "Получение заявок на менторскую программу по айди программы"

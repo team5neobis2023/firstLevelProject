@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,33 +31,23 @@ public class NotificationController {
     }
 
     @SecurityRequirement(name = "JWT")
-    @GetMapping
+    @GetMapping("")
     @Operation(
-            summary = "Получить все уведомления"
+            summary = "Получить уведомления пользователя",
+            description = "Позволяет получить уведомления авторизованного пользователя"
     )
-    private List<NotificationDTO> getAllNotifications() {
-        return notificationService.getAllNotifications();
+    public List<NotificationDTO> getNotificationsByUser(@AuthenticationPrincipal User user) {
+        return notificationService.getNotificationsByUser(user);
     }
 
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/{id}")
-    @Operation(
-            summary = "Получить уведомление",
-            description = "Позволяет получить уведомление по ID пользователя"
-    )
-    public ResponseEntity<?> getNotificationsByUserID(@PathVariable
-                                          @Parameter(description = "Идентификатор пользователя")
-                                          Long id) {
-        return notificationService.getNotificationsByUserID(id);
-    }
-
-    @SecurityRequirement(name = "JWT")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     @Operation(
             summary = "Добавить уведомление",
             description = "Позволяет добавить уведомление"
     )
-    public ResponseEntity<?> addNotification(@RequestBody NotificationDTO notificationDTO) {
+    public ResponseEntity<String> addNotification(@RequestBody NotificationDTO notificationDTO) {
         return notificationService.addNotification(notificationDTO);
     }
 
