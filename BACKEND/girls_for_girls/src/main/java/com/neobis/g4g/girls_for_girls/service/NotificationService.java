@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.neobis.g4g.girls_for_girls.data.dto.NotificationDTO.notificationToNotificationDto;
+import static com.neobis.g4g.girls_for_girls.data.dto.NotificationDTO.notificationToNotificationDtoList;
+
 @Service
 @AllArgsConstructor
 public class NotificationService {
@@ -22,15 +25,12 @@ public class NotificationService {
     private final NotificationRepo notificationRepo;
     private final UserRepository userRepository;
 
-    public List<NotificationDTO> getAllNotifications() {
-        return NotificationDTO.notificationToNotificationDtoList(notificationRepo.findAll());
+    public List<NotificationDTO> getNotificationsByUser(User user) {
+        return notificationToNotificationDtoList(notificationRepo.findAllByUser(user));
     }
 
-    public ResponseEntity<?> getNotificationsByUser(User user) {
-        return ResponseEntity.ok(NotificationDTO.notificationToNotificationDtoList(notificationRepo.findAllByUserId(user.getId())));
-    }
 
-    public ResponseEntity<?> addNotification(NotificationDTO notificationDTO) {
+    public ResponseEntity<String> addNotification(NotificationDTO notificationDTO) {
         try {
             Notification notification = new Notification();
             notification.setUser(userRepository.findById(notificationDTO.getUserId()).get());

@@ -23,8 +23,14 @@ public class Training {
     @Column(name = "rec_time")
     private Timestamp recTime;
 
+    @Column(name = "header")
+    private String header;
+
     @Column(name = "description")
     private String description;
+
+    @Column(name = "imageUrl")
+    private String image_url;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

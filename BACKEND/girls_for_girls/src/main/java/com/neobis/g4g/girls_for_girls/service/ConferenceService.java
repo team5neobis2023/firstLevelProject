@@ -4,7 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.ConferencesDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Conference;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
-import com.neobis.g4g.girls_for_girls.repository.ApplicationRepository;
+import com.neobis.g4g.girls_for_girls.repository.TrainingApplicationRepository;
 import com.neobis.g4g.girls_for_girls.repository.ConferencesRepository;
 import com.neobis.g4g.girls_for_girls.repository.SpeakerRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
@@ -19,7 +19,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO.toApplicationDTO;
 import static com.neobis.g4g.girls_for_girls.data.dto.ConferencesDTO.toConferencesDTO;
 import static com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO.toFeedbackDTO;
 
@@ -27,27 +26,19 @@ import static com.neobis.g4g.girls_for_girls.data.dto.FeedbackDTO.toFeedbackDTO;
 public class ConferenceService {
     private final ConferencesRepository conferencesRepository;
     private final UserRepository userRepository;
-    private final ApplicationRepository applicationRepository;
+    private final TrainingApplicationRepository trainingApplicationRepository;
     private final SpeakerRepository speakerRepository;
 
     @Autowired
-    public ConferenceService(ConferencesRepository conferencesRepository, UserRepository userRepository, ApplicationRepository applicationRepository, SpeakerRepository speakerRepository) {
+    public ConferenceService(ConferencesRepository conferencesRepository, UserRepository userRepository, TrainingApplicationRepository trainingApplicationRepository, SpeakerRepository speakerRepository) {
         this.conferencesRepository = conferencesRepository;
         this.userRepository = userRepository;
-        this.applicationRepository = applicationRepository;
+        this.trainingApplicationRepository = trainingApplicationRepository;
         this.speakerRepository = speakerRepository;
     }
 
     public List<ConferencesDTO> getAllConferences(){
         return toConferencesDTO(conferencesRepository.findAll());
-    }
-
-    public ResponseEntity<?> getAllApplicationsByConferenceId(long id){
-        if(conferencesRepository.existsById(id)){
-            return ResponseEntity.ok(toApplicationDTO(applicationRepository.findAllByConferenceId(id)));
-        }else {
-            return new ResponseEntity<>("Conference with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
-        }
     }
 
     public ResponseEntity<?> getConferenceById(long id){

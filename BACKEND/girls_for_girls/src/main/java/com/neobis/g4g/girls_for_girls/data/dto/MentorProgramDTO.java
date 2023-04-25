@@ -1,8 +1,6 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
-import com.neobis.g4g.girls_for_girls.data.entity.Application;
 import com.neobis.g4g.girls_for_girls.data.entity.MentorProgram;
-import com.neobis.g4g.girls_for_girls.data.entity.User;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;

@@ -4,7 +4,7 @@ import com.neobis.g4g.girls_for_girls.data.dto.TrainingDTO;
 import com.neobis.g4g.girls_for_girls.data.entity.Training;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
-import com.neobis.g4g.girls_for_girls.repository.ApplicationRepository;
+import com.neobis.g4g.girls_for_girls.repository.TrainingApplicationRepository;
 import com.neobis.g4g.girls_for_girls.repository.SpeakerRepository;
 import com.neobis.g4g.girls_for_girls.repository.TrainingRepository;
 import com.neobis.g4g.girls_for_girls.repository.UserRepository;
@@ -19,38 +19,38 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.neobis.g4g.girls_for_girls.data.dto.ApplicationDTO.toApplicationDTO;
+import static com.neobis.g4g.girls_for_girls.data.dto.TrainingApplicationDTO.toTrainingApplicationDTO;
 import static com.neobis.g4g.girls_for_girls.data.dto.TrainingDTO.toTrainingDTO;
 
 @Service
 public class TrainingService {
     private final TrainingRepository trainingRepository;
     private final UserRepository userRepository;
-    private final ApplicationRepository applicationRepository;
+    private final TrainingApplicationRepository trainingApplicationRepository;
     private final SpeakerRepository speakerRepository;
 
     @Autowired
-    public TrainingService(TrainingRepository trainingRepository, UserRepository userRepository, ApplicationRepository applicationRepository, SpeakerRepository speakerRepository) {
+    public TrainingService(TrainingRepository trainingRepository, UserRepository userRepository, TrainingApplicationRepository trainingApplicationRepository, SpeakerRepository speakerRepository) {
         this.trainingRepository = trainingRepository;
         this.userRepository = userRepository;
-        this.applicationRepository = applicationRepository;
+        this.trainingApplicationRepository = trainingApplicationRepository;
         this.speakerRepository = speakerRepository;
     }
 
-    public List<TrainingDTO> getAllTrainings(){
-        return toTrainingDTO(trainingRepository.findAll());
+    public List<Training> getAllTrainings(){
+        return trainingRepository.findAll();
     }
 
     public ResponseEntity<?> getTrainingById(long id){
         if(trainingRepository.findById(id).isPresent()){
-            return ResponseEntity.ok(toTrainingDTO(trainingRepository.findById(id).get()));
+            return ResponseEntity.ok(trainingRepository.findById(id).get());
         }
         return new ResponseEntity<>("Training with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<?> getAllApplicationsByTrainingId(long id){
         if(trainingRepository.existsById(id)){
-            return ResponseEntity.ok(toApplicationDTO(applicationRepository.findAllByTrainingId(id)));
+            return ResponseEntity.ok(toTrainingApplicationDTO((trainingApplicationRepository.findAllByTrainingId(id))));
         }else {
             return new ResponseEntity<>("Training with id " + id + " wasn't found", HttpStatus.NOT_FOUND);
         }

@@ -15,20 +15,19 @@ import java.util.List;
 @Entity
 @Table(name = "mentor_program")
 public class MentorProgram {
-
-    public MentorProgram(String description, Timestamp recTime, User userId) {
-        this.description = description;
-        this.recTime = recTime;
-        this.userId = userId;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "header")
+    private String header;
+
     @Column(name = "description")
     private String description;
+
+    @Column(name = "imageUrl")
+    private String image_url;
 
     @Column(name = "rec_time")
     private Timestamp recTime;
