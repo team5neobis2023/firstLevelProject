@@ -1,6 +1,8 @@
 package com.neobis.g4g.girls_for_girls.data.dto;
 
 import com.neobis.g4g.girls_for_girls.data.entity.Order;
+import com.neobis.g4g.girls_for_girls.data.entity.Product;
+import com.neobis.g4g.girls_for_girls.data.entity.Size;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -14,18 +16,18 @@ import java.util.stream.Collectors;
 @Builder
 public class OrderDTO {
     private Long userId;
-    private Long productId;
-    private Long sizeId;
+    private Product product;
+    private Size size;
     private int amount;
     private Timestamp orderDate;
 
     public static OrderDTO orderToOrderDto(Order order) {
         return OrderDTO.builder()
                 .userId(order.getUser().getId())
-                .productId(order.getProduct().getId())
+                .product(order.getProduct())
                 .amount(order.getAmount())
                 .orderDate(order.getOrderDate())
-                .sizeId(order.getSize().getId())
+                .size(order.getSize())
                 .build();
     }
 
