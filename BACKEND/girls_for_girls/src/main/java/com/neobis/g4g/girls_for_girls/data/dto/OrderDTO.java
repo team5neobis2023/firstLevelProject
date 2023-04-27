@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class OrderDTO {
-    private Long userId;
     private Product product;
     private Size size;
     private int amount;
@@ -23,7 +22,6 @@ public class OrderDTO {
 
     public static OrderDTO orderToOrderDto(Order order) {
         return OrderDTO.builder()
-                .userId(order.getUser().getId())
                 .product(order.getProduct())
                 .amount(order.getAmount())
                 .orderDate(order.getOrderDate())
