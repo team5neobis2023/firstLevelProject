@@ -48,26 +48,30 @@ public class BasketService {
             throw new NotAddedException(getErrorMsg(bindingResult).toString());
         }
 
-        if (productRepo.existsById(addBasketDTO.getProductId())){
-            if(sizeRepository.existsById(addBasketDTO.getSizeId())){
-                Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                User user = userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
-                basketRepository.save(
-                        Basket.builder()
-                                .amount(addBasketDTO.getAmount())
-                                .size(sizeRepository.findById(addBasketDTO.getSizeId()).get())
-                                .product(productRepo.findById(addBasketDTO.getProductId()).get())
-                                .user(user)
-                                .build()
-                );
-                return ResponseEntity.ok("Added to basket");
-
-            }else{
-                return ResponseEntity.badRequest().body("Write sizeId correctly");
-            }
-        }else{
+        if (!productRepo.existsById(addBasketDTO.getProductId())) {
             return ResponseEntity.badRequest().body("Write productId correctly");
         }
+        if(!sizeRepository.existsById(addBasketDTO.getSizeId())) {
+            return ResponseEntity.badRequest().body("Write sizeId correctly");
+        }
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
+        if(basketRepository.existsByProductIdAndUser(addBasketDTO.getProductId(), user)){
+            return ResponseEntity.badRequest().body("Already exists in basket");
+        }
+
+        basketRepository.save(
+                Basket.builder()
+                        .amount(addBasketDTO.getAmount())
+                        .size(sizeRepository.findById(addBasketDTO.getSizeId()).get())
+                        .product(productRepo.findById(addBasketDTO.getProductId()).get())
+                        .user(user)
+                        .build()
+        );
+        return ResponseEntity.ok("Added to basket");
+
+
     }
 
     public ResponseEntity<String> updateBasket(AddBasketDTO addBasketDTO,
