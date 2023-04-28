@@ -56,7 +56,7 @@ public class SpeakerController {
             summary = "Добавление спикера"
     )
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<?> addSpeaker(@RequestBody @Valid SpeakerDTO speakerDTO,
+    public ResponseEntity<Long> addSpeaker(@RequestBody @Valid SpeakerDTO speakerDTO,
                                          BindingResult bindingResult){
         return speakerService.addSpeaker(speakerDTO, bindingResult);
     }
