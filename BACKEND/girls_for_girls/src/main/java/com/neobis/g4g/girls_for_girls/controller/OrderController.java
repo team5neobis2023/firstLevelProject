@@ -44,6 +44,7 @@ public class OrderController {
     }
 
     @GetMapping("/myOrders/byPages")
+    @SecurityRequirement(name = "JWT")
     @Operation(
             summary = "Получить заказы авторизованного пользователя с пагинацией"
     )
