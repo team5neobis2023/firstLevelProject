@@ -65,8 +65,7 @@ public class MentorProgramService {
             MentorProgram mentorProgram = toMentorProgram(mentorProgramDTO);
             mentorProgram.setUserId(userRepository.findById(mentorProgramDTO.getUserId()).get());
             mentorProgram.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
-            mentorProgramRepository.save(mentorProgram);
-            return ResponseEntity.ok("Mentor program was added");
+            return ResponseEntity.ok(mentorProgramRepository.save(mentorProgram).getId());
         }else{
             return new ResponseEntity<>("Write user id correctly", HttpStatus.BAD_REQUEST);
         }

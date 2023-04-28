@@ -44,7 +44,7 @@ public class ArticleService {
         }
     }
 
-    public ResponseEntity<String> addArticle(ArticleDTO articleDTO,
+    public ResponseEntity<Long> addArticle(ArticleDTO articleDTO,
                                         BindingResult bindingResult,
                                         User user){
         if(bindingResult.hasErrors()){
@@ -55,8 +55,7 @@ public class ArticleService {
             article.setRecTime(Timestamp.valueOf(LocalDateTime.now()));
             article.setUser(user);
             article.setViewsCount(0L);
-            articleRepository.save(article);
-            return ResponseEntity.ok("Article was created");
+            return ResponseEntity.ok(articleRepository.save(article).getId());
 
     }
 
