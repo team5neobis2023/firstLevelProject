@@ -56,7 +56,7 @@ public class ArticleController {
     @PostMapping()
     @Operation(summary = "Добавление поста")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<String> addArticle(@RequestBody @Valid ArticleDTO articleDTO,
+    public ResponseEntity<Long> addArticle(@RequestBody @Valid ArticleDTO articleDTO,
                                         BindingResult bindingResult){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
