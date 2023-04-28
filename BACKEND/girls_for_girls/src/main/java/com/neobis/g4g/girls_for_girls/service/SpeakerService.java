@@ -39,13 +39,13 @@ public class SpeakerService {
         return new ResponseEntity<>("Speaker with this id: " + id + " not found", HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<String> addSpeaker(SpeakerDTO speakerDTO,
+    public ResponseEntity<Long> addSpeaker(SpeakerDTO speakerDTO,
                                                          BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             throw new NotAddedException(getErrorMsg(bindingResult).toString());
         }
 
-        speakerRepository.save(
+        return ResponseEntity.ok(speakerRepository.save(
                 Speaker.builder()
                         .full_info(speakerDTO.getFull_info())
                         .full_name(speakerDTO.getFull_name())
@@ -53,8 +53,7 @@ public class SpeakerService {
                         .instagram(speakerDTO.getInstagram())
                         .whatsapp(speakerDTO.getWhatsapp())
                         .build()
-        );
-        return ResponseEntity.ok("Speaker was created");
+        ).getId());
     }
 
     public ResponseEntity<String> updateSpeaker(Long id, SpeakerDTO speakerDTO,
