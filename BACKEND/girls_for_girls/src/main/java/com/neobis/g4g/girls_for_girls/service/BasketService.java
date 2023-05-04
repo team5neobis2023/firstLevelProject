@@ -37,8 +37,8 @@ public class BasketService {
         this.productRepo = productRepo;
     }
 
-    public List<GetBasketDTO> getMyBasket(){
-        return toGetBasketDTO(basketRepository.findByUser(getCurrentUser()));
+    public List<GetBasketDTO> getMyBasket(User user){
+        return toGetBasketDTO(basketRepository.findByUser(user));
     }
 
     public ResponseEntity<String> addToBasket(AddBasketDTO addBasketDTO,
@@ -70,11 +70,10 @@ public class BasketService {
                         .build()
         );
         return ResponseEntity.ok("Added to basket");
-
-
     }
 
     public ResponseEntity<String> updateBasket(AddBasketDTO addBasketDTO,
+                                              User user,
                                               BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
@@ -83,8 +82,8 @@ public class BasketService {
 
         if (productRepo.existsById(addBasketDTO.getProductId())){
             if(sizeRepository.existsById(addBasketDTO.getSizeId())){
-                if(basketRepository.existsByProductIdAndUser(addBasketDTO.getProductId(), getCurrentUser())) {
-                    Basket basket = basketRepository.findByProductIdAndUser(addBasketDTO.getProductId(), getCurrentUser()).get();
+                if(basketRepository.existsByProductIdAndUser(addBasketDTO.getProductId(), user)) {
+                    Basket basket = basketRepository.findByProductIdAndUser(addBasketDTO.getProductId(), user).get();
                     basketRepository.save(
                             Basket.builder()
                                     .id(basket.getId())
@@ -113,11 +112,6 @@ public class BasketService {
         }else{
             return ResponseEntity.badRequest().body("Basket with id " + id + " wasn't found");
         }
-    }
-
-    private User getCurrentUser(){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findByEmail(((UserDetails)principal).getUsername()).get();
     }
 
     private StringBuilder getErrorMsg(BindingResult bindingResult){

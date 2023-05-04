@@ -3,6 +3,7 @@ package com.neobis.g4g.girls_for_girls.controller;
 import com.neobis.g4g.girls_for_girls.data.dto.AddBasketDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.DeleteFromBasketDTO;
 import com.neobis.g4g.girls_for_girls.data.dto.GetBasketDTO;
+import com.neobis.g4g.girls_for_girls.data.entity.User;
 import com.neobis.g4g.girls_for_girls.exception.ErrorResponse;
 import com.neobis.g4g.girls_for_girls.exception.NotAddedException;
 import com.neobis.g4g.girls_for_girls.exception.NotUpdatedException;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +38,8 @@ public class BasketController {
     @GetMapping()
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Получение корзины авторизованного пользователя")
-    public List<GetBasketDTO> getMyBasket(){
-        return basketService.getMyBasket();
+    public List<GetBasketDTO> getMyBasket(@AuthenticationPrincipal User user){
+        return basketService.getMyBasket(user);
     }
 
     @PostMapping()
@@ -52,8 +54,9 @@ public class BasketController {
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Обновление корзины")
     public ResponseEntity<String> updateBasket(@RequestBody @Valid AddBasketDTO addBasketDTO,
+                                         @AuthenticationPrincipal User user,
                                          BindingResult bindingResult){
-        return basketService.updateBasket(addBasketDTO, bindingResult);
+        return basketService.updateBasket(addBasketDTO, user, bindingResult);
     }
 
     @SecurityRequirement(name = "JWT")

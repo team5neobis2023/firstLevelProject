@@ -90,8 +90,8 @@ public class ProductService {
         if (productRepo.existsById(id)) {
             productRepo.deleteById(id);
             return ResponseEntity.ok("Product is deleted");
+        } else {
+            return new ResponseEntity<>("There is no such product", HttpStatus.NOT_FOUND);
         }
-        else return new ResponseEntity<>("There is no such product", HttpStatus.NOT_FOUND);
     }
-
 }
